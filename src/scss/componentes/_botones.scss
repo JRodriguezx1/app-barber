@@ -1,0 +1,11 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.btnsmall{
+    @include m.btn(v.$grisblack, v.$blanco);
+    width: auto;
+}
+.btnmini{
+    @include m.btn1(v.$barprogress, v.$blanco);
+    width: auto;
+}

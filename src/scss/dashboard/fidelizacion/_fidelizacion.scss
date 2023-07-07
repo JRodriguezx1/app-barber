@@ -1,0 +1,56 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.fidelizacion{
+    background-color: v.$blanco;
+    h2{
+        color: v.$grisoscuro;
+        padding: 2rem 0 0;
+    }
+
+    &__contenedor{
+        margin-top: 3rem;
+        padding: 1rem;
+        @include m.tablet{
+            display: flex;
+            gap: 2rem;
+        }
+    }
+    &__nuevo{
+        margin-bottom: 2rem;
+    }
+    &__dctoindividual{
+        color: v.$grisoscuro;
+    }
+    &__heading{
+        color: v.$grisraton;
+        margin-bottom: 2rem;
+    }
+    &__registradas{
+        flex: 1;
+    }
+    &__ul{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    &__li{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        p{
+            margin: 0;
+            margin-right: 1rem;
+            color: v.$grisoscuro;
+        }
+        .opciones{
+            @include m.telefono{
+                display: flex;
+                align-items: center;
+            }
+           p{
+               white-space: nowrap;
+           }
+        }
+    }
+}

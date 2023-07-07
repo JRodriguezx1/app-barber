@@ -1,0 +1,32 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    height: 100%;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+body {
+    font-family: v.$fuente_principal;
+    font-size: 1.4rem;
+}
+a {
+    text-decoration: none;
+}
+img {
+    width: 100%;
+    height: auto;
+}
+.contenedor {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.contenedor-sm{
+    width: 95%;
+    max-width: 60rem;
+    margin: 0 auto;
+}

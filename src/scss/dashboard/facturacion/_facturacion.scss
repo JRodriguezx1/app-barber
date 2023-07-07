@@ -1,0 +1,18 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.facturacion{
+    background-color: v.$blanco;
+    padding: 1rem;
+    &__contenedor{
+        @include m.contenedor100;
+    }
+
+    &__filtros{
+        display: flex;
+        justify-content: space-between;
+    }
+    &__tabla{
+        overflow-x: scroll;
+    }
+}

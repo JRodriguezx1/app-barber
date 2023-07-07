@@ -1,0 +1,19 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.cliente{
+    &__nombrecliente{
+        p{
+            border-radius: 1rem;
+            background-color: v.$griswhite;
+            padding: 1rem;
+            display: inline-block;
+            color: v.$grisoscuro;
+        }
+    }
+    &__tablahistorial{
+        margin-top: 2rem;
+        overflow: hidden;
+        overflow-x: scroll;
+    }
+}

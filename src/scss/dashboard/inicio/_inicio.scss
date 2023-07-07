@@ -1,0 +1,106 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.inicio{
+    @include m.contenedor100;
+    .heading{
+        i{
+            margin-right: 1rem;
+            color: v.$grisraton;
+        }
+        color: v.$grisoscuro;
+        margin-bottom: 2rem;
+    }
+    .bloques{
+        &__grid{
+            @include m.grid(2, 2rem);
+            @include m.xl_tablet{
+                @include m.grid(4, 2rem);
+            }
+            
+        }
+        &__bloque{
+            //border: 1px solid v.$gris;
+            padding: 1rem;
+            background-color: v.$blanco;
+            border-radius: 1rem;
+            
+            border-bottom: 4px solid v.$azul;
+            box-shadow: rgba(24, 137, 243, 0.2) 0px 2px 8px 0px;
+            &:nth-of-type(2){
+                border-bottom: 4px solid v.$rosa;
+                box-shadow: rgba(243, 24, 152, 0.2) 0px 2px 8px 0px;
+            }
+            &:nth-of-type(3){
+                border-bottom: 4px solid v.$barprogress;
+                box-shadow: rgba(240, 101, 72, 0.2) 0px 2px 8px 0px;
+            }
+            &:nth-of-type(4){
+                border-bottom: 4px solid v.$secundario;
+                box-shadow: rgba(24, 236, 243, 0.2) 0px 2px 8px 0px;
+            }
+        }
+        &__heading{
+            margin: 0;
+            margin-bottom: 2rem;
+            color: v.$grisraton;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        &__contenido{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p{
+                //font-size: 3rem;
+                @include m.texto_fluido(1.6rem, 3rem);
+                margin: 0;
+                color: v.$grisoscuro;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            .sign{
+                span{
+                    font-size: 2rem;
+                    color: v.$azul;
+                }
+            }
+            .plus{
+                i{
+                    font-size: 2rem;
+                    color: v.$rosa;
+                }
+            }
+            .angule{
+                i{
+                    font-size: 2rem;
+                    color: v.$barprogress;
+                }
+            }
+            .employee{
+                i{
+                    font-size: 2rem;
+                    color: v.$secundario;
+                }
+            }
+            .idollar{
+                font-size: 4rem;
+                color: v.$azul;
+            }
+            .icalender{
+                font-size: 4rem;
+                color: v.$rosa;
+            }
+            .iusers{
+                font-size: 4rem;
+                color: v.$barprogress;
+            }
+            .icard{
+                font-size: 4rem;
+                color: v.$secundario;
+            }
+        }
+    }
+}

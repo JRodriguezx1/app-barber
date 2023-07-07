@@ -1,0 +1,119 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario{
+    display: flex;
+    flex-direction: column;
+    /*
+    &__legend{
+        color: v.$gris;
+        font-size: 2.2rem;
+        margin-bottom: 2rem;
+    }*/
+    &__fieldset{
+        border: none;
+        padding: 0;
+    }
+    &__campo{
+        display: flex;
+        flex-direction: column;
+        gap: .8rem;
+        margin: 0 0 1.5rem 0;
+    }
+    &__contenedor-icono{
+        display: flex;
+        border-radius: .5rem;
+        overflow: hidden;
+    }
+    &__icono{
+        background-color: v.$gris;
+        width: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i{
+           color: v.$blanco;
+           font-size: 2rem;
+        }
+    }
+    &__label{
+        display: block;
+        font-size: 1.6rem;
+        font-weight: 500;
+        color: rgba(v.$negro, 0.8);
+    }
+    &__input, &__select{
+        outline: none;
+        font-size: 1.4rem;
+        padding: 1rem;
+        border: 1px solid darken(v.$grisclaro, 20);
+        border-radius: .5rem;
+        &--file{
+            border: none;
+        }
+        &--sociales{
+            @extend .formulario__input;
+            flex: 1;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+    &__dato{
+        display: flex;
+        input{
+            flex: 1;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        label{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: .5rem;
+            border: 1px solid darken(v.$grisclaro, 20);
+            width: 4rem;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+        }
+    }
+    &__radio{
+        display: flex;
+        gap: 2rem;
+    }
+    &__texto{
+        margin-top: 3rem
+    }
+    &__imagen{
+        max-width: 20rem
+    }
+    &__listado{
+       // @include m.tags;
+    }
+    &__submit{
+        @include m.boton(v.$azul, v.$blanco);
+        align-self: flex-start;
+        width: auto;
+        &--eliminar{
+            @include m.boton(v.$barprogress, v.$blanco);  
+            width: auto;
+            align-self: flex-start;
+        }
+        &--login{
+            //@include m.boton(v.$barprogress, v.$blanco);
+            @include m.boton(rgba(v.$azul, .4), v.$blanco);
+            width: auto;
+            @include m.tablet{
+                @include m.boton(rgba(v.$azul, .4), v.$blanco);
+                width: auto;     
+            } 
+            align-self: center;    
+        }
+        &--servicio{
+            @include m.boton(v.$secundario, v.$blanco);  
+            width: auto;
+            align-self: center;
+        }
+    }
+
+}

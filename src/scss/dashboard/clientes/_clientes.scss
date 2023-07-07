@@ -1,0 +1,61 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formclientes{  //class agregada en clientes.js en citas.js y finalizcita.js
+    .orden{ //class en finalizcita.js
+        margin: 0 0 1rem 0;
+        font-size: 1.5rem;
+    }
+    .nameuser{ //class en finalizcita.js
+        font-size: 1.3rem;
+    }
+    .nameservice{ //class en finalizcita.js
+        font-size: 1.3rem;
+    }
+    .precio{ //class en finalizcita.js
+        font-size: 1.4rem;
+    }
+    #horacita{  //id en citas.js
+        display: inline-block;
+        color: v.$blanco;
+        text-align: center;
+        font-size: 1.4rem;
+        margin: 0;
+        background-color: v.$azul;
+        padding: .6rem .5rem;
+        border-radius: 1rem;
+    }
+    .cliente__campohoras{
+        padding: 0 0 1rem 0;
+    }
+    .formulario__campo{
+        gap: 0.3rem;
+        margin-bottom: 1.1rem;
+        .formulario__label{
+            text-align: left;
+            font-size: 1.4rem;
+        }
+    }
+    #devolucion{
+        color: v.$barprogress;
+        font-size: 1.6rem;
+        font-weight: 600;
+    }
+    .clientes-btn{
+        @include m.btn(v.$secundario, v.$blanco);
+        align-self: center;
+        width: auto;
+    }
+    .formulario__campo-2r{
+        display: flex;
+        .formulario__campo{
+            width: 13rem;
+            margin: 0 auto;
+        }
+    }
+    .formulario__imprimir{
+        display: flex;
+        gap: 2rem;
+        margin: 0 auto;
+    }
+}

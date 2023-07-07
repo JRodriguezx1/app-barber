@@ -1,0 +1,123 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.servicios{
+    @include m.contenedor100;
+    &__titulos{
+        background-color: v.$blanco;
+        padding-top: 1rem;
+        p{
+            margin-bottom: 0;
+            padding-bottom: 3rem;
+        }
+    }
+    &__contenedor{
+        @include m.tablet{
+            display: flex;
+            justify-content: space-between;
+            
+        }
+    }
+
+    &__campoformulario{
+        flex-basis: calc(38% - 1rem);
+        .formulario{
+            padding: .8rem;
+            background-color: v.$blanco;
+            &__fieldset{
+                border: none;
+                padding: 3rem 2rem;
+                background-color: v.$griswhite;
+            }
+        }
+    }
+
+    &__lista{
+        padding: 2rem;
+        //border: 8px solid v.$blanco;
+        flex-basis: calc(60% - 1rem);
+        @include m.grid(1, 1rem);
+        @include m.telefono{
+            @include m.grid(2, 1rem);
+        }
+        @include m.tablet{
+            @include m.grid(1, 1rem);
+        }
+        @include m.desktop{
+            @include m.grid(2, 1.4rem);
+            row-gap: 1rem;
+        }
+        
+    }
+
+    &__servicio{
+        position: relative;
+        margin: 0 auto;
+        border: 1px solid v.$grisclaro;
+        background-color: v.$blanco;
+        max-width: 30rem;
+        width: 100%;
+        padding: 1rem 1rem 0 1rem;
+        color: v.$grisoscuro;
+        transition: all .8s ease;
+        h4{
+            position: relative;
+        }
+        p{
+            position: relative;
+            margin-top: 1rem;
+            span{
+                font-weight: 700;
+            } 
+        }
+        &:hover{
+            cursor: pointer;
+            scale: 1.1;
+            color: v.$blanco;
+            a{
+                color: v.$grisclaro;
+                &:hover{
+                    color: v.$blanco;
+                    font-size: 2.4rem;
+                }
+            }
+            &::before{
+                cursor: pointer;
+                width: 100%;
+                height: 100%;
+            }
+        }
+        //@include m.tablet { 
+            &::before{
+               content: '';
+               width: 0;
+               height: 0;
+               background-color: darken(v.$azul2, 10);
+               position: absolute;
+               bottom: 0;
+               left: 0; 
+               transition: all 0.6s ease;
+               //border-radius: .8rem; 
+            }
+         
+             //cuando se hace hover toma el seudo elemento
+           /* &:hover::before{ 
+               cursor: pointer;
+               width: 100%;
+               height: 100%;
+            }*/
+        //}
+    }
+
+    &__eliminar{
+        position: absolute;
+        bottom: 0%;
+        right: 0%;
+        padding: 1.3rem;
+        color: v.$iconos;
+        font-size: 2rem;
+         font-size: 2.2rem;
+         transition: all .8s ease;
+    }
+
+}

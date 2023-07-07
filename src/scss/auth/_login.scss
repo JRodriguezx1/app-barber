@@ -1,0 +1,60 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.auth{
+    /*max-width: 35rem;
+    width: 100%;
+    margin: 0 auto;*/
+    position: relative;
+    padding: 1rem;
+    .btnclose{
+        position: absolute;
+        top: -.5rem;
+        right: -2%;
+        color: v.$negro;
+        border-radius: 50%;
+        
+        i{
+            font-size: 3.5rem;
+        }
+    }
+    &__heading{
+        color: v.$barprogress;
+        @include m.tablet{
+            color: rgba(v.$grisclaro, 1);
+        }
+    }
+    &__texto{
+        margin-top: 0rem;
+        color: v.$grisraton;
+        @include m.tablet{
+            color: v.$grisclaro;
+        }
+    }
+    .formulario{
+
+        &__campo{
+            gap: .3rem;
+            margin-bottom: 1.1rem;
+        }
+        &__label{
+            font-size: 1.4rem;
+        }
+        &__input{
+            padding: .8rem 1rem;
+        }
+        @include m.tablet{
+            &__label{
+                color: v.$grisclaro;
+            }
+            &__input{
+                color: v.$blanco;
+                border: none;
+                background-color: rgba(v.$griswhite, .2);
+                &::placeholder{
+                    color: black;
+                }
+            }
+        }
+    }
+}

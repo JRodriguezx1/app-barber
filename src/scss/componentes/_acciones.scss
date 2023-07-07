@@ -1,0 +1,21 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.acciones{ //hace referencia a las etiquetas <a>href=""</a> en las paginas de login/registro... etc.
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    &__Centrar{
+        @extend .acciones;
+        justify-content: center;
+    }
+    &__enlace{
+        //color: v.$negro;
+        color: v.$grisoscuro;
+        @include m.tablet{
+            color: v.$grisclaro;
+        }
+        font-size: 1.4rem;
+        font-weight: v.$delgada;
+    }
+}

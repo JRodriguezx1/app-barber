@@ -1,0 +1,325 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.informacion{
+    background-color: v.$blanco;
+    padding: 1rem;
+    p{
+        color: v.$grisoscuro;
+        font-weight: 600;
+        padding-bottom: 1rem;
+    }
+    .barraprogreso{  ///////div barra progreso
+        height: 1.5rem;
+        padding: .4rem;
+        border-radius: 3rem;
+        background-color: v.$azulclaro;
+        &__barra{ ////div barra
+            position: relative;
+            width: 0%;
+            height: .7rem;
+            border-radius: 3rem;
+            background-color: v.$barprogress;
+            transition: all 1s ease;
+            &.animation{
+                width: 0%;
+            }
+            &::after{ //puntico final de la barra de progreso
+                position: absolute;
+                right: .3rem;
+                top: .18rem;
+                content: "";
+                background-color: v.$blanco;
+                width: 4px;
+                height: 4px;
+                border-radius: .5rem;
+            }
+        }
+        &__label{
+            position: absolute;
+            top: -2.5rem;
+            right: 0rem;
+            transform: translateX(35%);
+            background-color: #405189;
+            color: v.$blanco;
+            display: inline-block;
+            padding: .4rem;
+            border-radius: .4rem;
+            font-size: 1rem;
+            &::after{
+                content: "";
+                position: absolute;
+                border: 4px solid transparent;
+                border-top-color: #405189;
+                bottom: -.7rem;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}
+///formulario datos basicos del negocio
+.negocio{
+    &__info{
+        margin-top: 2rem;
+        background-color: v.$blanco;
+    }
+    &__grid{
+        @include m.contenedor-sm;
+        padding: 2rem;
+        h4{
+            text-align: center;
+            color: v.$grisoscuro;
+        }
+    }
+}
+
+/////gestion de empleados y malla
+.configuracion{
+    background-color: v.$blanco;
+    margin-top: 2rem;
+    padding: 1rem 0rem;
+    &__grid{
+       @include m.contenedor; 
+    }
+    
+    .paginas{
+        padding: 1rem 0;
+    }
+    &__heading{
+        color: v.$grisblack;
+        margin-bottom: 1rem;
+    }
+    
+    .pagina1{   //empleado
+        display: none;
+        //color: v.$grisblack;
+        .formulario{
+            &__elegirempleado{
+                text-align: center;
+                select{
+                    width: 100%;
+                }
+                @include m.telefono{
+                    select{
+                        width: auto;
+                    }
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    
+                }
+            }
+            &__fieldset{
+                &--personal{
+                    @include m.grid(1, 0rem);
+                    @include m.tablet{
+                        @include m.grid(2, 2rem);
+                        row-gap: 0rem;
+                    }
+                } 
+                &--lugar{
+                    @include m.grid(1, 0rem);
+                    @include m.tablet{
+                        @include m.grid(3, 2rem);
+                    }
+                }
+            }
+            &__tags{  //div q envuelve a los skills y al select
+                border: 1px solid darken(v.$grisclaro, 20);
+                padding: .5rem;
+                display: flex;
+                flex-direction: column-reverse;
+                @include m.telefono{
+                    flex-direction: row;
+                    align-items: center;
+                }
+                gap: 1rem;
+                border-radius: 0.5rem;
+            }
+            &__tag{ //div
+                display: inline-block;
+                border: 1px solid darken(v.$grisclaro, 20);
+                padding: .3rem .6rem;
+                color: v.$blanco;
+                background-color: #405189;
+                margin-right: .6rem;
+                span{
+                    white-space: nowrap;
+                    margin-right: .5rem;
+                }
+            }/*
+            &__inputag{
+                border: none;
+                outline: none;
+                flex: 1;
+            }*/
+            &__tagselect{
+                padding: 0;
+                border: none;
+                outline: none;
+                flex: 1;
+            }
+        }
+        &.mostrarseccion{   //clase agrgada con js en configuracion.js
+            display: block;
+        }
+    }
+
+    .pagina2{  //malla
+        display: none;
+        &.mostrarseccion{ //clase agrgada con js en configuracion.js
+            display: block;
+        }
+        .formulario{
+            &__elegirempleado{
+                text-align: center;
+                select{
+                    width: 100%;
+                }
+                @include m.telefono{
+                    select{
+                        width: auto;
+                    }
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    
+                }
+            }
+            .dia{
+                display: flex;
+                align-items: center;
+                //border-bottom: 1px solid darken(v.$grisclaro, 20);
+                padding: .4rem;
+                &:nth-child(odd){
+                    background-color: v.$azulclaro;
+                }
+                margin-bottom: .5rem;
+                .nombre-dia{
+                    min-width: 10rem;
+                    //white-space: nowrap;
+                    input[type="checkbox"] {
+                        display: none;
+                    }
+                    input[type="checkbox"] + label {
+                        line-height: 2rem;
+                        cursor: pointer;
+                    }
+                    input[type="checkbox"] + label:before{ //crea una caja cuadrada con :before
+                        content: "";
+                        width: 2.2rem;
+                        height: 2.2rem;
+                        float: left;
+                        border: 1px solid darken(v.$grisclaro, 20);
+                        background-color: v.$blanco;
+                        margin-right: 1rem;
+                    }
+                    input[type="checkbox"]:checked + label:before{  // cuando este chequeado toma el pseudo elemento before y pinta verde
+                        border-color: v.$secundario;
+                    }
+                    input[type="checkbox"]:checked + label:after { // cuando se chequea tomo el pseudo elemento after y crea otra caja se le quita 2 bordes se rota -55º y que listo el tiket 
+                        content: "";
+                        width: 1.4rem;
+                        height: .8rem;
+                        border: 4px solid v.$secundario;
+                        float: left;
+                        margin-left: -2.8rem;
+                        margin-top: .7rem;
+                        border-right: 0;
+                        border-top: 0;
+                        transform: rotate(-55deg);
+                    }  
+                }
+                .horario{   
+                    width: 100%;
+                    @include m.grid(1, 1rem);
+                    @include m.telefono{
+                        @include m.grid(2, 1rem);
+                    }
+                    @include m.desktop{
+                        @include m.grid(4, 1rem);
+                        display: flex;
+                        justify-content: center;
+                    }
+                    input{
+                        max-width: 30rem;
+                        width: 100%;
+                        @include m.desktop{
+                            width: 17rem;
+                        }
+                        @include m.xl_desktop{
+                            margin-right: 2rem;
+                        }
+                    }
+                }
+            } //fin dia
+        }
+    }  //fin pagina 2
+    .pagina3{  //pagina 3
+        display: none;
+        &.mostrarseccion{   //clase agrgada con js en configuracion.js
+            display: block;
+        }
+        .registrasfechas{
+            display: flex;
+            flex-direction: column;
+            .formulario__input{
+                width: 20rem;
+            }
+            @include m.xl_tablet{
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                .formulario__input{
+                    width: auto;
+                }
+            }
+        }
+        .viewdates{
+            margin-top: 1rem;
+            @include m.grid(2, 1rem);
+            @include m.telefono{
+                @include m.grid(2, 3rem);
+                row-gap: 1rem;
+            }
+            @include m.tablet{
+                @include m.grid(3, 3rem);
+                row-gap: 1rem;
+            }
+            @include m.xl_tablet{
+                @include m.grid(4, 3rem);
+                row-gap: 1rem;
+            }
+            @include m.desktop{
+                @include m.grid(5, 3rem);
+                row-gap: 1rem;
+            }
+            &__viewdate{
+                background-color: v.$griswhite;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            &__fecha{
+                color: v.$grisoscuro;
+                margin: 0;
+            }
+            i{
+                font-size: 2rem;
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+    }  //fin pagina 3
+    .pagina4{
+        @extend .pagina1;
+        display: none;
+        &.mostrarseccion{ //clase agrgada con js en configuracion.js
+            display: block;
+        }
+    }
+}

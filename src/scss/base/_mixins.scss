@@ -1,0 +1,179 @@
+@use 'variables' as v;
+
+/** Media Queries **/
+@mixin telefono {
+    @media (min-width: v.$telefono) {
+        @content;
+    }
+}
+@mixin tablet {
+    @media (min-width: v.$tablet) {
+        @content;
+    }
+}
+@mixin xl_tablet {
+    @media (min-width: v.$xl_tablet) {
+        @content;
+    }
+}
+@mixin desktop {
+    @media (min-width: v.$desktop) {
+        @content;
+    }
+}
+@mixin xl_desktop {
+    @media (min-width: v.$xl_desktop) {
+        @content;
+    }
+}
+
+@mixin boton($bgColor, $colorTexto) {
+    background-color: $bgColor;
+    padding: 1.5rem 4rem;
+    color: $colorTexto;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border: none;
+    transition-property: background-color;
+    transition-duration: .3s;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+
+    &:hover {
+        background-color: darken( $bgColor, 10% );
+        cursor: pointer;
+    }
+}
+
+@mixin btn($bgColor, $colorTexto) {
+    background-color: $bgColor;
+    padding: .6rem 1.1rem;
+    color: $colorTexto;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border: none;
+    border-radius: .5rem;
+    transition-property: background-color;
+    transition-duration: .3s;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+
+    &:hover {
+        background-color: lighten( $bgColor, 20% );
+        cursor: pointer;
+    }
+}
+
+@mixin btn1($bgColor, $colorTexto) {
+    background-color: $bgColor;
+    padding: .4rem .9rem;
+    color: $colorTexto;
+    font-size: 1.3rem;
+    font-weight: 400;
+    border: none;
+    border-radius: .5rem;
+    transition-property: background-color;
+    transition-duration: .3s;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+
+    &:hover {
+        background-color: lighten( $bgColor, 20% );
+        cursor: pointer;
+    }
+}
+
+@mixin grid($columnas, $espaciado ) {
+    display: grid;
+    gap: $espaciado;
+    grid-template-columns: repeat($columnas, 1fr);
+}
+
+@mixin contenedor{
+    //max-width: 120rem;
+    //width: 95%;
+    width: min(95%, 144rem); //igual que las 2 lineas de arriba...  menor a 1200px toma 95% y mayor a 1200px muestra los 1200ox
+    margin: 0 auto;
+}
+
+@mixin contenedor100{
+    width: min(100%, 144rem); //igual que las 2 lineas de arriba...  menor a 1200px toma 95% y mayor a 1200px muestra los 1200ox
+    margin: 0 auto;
+}
+
+@mixin contenedor-sm{
+    //max-width: 120rem;
+    //width: 95%;
+    width: min(95%, 60rem); //igual que las 2 lineas de arriba...  menor a 1200px toma 95% y mayor a 1200px muestra los 1200ox
+    margin: 0 auto;
+}
+
+@mixin texto_fluido($min, $max){
+    font-size: clamp($min, -0.8rem + 10vw ,$max);
+}
+
+@mixin logo{
+    color: v.$grisblack;
+    text-align: center;
+    margin-bottom: 2rem;
+    @include tablet{
+        text-align: left;
+        margin: 0;
+    }
+}
+
+@mixin  enlace {  //registro e iniciar sesion
+    //all: unset; limpia todos los estilos
+    color: v.$grisblack;
+    font-size: 1.4rem;
+    font-weight: v.$bold;
+    text-transform: uppercase;
+    background-color: transparent;
+    border: none;
+    &:hover{
+        cursor: pointer;
+        color: v.$azul;
+    }   
+}
+
+@mixin sombra {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;    
+}
+
+@mixin menu-social($color, $size) {
+    &__enlace{ // = <a>...</a>
+        &::before{
+            color: $color;
+            font-size: $size;
+            display: inline-block; // para que se ponga el elemento al lado de otro se puede aplicar pading
+            font-style: normal;
+            text-rendering: auto; //propiedad que se aplica a vectores
+            -webkit-font-smoothing: antialiased;
+            font-family: "Font Awesome 6 brands";
+        }
+        &[href*="https://facebook.com"]::before{
+            content: "\f39e";
+        }
+        &[href*="https://github.com"]::before{
+            content: "\f09b";
+        }
+        &[href*="https://tiktok.com"]::before{
+            content: "\e07b";
+        }
+        &[href*="https://instagram.com"]::before{
+            content: "\f16d";
+        }
+        &[href*="https://twitter.com"]::before{
+            content: "\f099";
+        }
+        &[href*="https://youtube.com"]::before{
+            content: "\f167";
+        }
+    }
+    &__ocultar{ //== <span></span>
+        display: none;
+    }
+}

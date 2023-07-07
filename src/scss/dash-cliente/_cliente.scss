@@ -1,0 +1,129 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.cliente{
+    &__contenedor{
+        @include m.contenedor;
+        background-color: v.$blanco;
+        padding: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    &__paginas{
+        margin-bottom: 1rem;
+    }
+    &__informacion{
+    }
+    &__heading{
+        background-color: v.$sidebar3;
+        color: v.$blanco;
+        padding: 1rem 2rem;
+    }
+    &__datos{
+        padding: 1rem;
+        @include m.grid(2, 2rem);
+        @include m.tablet{
+            @include m.grid(4, 2rem);
+        }
+    }
+    &__dato{
+        p{
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            color: v.$grisoscuro;
+        }
+        span{
+            color: v.$grisoscuro;
+        }
+    }
+
+    &__cita{}
+
+    &__disponibilidad{
+        @include m.tablet{
+            display: flex;
+        }
+    }
+
+    &__select{
+        padding: 1rem;
+        /*@include m.tablet{
+            display: flex;
+            gap: 3rem;
+        }*/
+    }
+    
+    &__horas{
+        flex: 1;
+        padding: 1rem;
+        .headinghoras{
+            background-color: v.$sidebar3;
+            color: v.$blanco;
+            padding: 1rem;
+            p{
+                margin: 0;
+                font-size: 1.3rem;
+                font-weight: 400;
+            }
+            margin-bottom: 1rem;
+        }
+    }
+    &__campohoras{
+        @include m.grid(2, 2rem);
+        @include m.tablet{
+            @include m.grid(3, 2rem);
+        }
+        @include m.xl_tablet{
+            @include m.grid(4, 2rem);
+        }
+        //border: 1px solid v.$grisclaro;
+        padding: 1rem;
+    }
+    &__hora{
+        //border: 1px solid v.$grisclaro;
+        border-radius: 1rem;
+        background-color: v.$griswhite;
+        .texthora{
+            color: v.$grisoscuro;
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 0;
+            padding: .8rem 0;
+        }
+        &:hover{
+            background-color: v.$azul;
+            //border: 1px solid v.$azul;
+            cursor: pointer;
+            .texthora{
+                color: v.$blanco;
+            }
+        }
+        &.horaselect{ // class agregada en citas.js
+            background-color: v.$azul;
+            .texthora{
+                color: v.$blanco;
+            }
+        }
+    }
+
+    .pagina1{
+        display: none;
+        &.mostrarseccion{   //clase agrgada con js en configuracion.js
+            display: block;
+        }
+    }
+
+    .pagina2{
+        display: none;
+        &.mostrarseccion{   //clase agrgada con js en configuracion.js
+            display: block;
+        }
+    }
+    .pagina3{
+        display: none;
+        &.mostrarseccion{   //clase agrgada con js en configuracion.js
+            display: block;
+        }
+    }
+}

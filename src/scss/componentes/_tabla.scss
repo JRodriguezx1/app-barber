@@ -1,0 +1,56 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.tabla{
+    width: 100%;
+    border-collapse: collapse;
+    thead{
+        color: v.$grisblack;
+        tr{
+            
+            th{
+                border:  solid 1px darken(v.$grisclaro, 0);
+                padding: 1rem;
+            }
+        }
+    }
+    tbody{
+        color: v.$grisoscuro;
+        text-align: center;
+        tr{
+            td{
+                padding: 1rem;
+            }
+            .accionestd{
+                padding: 0;
+                .acciones-iconos{
+                    display: flex;
+                    justify-content: space-around;
+                    font-size: 1.7rem;
+                    i{
+                        padding: 1rem;
+                        border-radius: 50%;
+                        &:hover{
+                            cursor: pointer;
+                            background-color: v.$grisclaro;
+                            
+                        }
+                    }
+                    .finalizado{
+                        color: v.$secundario;
+                    }
+                    .programar{
+                        color: v.$grisoscuro;
+                    }
+                    .cancelado{
+                        color: v.$barprogress;
+                    }
+                }
+               
+            }
+        } //fin tr
+        .tr-resaltar{
+            background-color: lighten(v.$azul, 47);
+        }
+    } //fin tbody
+}//fin tabla

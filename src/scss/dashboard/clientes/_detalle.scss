@@ -1,0 +1,124 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.detalle{
+    background-color: v.$blanco;
+    padding: 2rem;
+    &__contenedor{
+        margin-top: 1rem;
+        @include m.tablet{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    &__datospersonal{
+        i{
+            font-size: 2rem;
+            color: v.$gris;
+        }
+    }
+    &__dato{
+        margin-bottom: 1rem;
+        color: v.$grisoscuro;
+        display: flex;
+        align-items: center;
+    }
+    &__icon{
+        background-color: v.$grisclaro;
+        width: 4rem;
+        height: 4rem;
+        margin-right: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__heading{
+        color: v.$grisoscuro;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    ////////////fidelizacion////////////
+    &__descuento{
+        margin-top: 2rem;
+        @include m.xl_tablet{
+            display: flex;
+        }
+        .ingreso-dcto{
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+    }
+    &__dctosvigentes{
+        margin-top: 2rem;
+        @include m.xl_tablet{
+            margin-top: 0;
+        }
+        .dctovigenteheading{
+            margin-top: 0;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: v.$grisoscuro;
+            text-transform: uppercase;
+        }
+        margin-left: 1rem;
+    }
+
+    ///////////historial////////////////
+    &__historial{
+        margin-top: 2rem;
+        @include m.tablet{
+            margin-top: 0;
+        }
+    }
+    &__contenido{
+        border-left: 2px solid v.$secundario;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    &__registro{
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 2rem;
+    }
+    &__servicio{
+        p{ margin: 0; 
+        color: v.$grisoscuro;}
+        .fecha{
+            color: v.$grisraton;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            &::before{
+                content: '';
+                height: 1.2rem;
+                width: 1.2rem;
+                background-color: v.$verde1;
+                border-radius: 50%;
+                margin-right: 1rem;
+            }
+        }
+    }
+    &__pago{
+        color: v.$grisoscuro;
+        font-weight: 600;
+    }
+    &__deduccion{
+        color: v.$grisoscuro;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__total{
+        text-align: end;
+        p{margin: 0;}
+        span{
+            color: v.$grisblack;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+    }
+}

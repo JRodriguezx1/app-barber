@@ -1,0 +1,104 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.citas{
+    background-color: v.$blanco;
+    padding: 1rem;
+    &__contenedor{
+        @include m.contenedor100;
+    }
+
+    &__acciones{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        margin-bottom: 1rem;
+        @include m.xl_tablet{
+            flex-direction: row;
+            justify-content: space-between;
+            //align-items: center;
+            gap: 0rem;
+        }
+       // margin-bottom: 1rem;
+    }
+
+    &__crear{
+       // align-self: center;
+       border-bottom: 1px solid v.$grisclaro;
+       padding-bottom: 1rem;
+       @include m.xl_tablet{
+           border-bottom: none;
+       }
+       text-align: center;
+    }
+
+    &__filtros{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+
+        @include m.telefono{
+            flex-direction: row;
+            justify-content: space-around;
+        }
+        
+        
+        border-bottom: 1px solid v.$grisclaro;
+        padding-bottom: 1rem;
+        @include m.xl_tablet{
+            gap: 8rem;
+            border-bottom: none;
+            padding: 0;
+        }
+    }
+
+    &__profesional{
+        text-align: center;
+    }
+    &__consultar{
+        margin-top: .4rem;
+        text-align: center;
+    }
+
+    &__busqueda{
+        text-align: center;
+        .formulario__select{
+            width: auto;
+            @include m.telefono{
+                width: 100%;
+            }
+        }
+        .btn_busqueda{
+            margin-top: .4rem;
+            display: flex;
+            justify-content: center;
+            .formulario__input{
+                border-right: none;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                outline: none;
+                width: auto;
+            }
+            label{
+                padding: 0 1rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid darken(v.$grisclaro, 20);
+                border-top-right-radius: .5rem;
+                border-bottom-right-radius: .5rem;
+                border-left: none;
+            }
+            #busqueda{
+                display: none;
+            }
+        }
+    }
+    &__fecha{
+
+    }
+
+    &__tabla{
+        overflow-x: scroll;
+    }
+}

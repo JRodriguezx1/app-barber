@@ -1,0 +1,29 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.pagina3perfil{
+    padding: 0 1rem;
+    @include m.telefono{
+        padding: 0 3rem;
+    }
+
+    &__heading{
+        h4{
+            color: v.$grisoscuro;
+            border-bottom: 1px solid rgba(v.$azul, .2);
+            padding: 1rem;
+            margin: 0 0 1rem 0;
+            //background-color: v.$griswhite;
+        }
+    }
+
+    .formcampospagina3{
+        @include m.tablet{
+            @include m.grid(2, 2rem);
+            row-gap: 0rem;
+        }
+        .formulario__input{
+            border: 1px solid rgba(v.$azul1, .3);
+        }
+    }
+}

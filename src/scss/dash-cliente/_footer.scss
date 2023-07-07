@@ -1,0 +1,31 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.dash-cliente{
+    background-color: v.$blanco;
+    &__negocio{
+        padding: 1rem;
+    }
+    &__logo{
+        @include m.texto-fluido(2rem, 3rem);
+        color: v.$gris;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+    &__rrss{
+        .menu-redes{//== <nav>...</nav>
+            @include m.menu-social(v.$azul, 2rem);
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+    }
+    .allright{
+        color: v.$gris;
+        font-weight: 300;
+        span{
+            color: v.$azul;
+            font-weight: 600;
+        }
+    }
+}

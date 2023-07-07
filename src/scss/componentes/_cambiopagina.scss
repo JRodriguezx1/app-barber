@@ -1,0 +1,20 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.cambiopaginas{ //nav de las paginas
+    span{
+        color: v.$grisoscuro;
+        padding: 1rem 1rem;
+        //border-bottom: 1px solid v.$grisoscuro;
+        display: block;
+        @include m.telefono{
+            display: inline-block;
+        }
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    .resaltar{  //clase agrgada con js en configuracion.js
+        border-bottom: 1px solid v.$grisoscuro;
+    }
+}
