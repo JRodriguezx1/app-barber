@@ -15,7 +15,9 @@ class Router
 
     public function comprobarRutas()
     {
-        $url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        //$url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        $url_actual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
+        //$url_actual = $_SERVER['REQUEST_URI'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'GET') {
@@ -45,7 +47,10 @@ class Router
         $contenido = ob_get_clean(); // Limpia el Buffer // limpia la memoria y en variable $contenido se almacena el include de arriba, y la variable $contenido se muestra en el include de abajo
 
         //utilizar el layout o la vista del dashboard deacuerdo a la url
-        $url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        //$url_actual = $_SERVER['PATH_INFO'] ?? '/';
+        //$url_actual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
+        $url_actual = $_SERVER['REQUEST_URI'] ?? '/';
+        //debuguear($_SERVER['REQUEST_URI']);
         if(str_contains($url_actual, '/Cliente')){
             include_once __DIR__ . '/views/cliente-layout.php'; //pagina maestra para el dashboard admin-cliente
         }else{

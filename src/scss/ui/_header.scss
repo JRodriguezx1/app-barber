@@ -3,7 +3,10 @@
 
 .headerapp{
     height: 100vh;
-    background-image: linear-gradient(to left, rgba(v.$negro, .1), rgba(v.$negro, 1)), url(/build/img/barberapp.webp), ;
+    background-image: linear-gradient(to left, rgba(v.$negro, .1), rgba(v.$negro, 1)), url(/build/img/barberapp.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     &__contenedor{
         position: relative;
         @include m.contenedor;

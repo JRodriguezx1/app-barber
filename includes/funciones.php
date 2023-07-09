@@ -13,7 +13,8 @@ function s($html) : string {
 }
 
 function validar_string_url($path):bool{ //retorna bolean
-    return strpos($_SERVER['PATH_INFO']??'/', $path)?true:false;
+    //return strpos($_SERVER['PATH_INFO']??'/', $path)?true:false;
+    return strpos($_SERVER['REQUEST_URI']??'/', $path)?true:false;
 }
 
 function isauth():void  //valida si el usuario esta registrao
