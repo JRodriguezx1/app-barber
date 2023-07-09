@@ -42,10 +42,10 @@ class dashboardcontrolador{
 
     public static function totalcitas(){  //api
         date_default_timezone_set('America/Bogota');
-        $fecha = date('Y-m-d');
+        $fecha = date('Y-m-d'); //dia actual hoy
         $citasxdia = citas::idregistros('fecha_fin', $fecha);
         foreach($citasxdia as $value){
-            $value->idservicio = empserv::uncampo('id', $value->id_empserv, 'idservicio');
+           // $value->idservicio = empserv::uncampo('id', $value->id_empserv, 'idservicio');
             $value->facturacion = facturacion::find('idcita', $value->id);
         }
         echo json_encode($citasxdia);

@@ -98,7 +98,11 @@ class ActiveRecord {
         $valores = [];
         foreach($atributos as $key => $value ){
             if($key === "fechacreacion")$value = date('y-m-d'); //
-            $valores[] = "{$key}='{$value}'"; //$valores = [llave1='valor1', llave2='valor2',...]
+            if($value == ''){
+                $valores[] = "{$key}=NULL";
+            }else{
+                $valores[] = "{$key}='{$value}'"; //$valores = [llave1='valor1', llave2='valor2',...]
+            }
         }
         $query = "UPDATE ".static::$tabla." SET ";
         $query .= join(", ", $valores); // = "llave1='valor1', llave2=>valor2,...."

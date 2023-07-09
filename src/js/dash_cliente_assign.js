@@ -196,6 +196,7 @@
         async function enviarcita(horacita){
             const datos = new FormData();
             const id_empserv = professionals.options[professionals.options.selectedIndex]; //id de la relacion empleado_servicio
+            const id_servicio = document.querySelector('#servicio').options[document.querySelector('#servicio').options.selectedIndex].value;
             const hoy = new Date();
 
             datos.append('id_empserv', id_empserv.dataset.id);
@@ -204,6 +205,8 @@
             datos.append('fecha_fin', select_date.value);
             datos.append('hora', hoy.toLocaleTimeString());
             datos.append('hora_fin', horacita);
+            datos.append('servicio', id_servicio);
+            datos.append('profesional', id_empserv.value);
             try {
                 const url = "/admin/api/enviarcita";
                 const respuesta = await fetch(url, {method: 'POST', body: datos}); 

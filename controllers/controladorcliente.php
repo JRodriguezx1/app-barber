@@ -55,11 +55,18 @@ class controladorcliente{
         $idusuario = $_SESSION['id'];
         $cita = new citas($_POST);
         $cita->id_usuario = $idusuario;
+        $valorcita = servicios::uncampo('id', $_POST['servicio'], 'precio');
+        $servicio = servicios::uncampo('id', $_POST['servicio'], 'nombre');
+        $profesional = empleados::uncampo('id', $_POST['profesional'], 'nombre').' '.empleados::uncampo('id', $_POST['profesional'], 'apellido');
+        $cita->valorcita = $valorcita;
+        $cita->servicio = $servicio;
+        $cita->profesional = $profesional;
         $alertas = $cita->validarcitas();
         if(empty($alertas)){
             $r = $cita->crear_guardar();
 
             //////////////////enviar sms por whatsapp////////////
+            /*
             $sid = "AC81feeb3abcf6563f2a8f9b32904f8ae0";
             $token = "64729da944065ae2872c8364f27bdd9e";
             $twilio = new Client($sid, $token);
@@ -71,7 +78,7 @@ class controladorcliente{
                             ]
                     );
 
-            print($message->sid);
+            print($message->sid);*/
         }
         echo json_encode($r);
     }
@@ -80,9 +87,9 @@ class controladorcliente{
         $alertas = [];
         date_default_timezone_set('America/Bogota');
         //$citas = citas::inner_join('SELECT * FROM citas WHERE fecha_fin >= CURDATE();');
-        $citas = citas::inner_join("SELECT id, id_usuario, id_empserv, fecha_inicio, fecha_fin, hora, TIME_FORMAT(hora_fin, '%H:%i') as hora_fin, estado, duracion, dato1 FROM citas WHERE fecha_fin >= CURDATE();");
+        $citas = citas::inner_join("SELECT id, id_usuario, id_empserv, fecha_inicio, fecha_fin, hora, TIME_FORMAT(hora_fin, '%H:%i') as hora_fin, estado, duracion, valorcita, servicio, profesional FROM citas WHERE fecha_fin >= CURDATE();");
         foreach($citas as $cita){
-            $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+            if($cita->id_empserv)$cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
         }
         echo json_encode($citas);
     }
@@ -93,7 +100,7 @@ class controladorcliente{
         $cita = citas::find('id', $id);
         $cita->estado = "Cancelado";
         $r = $cita->actualizar();
-        echo json_encode($r);
+        echo json_encode($cita);
     }
      
 }

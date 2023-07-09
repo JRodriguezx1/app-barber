@@ -89,10 +89,12 @@ class citascontrolador{
             foreach($citas as $cita){
                 $cita->usuario = usuarios::find('id', $cita->id_usuario);
                 $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
-                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
-                $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-                $cita->servicio = servicios::find('id', $cita->idservicio);
-                $cita->empleado = empleados::find('id', $cita->idempleado);
+                if($cita->id_empserv){
+                    $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+                    $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                    $cita->servicio = servicios::find('id', $cita->idservicio);
+                    $cita->empleado = empleados::find('id', $cita->idempleado);
+                }
             }
         }
         
@@ -124,10 +126,12 @@ class citascontrolador{
         foreach($citas as $cita){
             $cita->usuario = usuarios::find('id', $cita->id_usuario);
             $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
-            $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
-            $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-            $cita->servicio = servicios::find('id', $cita->idservicio);
-            $cita->empleado = empleados::find('id', $cita->idempleado);
+            if($cita->id_empserv){
+                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+                $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                $cita->servicio = servicios::find('id', $cita->idservicio);
+                $cita->empleado = empleados::find('id', $cita->idempleado);
+            }
         }
 
         
@@ -142,10 +146,16 @@ class citascontrolador{
         date_default_timezone_set('America/Bogota');
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $cita = new citas($_POST); //validar el campo hora
+            $valorcita = servicios::uncampo('id', $_POST['servicio'], 'precio');
+            $servicio = servicios::uncampo('id', $_POST['servicio'], 'nombre');
+            $profesional = empleados::uncampo('id', $_POST['profesional'], 'nombre').' '.empleados::uncampo('id', $_POST['profesional'], 'apellido');
+            $cita->valorcita = $valorcita;
+            $cita->servicio = $servicio;
+            $cita->profesional = $profesional;
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
                 $r = $cita->crear_guardar();
-                if($r)$alertas['exito'][] = "Cita Creada";
+                if($r[0])$alertas['exito'][] = "Cita Creada";
             }
         }
 
@@ -162,10 +172,12 @@ class citascontrolador{
         foreach($citas as $cita){
             $cita->usuario = usuarios::find('id', $cita->id_usuario);
             $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
-            $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
-            $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-            $cita->servicio = servicios::find('id', $cita->idservicio);
-            $cita->empleado = empleados::find('id', $cita->idempleado);
+            if($cita->id_empserv){
+                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+                $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                $cita->servicio = servicios::find('id', $cita->idservicio);
+                $cita->empleado = empleados::find('id', $cita->idempleado);
+            }
         }
         $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'alertas'=>$alertas]);
     }
@@ -222,10 +234,12 @@ class citascontrolador{
         foreach($citas as $cita){
             $cita->usuario = usuarios::find('id', $cita->id_usuario);
             $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
-            $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
-            $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-            $cita->servicio = servicios::find('id', $cita->idservicio);
-            $cita->empleado = empleados::find('id', $cita->idempleado);
+            if($cita->id_empserv){
+                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+                $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                $cita->servicio = servicios::find('id', $cita->idservicio);
+                $cita->empleado = empleados::find('id', $cita->idempleado);
+            }
         }
         $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'alertas'=>$alertas]);
     }

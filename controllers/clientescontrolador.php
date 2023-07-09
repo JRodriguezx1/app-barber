@@ -124,11 +124,13 @@ class clientescontrolador{
         $cliente = usuarios::find('id', $id);
         $citas = citas::idregistros('id_usuario', $id);
         foreach($citas as $cita){
-            $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
-            $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-            $cita->servicio = servicios::find('id', $cita->idservicio);
-            $cita->empleado = empleados::uncampo('id', $cita->idempleado, 'nombre').' '.empleados::uncampo('id', $cita->idempleado, 'apellido');
-            $cita->facturacion = facturacion::find('idcita', $cita->id);
+            if($cita->id_empserv){
+                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+                $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                $cita->servicio = servicios::find('id', $cita->idservicio);
+                $cita->empleado = empleados::uncampo('id', $cita->idempleado, 'nombre').' '.empleados::uncampo('id', $cita->idempleado, 'apellido');
+                $cita->facturacion = facturacion::find('idcita', $cita->id);
+            }
         }
         $router->render('admin/clientes/detalle', ['titulo'=>'clientes', 'cliente'=>$cliente, 'citas'=>$citas, 'alertas'=>$alertas]);
     }

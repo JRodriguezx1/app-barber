@@ -55,11 +55,11 @@
                     <div class="detalle__registro">
                         <div class="detalle__servicio">
                             <p class="fecha"><?php echo $cita->fecha_fin; ?></p>
-                            <p class="servicio"><?php echo $cita->servicio->nombre; ?></p>
-                            <p class="profesional"><?php echo $cita->empleado; ?></p>
+                            <p class="servicio"><?php echo $cita->servicio->nombre??''; ?></p>
+                            <p class="profesional"><?php echo $cita->empleado??''; ?></p>
                         </div>
                         <div class="detalle__pago">
-                            <p>$<?php echo $cita->servicio->precio; ?></p>
+                            <p>$<?php echo $cita->servicio->precio??''; ?></p>
                         </div>
                     </div>
                     <div class="detalle__deduccion">
@@ -71,85 +71,7 @@
                     </div>
                 </div>   
             <?php endforeach; ?>
-                <!--<div class="detalle__contenido">
-                    <div class="detalle__registro">
-                        <div class="detalle__servicio">
-                            <p class="fecha">15/5/2023</p>
-                            <p class="servicio">corte de cabello</p>
-                            <p class="profesional">Lupe lulu</p>
-                        </div>
-                        <div class="detalle__pago">
-                            <p>$15000</p>
-                        </div>
-                    </div>
-                    <div class="detalle__deduccion">
-                        <p>Deduccion:</p>
-                        <p> $0</p>
-                    </div>
-                    <div class="detalle__total">
-                        <p>total: <span> $15000</span></p>
-                    </div>
-                </div>
-
-                <div class="detalle__contenido">
-                    <div class="detalle__registro">
-                        <div class="detalle__servicio">
-                            <p class="fecha">15/5/2023</p>
-                            <p class="servicio">corte de cabello</p>
-                            <p class="profesional">Lupe lulu</p>
-                        </div>
-                        <div class="detalle__pago">
-                            <p>$15000</p>
-                        </div>
-                    </div>
-                    <div class="detalle__deduccion">
-                        <p>Deduccion:</p>
-                        <p> $0</p>
-                    </div>
-                    <div class="detalle__total">
-                        <p>total: <span> $15000</span></p>
-                    </div>
-                </div>
-
-                <div class="detalle__contenido">
-                    <div class="detalle__registro">
-                        <div class="detalle__servicio">
-                            <p class="fecha">15/5/2023</p>
-                            <p class="servicio">corte de cabello</p>
-                            <p class="profesional">Lupe lulu</p>
-                        </div>
-                        <div class="detalle__pago">
-                            <p>$15000</p>
-                        </div>
-                    </div>
-                    <div class="detalle__deduccion">
-                        <p>Deduccion:</p>
-                        <p> $0</p>
-                    </div>
-                    <div class="detalle__total">
-                        <p>total: <span> $15000</span></p>
-                    </div>
-                </div>
-
-                <div class="detalle__contenido">
-                    <div class="detalle__registro">
-                        <div class="detalle__servicio">
-                            <p class="fecha">15/5/2023</p>
-                            <p class="servicio">corte de cabello</p>
-                            <p class="profesional">Lupe lulu</p>
-                        </div>
-                        <div class="detalle__pago">
-                            <p>$15000</p>
-                        </div>
-                    </div>
-                    <div class="detalle__deduccion">
-                        <p>Deduccion:</p>
-                        <p> $0</p>
-                    </div>
-                    <div class="detalle__total">
-                        <p>total: <span> $15000</span></p>
-                    </div>
-                </div> -->
+                
             </div>
         </div> <!-- fin detalle historial -->
     </div> <!-- fin detalle contenedor -->

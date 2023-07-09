@@ -4,7 +4,7 @@ namespace Model;
 
 class usuarios extends ActiveRecord {
     protected static $tabla = 'usuarios';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'cedula', 'movil', 'email', 'ws', 'password', 'confirmado', 'token', 'admin', 'idfidelizacion', 'ciudad', 'direccion'];
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'cedula', 'movil', 'email', 'ws', 'password', 'confirmado', 'token', 'admin', 'idfidelizacion', 'ciudad', 'direccion', 'habilitar'];
     
     public function __construct($args = [])
     {
@@ -23,6 +23,7 @@ class usuarios extends ActiveRecord {
         $this->idfidelizacion = $args['idfidelizacion'] ?? '1';
         $this->ciudad = $args['ciudad'] ?? '';
         $this->direccion = $args['direccion'] ?? '';
+        $this->habilitar = $args['habilitar'] ?? '';
     }
 
     // Validar el Login de Usuarios

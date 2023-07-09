@@ -47,7 +47,7 @@ class servicioscontrolador{
         $router->render('admin/servicios/index', ['titulo'=>'Servicios', 'servicios'=>$servicios, 'alertas'=>$alertas]);
     }
 
-    public static function eliminar(){  //api llamada en servicios.js
+    public static function eliminar(){  //api llamada en servicios.js para eliminar servicio
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $servicio = servicios::find('id', $_POST['id']);
             $r = $servicio->eliminar_registro();
