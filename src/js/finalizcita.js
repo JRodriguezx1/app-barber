@@ -11,7 +11,7 @@
                 const tr = e.target.parentElement.parentElement.parentElement;
                 const id = tr.children[0].textContent;
                 const estado = tr.children[7].textContent;
-                if(estado === "Pendiente")cancelarcita(id, tr.children[7]); //se pasa el id de la cita y su estado  
+                if(estado === "Pendiente" || estado === "Out")cancelarcita(id, tr.children[7]); //se pasa el id de la cita y su estado  
             });
         });
 

@@ -117,7 +117,7 @@
             try {
                 const url = "/admin/api/getcitas"; //llamado a la API REST para trer toda las citas desde la fecha actual hasta posterior
                 const respuesta = await fetch(url); 
-                citas = await respuesta.json();
+                citas = await respuesta.json(); //se trae las citas de hoy
             } catch (error) {
                 console.log(error);
             }
@@ -139,9 +139,10 @@
         });
         programar.forEach(element =>{
             element.addEventListener('click', (e)=>{ ///programar cita
+                const valstatus = e.target.parentElement.parentElement.previousElementSibling.textContent;
                 const usuario = `<span class="namecliente"></span><span id="horacita"></span>
                                 <input type="hidden" id="id" name="id" value="" >`;
-                if(e.target.parentElement.parentElement.previousElementSibling.textContent === "Pendiente")
+                if(valstatus === "Pendiente" || valstatus === "Out")
                 {   formulariocliente('Reprogramar Cita A:', 'Enviar', '/admin/citas?pagina=1', usuario);
                     cargarcita(e.target);
                 }
@@ -164,13 +165,13 @@
                                 ${usuario}
                                 <div class="formulario__campo">
                                     <label class="formulario__label" for="servicio">Seleccione Servicio: </label>
-                                    <select class="formulario__select" name="servicio" id="servicios" required>
+                                    <select class="formulario__select" name="nameservicio" id="servicios" required>
                                         <option value="" disabled selected> -Selecionar- </option>
                                     </select>
                                 </div>
                                 <div class="formulario__campo">
                                     <label class="formulario__label" for="profesional">Seleccione Profesional: </label>
-                                    <select class="formulario__select" name="profesional" id="professionals" required>
+                                    <select class="formulario__select" name="nameprofesional" id="professionals" required>
                                         <option value="" disabled selected> -Selecionar- </option>
                                     </select>
                                 </div>
@@ -263,7 +264,7 @@
             onlymalla = malla[`empleado_${idempleado}`]; //obtiene solo la malla de ese empleado
             onlyfechadesc = fechadesc.filter(element => idempleado === element.empleado_id);
             onlycitas = citas.filter(cita => (cita.idempleado === idempleado&&cita.fecha_fin === fecha&&cita.estado === "Pendiente")); //obtengo las citas deacuerdo al profesional y fecha seleccionada y pendiente
-
+            console.log(1);
             const r1 = onlyfechadesc.some(element => element.fecha === fecha);
             if(r1){
                 Swal.fire(

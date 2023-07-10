@@ -55,12 +55,12 @@ class controladorcliente{
         $idusuario = $_SESSION['id'];
         $cita = new citas($_POST);
         $cita->id_usuario = $idusuario;
-        $valorcita = servicios::uncampo('id', $_POST['servicio'], 'precio');
-        $servicio = servicios::uncampo('id', $_POST['servicio'], 'nombre');
-        $profesional = empleados::uncampo('id', $_POST['profesional'], 'nombre').' '.empleados::uncampo('id', $_POST['profesional'], 'apellido');
+        $valorcita = servicios::uncampo('id', $_POST['nameservicio'], 'precio');
+        $servicio = servicios::uncampo('id', $_POST['nameservicio'], 'nombre');
+        $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
         $cita->valorcita = $valorcita;
-        $cita->servicio = $servicio;
-        $cita->profesional = $profesional;
+        $cita->nameservicio = $servicio;
+        $cita->nameprofesional = $profesional;
         $alertas = $cita->validarcitas();
         if(empty($alertas)){
             $r = $cita->crear_guardar();
@@ -87,7 +87,7 @@ class controladorcliente{
         $alertas = [];
         date_default_timezone_set('America/Bogota');
         //$citas = citas::inner_join('SELECT * FROM citas WHERE fecha_fin >= CURDATE();');
-        $citas = citas::inner_join("SELECT id, id_usuario, id_empserv, fecha_inicio, fecha_fin, hora, TIME_FORMAT(hora_fin, '%H:%i') as hora_fin, estado, duracion, valorcita, servicio, profesional FROM citas WHERE fecha_fin >= CURDATE();");
+        $citas = citas::inner_join("SELECT id, id_usuario, id_empserv, fecha_inicio, fecha_fin, hora, TIME_FORMAT(hora_fin, '%H:%i') as hora_fin, estado, duracion, valorcita, dcto, dctovalor, nameservicio, nameprofesional FROM citas WHERE fecha_fin >= CURDATE();");
         foreach($citas as $cita){
             if($cita->id_empserv)$cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
         }

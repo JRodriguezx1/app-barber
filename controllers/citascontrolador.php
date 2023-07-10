@@ -28,6 +28,14 @@ class citascontrolador{
             $id = $_POST['id'];
             $citas = citas::find('id', $id);
             $citas->compara_objetobd_post($_POST);  //validar el campo hora
+            
+            $valorcita = servicios::uncampo('id', $_POST['nameservicio'], 'precio');
+            $servicio = servicios::uncampo('id', $_POST['nameservicio'], 'nombre');
+            $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
+            $citas->valorcita = $valorcita;
+            $citas->nameservicio = $servicio;
+            $citas->nameprofesional = $profesional;
+
             $alertas = $citas->validarcitas();
             if(empty($alertas)){
                 $r = $citas->actualizar();
@@ -146,12 +154,12 @@ class citascontrolador{
         date_default_timezone_set('America/Bogota');
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $cita = new citas($_POST); //validar el campo hora
-            $valorcita = servicios::uncampo('id', $_POST['servicio'], 'precio');
-            $servicio = servicios::uncampo('id', $_POST['servicio'], 'nombre');
-            $profesional = empleados::uncampo('id', $_POST['profesional'], 'nombre').' '.empleados::uncampo('id', $_POST['profesional'], 'apellido');
+            $valorcita = servicios::uncampo('id', $_POST['nameservicio'], 'precio');
+            $servicio = servicios::uncampo('id', $_POST['nameservicio'], 'nombre');
+            $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
             $cita->valorcita = $valorcita;
-            $cita->servicio = $servicio;
-            $cita->profesional = $profesional;
+            $cita->nameservicio = $servicio;
+            $cita->nameprofesional = $profesional;
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
                 $r = $cita->crear_guardar();

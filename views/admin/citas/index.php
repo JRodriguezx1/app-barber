@@ -61,7 +61,7 @@
                     
                 <tbody>
                     <?php foreach($citas as $cita): ?>
-                    <tr>
+                    <tr class="<?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'reprogramar':''; ?>">
                         <td class=""><?php echo $cita->id; ?></td> 
                         <td class=""><?php echo $cita->usuario->nombre.' '.$cita->usuario->apellido; ?></td>         
                         <td class=""><?php echo $cita->usuario->cedula; ?></td>
@@ -71,7 +71,7 @@
                         <td class=""><?php echo $cita->nameprofesional??'';?></td>
                         <td class=""><?php echo $cita->fecha_fin; ?></td>         
                         <td class=""><?php echo $cita->hora_fin; ?></td>
-                        <td class=""><?php echo $cita->estado; ?></td>
+                        <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; //echo $cita->estado; ?></td>
                         <td class="accionestd"> <div class="acciones-iconos" data-dctogeneral="<?php echo $cita->usuario->dctogeneral->dcto; ?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i></div></td>
                     </tr>   
                     <?php endforeach; ?>

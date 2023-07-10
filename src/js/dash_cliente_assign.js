@@ -205,8 +205,8 @@
             datos.append('fecha_fin', select_date.value);
             datos.append('hora', hoy.toLocaleTimeString());
             datos.append('hora_fin', horacita);
-            datos.append('servicio', id_servicio);
-            datos.append('profesional', id_empserv.value);
+            datos.append('nameservicio', id_servicio);
+            datos.append('nameprofesional', id_empserv.value);
             try {
                 const url = "/admin/api/enviarcita";
                 const respuesta = await fetch(url, {method: 'POST', body: datos}); 
