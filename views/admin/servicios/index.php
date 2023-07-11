@@ -46,14 +46,6 @@
                     <a class="servicios__eliminar" href="#"><i class="fa-solid fa-trash-can"></i></a>
                 </div>
             <?php endforeach; ?>
-            
-            <div id="servicio" class="servicios__servicio">
-                <h4>Nombre del servicio</h4>
-                <p>Precio: <span>$ 25000</span></p>
-                <p>Duracion: <span>15 min</span></p>
-                <a class="servicios__eliminar" href="#"><i class="fa-solid fa-trash-can"></i></a>
-            </div>
-            
 
         </div>
     </div>

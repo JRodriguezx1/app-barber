@@ -38,7 +38,7 @@
             </div>
             <div class="fact_gestionar__reporte">
                 <!--<H4 class="fact_gestionar__heading">Servicios Realizados(Citas - Ordinarios)</H4>-->
-                <h4 class="fact_gestionar__heading">Informacion General</h4>
+                <h4 class="fact_gestionar__heading">Informacion General <span class="fact_gestionar__fecha"><?php echo $fecha; ?></span></h4>
                 <div class="fact_gestionar__infogeneral">
                     <div class="fact_gestionar__datos">
                         <div class="fact_gestionar__dato">

@@ -111,7 +111,7 @@
                         confirmButton: 'sweetbtnconfirm',
                         cancelButton: 'sweetbtncancel'
                     },
-                    title: 'Desea eliminar el cliente?',
+                    title: 'Desea bloquear el cliente?',
                     showCancelButton: true,
                     confirmButtonText: 'Si',
                     cancelButtonText: 'No',

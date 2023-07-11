@@ -20,8 +20,13 @@
         margin-bottom: 1rem;
         font-size: 1.9rem;
     }
-    &__miniheading{
-        
+    &__fecha{
+        font-size: 1.5rem;
+        color: v.$blanco;
+        white-space: nowrap;
+        background-color: v.$azul;
+        padding: .5rem 1rem;
+        border-radius: 1rem;
     }
     &__cierre{
         flex: 0 0 19%;

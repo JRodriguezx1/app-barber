@@ -12,9 +12,6 @@
     &__enlace{
         //color: v.$negro;
         color: v.$grisoscuro;
-        @include m.tablet{
-            color: v.$grisclaro;
-        }
         font-size: 1.4rem;
         font-weight: v.$delgada;
     }

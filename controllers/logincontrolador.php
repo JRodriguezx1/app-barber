@@ -20,10 +20,11 @@ class logincontrolador{
 
                 //$usuario = $auth->validar_registro();  //valida si email existe? retorna 1 o 0 
                 $usuario = $auth->find('email', $auth->email); //busca en la columna 'email' el correo electronico: $auth->email y retorna el registro de la bd en un objeto
-                if($usuario){ //existe usuario o confirmado     //$usuario es objeto de la clase usuarios pero con los datos de la bd
+                if($usuario&&$usuario->habilitar){ //existe usuario o confirmado     //$usuario es objeto de la clase usuarios pero con los datos de la bd
                     //$usuario->password = $auth->password
                     $pass = $usuario->comprobar_password($auth->password);  //comprueba password y verifica si esta confirmado
-                    if($pass){                          //$auth->password = es lo que se escribe en el form
+                    $confirmado = $usuario->confirmado;
+                    if($pass&&$confirmado){         //$auth->password = es lo que se escribe en el form
                         //autenticar usuario         
                         session_start();
                         $_SESSION['id'] = $usuario->id;
@@ -39,10 +40,9 @@ class logincontrolador{
                             header('Location: /Cliente/app');
                         }
 
-                    }
+                    }else{ $alertas = usuarios::setAlerta('error', 'Password incorrecto o cliente no confirmado, verfica tu email');  }
                 }else{
                     $alertas = usuarios::setAlerta('error', 'usuario no encontrado o no existe');
-             
                 }
             } //cierre del empty de alertas
         } //cierre de $_SERVER['REQUEST_METHOD'] === 'POST'
@@ -136,6 +136,7 @@ class logincontrolador{
             
             $usuario->compara_objetobd_post($_POST); //objeto instaciado toma los valores del $_POST
             $alertas = $usuario->validar_nueva_cuenta(); //metodo de mensajes de validacion para la creacion de la cuenta, nombre, apellido etc..
+            $alertas = $usuario->validarEmail();
             //revisar que las alertas esten vacios
             if(empty($alertas)){ //si el arreglo alertas esta vacio es pq paso las validacion del formulario crear cuenta
                 

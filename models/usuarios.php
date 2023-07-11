@@ -23,7 +23,7 @@ class usuarios extends ActiveRecord {
         $this->idfidelizacion = $args['idfidelizacion'] ?? '1';
         $this->ciudad = $args['ciudad'] ?? '';
         $this->direccion = $args['direccion'] ?? '';
-        $this->habilitar = $args['habilitar'] ?? '';
+        $this->habilitar = $args['habilitar'] ?? '1';
     }
 
     // Validar el Login de Usuarios

@@ -90,14 +90,20 @@
                         
                     <tbody>
                         <?php foreach($citas as $cita): ?>
-                        <tr class="<?php echo $cita->estado=="Cancelado"?'tr-resaltar':'' ?>">               
-                            <td class=""><?php echo $cita->servicio->nombre; ?></td>
-                            <td class=""><?php echo $cita->nameprofessional.' '.$cita->lastnameprofessional; ?></td> 
+                        <tr class="<?php if($cita->id_empserv==null&&$cita->estado=='Pendiente')
+                                        {
+                                            echo 'reprogramar';
+                                        }else{
+                                            if($cita->estado == 'Cancelado')echo 'tr-resaltar';
+                                        }
+                                    ?>">               
+                            <td class=""><?php echo $cita->nameservicio??''; ?></td>
+                            <td class=""><?php echo $cita->nameprofesional??''; ?></td> 
                             <td class=""><?php echo $cita->fecha_fin; ?></td>         
                             <td class=""><?php echo substr($cita->hora_fin, 0, 5); ?></td>
                             <td class=""><?php echo $cita->id; ?></td> 
-                            <td class="">$<?php echo $cita->servicio->precio; ?></td>
-                            <td class=""><?php echo $cita->estado; ?></td>
+                            <td class="">$<?php echo $cita->valorcita; ?></td>
+                            <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; ?></td>
                             <!--<td class="accionestd"> <div class="acciones-iconos" data-id="<?php //echo $cita->id; ?>"><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i></div></td>-->
                             <td class="accionestd"> <div class="acciones-iconos" data-id="<?php echo $cita->id; ?>"><span id="cancelado" class="btnmini">Cancelar</span></div></td>
                         </tr>

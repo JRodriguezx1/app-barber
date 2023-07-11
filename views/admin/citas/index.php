@@ -61,7 +61,9 @@
                     
                 <tbody>
                     <?php foreach($citas as $cita): ?>
-                    <tr class="<?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'reprogramar':''; ?>">
+                    <tr class="<?php if($cita->id_empserv==null&&$cita->estado=='Pendiente') echo 'reprogramar';
+                                    if($cita->estado=='Finalizada') echo 'tr-resaltar'
+                                ?>">
                         <td class=""><?php echo $cita->id; ?></td> 
                         <td class=""><?php echo $cita->usuario->nombre.' '.$cita->usuario->apellido; ?></td>         
                         <td class=""><?php echo $cita->usuario->cedula; ?></td>

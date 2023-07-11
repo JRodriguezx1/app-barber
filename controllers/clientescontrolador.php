@@ -100,12 +100,15 @@ class clientescontrolador{
 
         $cliente = usuarios::find('id', $id);
         if($cliente){
-            $r = $cliente->eliminar_registro();
+            //$r = $cliente->eliminar_registro();
+            $cliente->habilitar = 0;
+            $r = $cliente->actualizar();
         }else{
             header('Location: /admin/clientes');
         }
+
         if($r){
-            $alertas['exito'][] = 'Cliente eliminado de la base de datos';
+            $alertas['exito'][] = 'Cliente bloqueado de la base de datos';
         }else{
             $alertas['exito'][] = 'hubo un error';
         }
@@ -120,7 +123,7 @@ class clientescontrolador{
         if(!is_numeric($id))return;
 
         $alertas = []; 
-
+ 
         $cliente = usuarios::find('id', $id);
         $citas = citas::idregistros('id_usuario', $id);
         foreach($citas as $cita){

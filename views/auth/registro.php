@@ -1,5 +1,5 @@
 <main class="auth">
-    <a class="btnclose" href="/"><i class="fa-solid fa-circle-xmark"></i></a>
+    <a class="auth__btnatras" href="/">Regresar</a>
     <h2 class="auth__heading"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
     <p class="auth__texto">Registrate en appbarber</p>
 

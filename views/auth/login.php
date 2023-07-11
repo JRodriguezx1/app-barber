@@ -1,6 +1,6 @@
 
 <main class="auth">
-    <a class="btnclose" href="/"><i class="fa-solid fa-circle-xmark"></i></a>
+    <a class="auth__btnatras" href="/">Regresar</a>
     <h2 class="auth__heading"><?php echo $titulo; ?></h2>
     <?php include __DIR__. "/../templates/alertas.php"; ?>
     <p class="auth__texto">Iniciar Sesion en appbarber</p>

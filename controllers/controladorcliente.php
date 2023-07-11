@@ -38,11 +38,13 @@ class controladorcliente{
 
         $citas = citas::idregistros('id_usuario', $_SESSION['id']);
         foreach($citas as $cita){
-            $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
-            $cita->servicio = servicios::find('id', $cita->idservicio);
-            $cita->idprofessional = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-            $cita->nameprofessional = empleados::uncampo('id', $cita->idprofessional, 'nombre');
-            $cita->lastnameprofessional = empleados::uncampo('id', $cita->idprofessional, 'apellido');
+           /* if($cita->id_empserv){
+                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+                $cita->servicio = servicios::find('id', $cita->idservicio);
+                $cita->idprofessional = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                $cita->nameprofessional = empleados::uncampo('id', $cita->idprofessional, 'nombre');
+                $cita->lastnameprofessional = empleados::uncampo('id', $cita->idprofessional, 'apellido');
+            }*/
         }
         //debuguear($citas);
 

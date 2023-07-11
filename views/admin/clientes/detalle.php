@@ -51,7 +51,10 @@
             <h4 class="detalle__heading">Historial</h4>
             <div class="detalle__registros">
             <?php foreach($citas as $cita): ?>
-                <div class="detalle__contenido">
+                <div class="detalle__contenido <?php
+                                                    if($cita->estado=='Cancelado')echo 'citacancel';
+                                                    if($cita->estado=='Pendiente')echo 'citapendiente';
+                                                ?>">
                     <div class="detalle__registro">
                         <div class="detalle__servicio">
                             <p class="fecha"><?php echo $cita->fecha_fin; ?></p>
@@ -75,5 +78,4 @@
             </div>
         </div> <!-- fin detalle historial -->
     </div> <!-- fin detalle contenedor -->
-
 </div>

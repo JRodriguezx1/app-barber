@@ -264,7 +264,7 @@
             onlymalla = malla[`empleado_${idempleado}`]; //obtiene solo la malla de ese empleado
             onlyfechadesc = fechadesc.filter(element => idempleado === element.empleado_id);
             onlycitas = citas.filter(cita => (cita.idempleado === idempleado&&cita.fecha_fin === fecha&&cita.estado === "Pendiente")); //obtengo las citas deacuerdo al profesional y fecha seleccionada y pendiente
-            console.log(1);
+            console.log(citas);
             const r1 = onlyfechadesc.some(element => element.fecha === fecha);
             if(r1){
                 Swal.fire(

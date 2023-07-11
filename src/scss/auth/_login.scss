@@ -5,31 +5,20 @@
     /*max-width: 35rem;
     width: 100%;
     margin: 0 auto;*/
-    position: relative;
-    padding: 1rem;
-    .btnclose{
-        position: absolute;
-        top: -.5rem;
-        right: -2%;
-        color: v.$negro;
-        border-radius: 50%;
-        
-        i{
-            font-size: 3.5rem;
-        }
+    padding: 2rem;
+    &__btnatras{
+        background-color: v.$azul;
+        color: v.$blanco;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
     }
     &__heading{
+        margin-top: 1rem;
         color: v.$barprogress;
-        @include m.tablet{
-            color: rgba(v.$grisclaro, 1);
-        }
     }
     &__texto{
         margin-top: 0rem;
         color: v.$grisraton;
-        @include m.tablet{
-            color: v.$grisclaro;
-        }
     }
     .formulario{
 
@@ -42,19 +31,6 @@
         }
         &__input{
             padding: .8rem 1rem;
-        }
-        @include m.tablet{
-            &__label{
-                color: v.$grisclaro;
-            }
-            &__input{
-                color: v.$blanco;
-                border: none;
-                background-color: rgba(v.$griswhite, .2);
-                &::placeholder{
-                    color: black;
-                }
-            }
         }
     }
 }

@@ -44,6 +44,7 @@ class dashboardcontrolador{
         date_default_timezone_set('America/Bogota');
         $fecha = date('Y-m-d'); //dia actual hoy
         $citasxdia = citas::idregistros('fecha_fin', $fecha);
+        //$citasxdia = citas::whereArray(['fecha_fin'=>$fecha]);
         foreach($citasxdia as $value){
            // $value->idservicio = empserv::uncampo('id', $value->id_empserv, 'idservicio');
             $value->facturacion = facturacion::find('idcita', $value->id);

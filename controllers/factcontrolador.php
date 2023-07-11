@@ -75,8 +75,9 @@ class factcontrolador{
         $recibidos = 0;
         $devoluciones = 0;
         
+        $pagosxdia = pagosxdia::find('id', $id);
+        $fecha = $pagosxdia->fecha;
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){ //cunado se cierra caja
-            $pagosxdia = pagosxdia::find('id', $id);
             $pagosxdia->compara_objetobd_post($_POST);
             $r = $pagosxdia->actualizar();
             if($r)header('Location: /admin/facturacion');
@@ -87,10 +88,12 @@ class factcontrolador{
         foreach($gestionardia as $value){
             if($value->idcita!=1){
                 $value->idempserv = citas::uncampo('id', $value->idcita, 'id_empserv');
-                $value->idservicio = empserv::uncampo('id', $value->idempserv, 'idservicio');
-                $value->idempleado = empserv::uncampo('id', $value->idempserv, 'idempleado');
-                $value->servicio = servicios::uncampo('id', $value->idservicio, 'nombre');
-                $value->empleado = empleados::uncampo('id', $value->idempleado, 'nombre').' '.empleados::uncampo('id', $value->idempleado, 'apellido');
+                if($value->idempserv){
+                    $value->idservicio = empserv::uncampo('id', $value->idempserv, 'idservicio');
+                    $value->idempleado = empserv::uncampo('id', $value->idempserv, 'idempleado');
+                    $value->servicio = servicios::uncampo('id', $value->idservicio, 'nombre');
+                    $value->empleado = empleados::uncampo('id', $value->idempleado, 'nombre').' '.empleados::uncampo('id', $value->idempleado, 'apellido');
+                }
             }
             $valorservicios+= $value->total; //facturacion de todos los servicios con sus precios originales
             if($value->dcto != 0){
@@ -101,7 +104,7 @@ class factcontrolador{
             $devoluciones+= $value->devolucion;
         }
         $total = pagosxdia::uncampo('id', $id, 'computarizado');
-        $router->render('admin/facturacion/gestionar', ['titulo'=>'facturacion', 'gestionardia'=>$gestionardia, 'numservicios'=>$numservicios, 'valorservicios'=>$valorservicios, 'numdctos'=>$numdctos, 'valordctos'=>$valordctos, 'recibidos'=>$recibidos, 'devoluciones'=>$devoluciones, 'total'=>$total, 'alertas'=>$alertas]);
+        $router->render('admin/facturacion/gestionar', ['titulo'=>'facturacion', 'fecha'=>$fecha, 'gestionardia'=>$gestionardia, 'numservicios'=>$numservicios, 'valorservicios'=>$valorservicios, 'numdctos'=>$numdctos, 'valordctos'=>$valordctos, 'recibidos'=>$recibidos, 'devoluciones'=>$devoluciones, 'total'=>$total, 'alertas'=>$alertas]);
     }
 
      

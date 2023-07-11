@@ -74,9 +74,25 @@
         }
     }
     &__contenido{
-        border-left: 2px solid v.$secundario;
+        border-left: 2px solid v.$grisclaro;
         padding: 1rem;
         margin-bottom: 1rem;
+        box-shadow: rgba(149, 157, 165, 0.2) -1px 5px 12px -1px;
+    }
+    .citacancel{ //clase se agrega con php para las citas canceladas en detalle del cliente
+        //border-left: 2px solid v.$rosa;
+        .fecha{
+            &::before{
+                background-color: v.$rosa;
+            }
+        }
+    }
+    .citapendiente{
+        .fecha{
+            &::before{
+                background-color: v.$secundario;
+            }
+        }
     }
     &__registro{
         display: flex;
