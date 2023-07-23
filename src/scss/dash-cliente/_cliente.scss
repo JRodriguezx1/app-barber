@@ -38,6 +38,16 @@
         }
     }
 
+    &__promociones{
+        
+    }
+    &__promocion{
+        @include m.tablet{
+            display: flex;
+            gap: .8rem;
+        }
+    }
+
     &__cita{}
 
     &__disponibilidad{

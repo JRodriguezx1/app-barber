@@ -3,7 +3,7 @@
     const grafica = document.querySelector('#servicios-grafica');
     if(grafica){
        
-        let fechas, cierretotal, totalcitas, citasrealizadas, valorcitas=0; citas100=0, progreso=440;
+        let fechas, cierretotal, totalcitas, citasrealizadas, citascancelado, valorcitas=0; citas100=0, progreso=440;
         (async ()=>{
             try {
                 const url1 = "/admin/api/alldays"; //llamado a la API REST
@@ -17,9 +17,11 @@
                 fechas = resultado1.map(date => date.fecha);
                 cierretotal = resultado1.map(total => total.totaldia);
 
+                citascancelado = resultado2.filter(Element=>Element.estado==='Cancelado');
+                totalcitas = resultado2.length - citascancelado.length;
                 
-                totalcitas = resultado2.length;
                 citasrealizadas = resultado2.filter(Element=>Element.estado==='Finalizada');
+
                 valorcitas = citasrealizadas.reduce((total, Element)=>total+parseInt(Element.facturacion.total), 0);
                 if(totalcitas)citas100 = (citasrealizadas.length*100)/totalcitas;
                 progreso = (440*citas100)/100;

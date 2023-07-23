@@ -1,0 +1,41 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.creardescuento{
+    @include m.contenedor100;
+
+    &__contenedor{
+
+    }
+    &__btnatras{
+        background-color: v.$blanco;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    &__form{
+        background-color: v.$blanco;
+        padding: 1rem;
+        .formulario{
+            .valorservicio{
+                color: v.$rosa;
+                font-size: 1.6rem;
+                text-align: end;
+                font-weight: 600;
+            }
+            .campos{
+                @include m.grid(1, 1rem);
+                @include m.tablet{
+                    @include m.grid(2, 1rem);
+                }
+                @include m.xl_tablet{
+                    @include m.grid(4, 1rem); 
+                }
+            }
+            &__select{
+                padding: .6rem .8rem;
+            }
+        }
+    }
+
+}

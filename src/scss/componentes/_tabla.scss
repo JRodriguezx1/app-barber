@@ -21,9 +21,9 @@
             td{
                 padding: 1rem;
             }
-            .accionestd{
+            .accionestd{  //td
                 padding: 0;
-                .acciones-iconos{
+                .acciones-iconos{ //div
                     display: flex;
                     justify-content: space-around;
                     font-size: 1.7rem;
@@ -39,11 +39,20 @@
                     .finalizado{
                         color: v.$secundario;
                     }
+                    .sendmsj{
+                        color: v.$verde1;
+                    }
                     .programar{
                         color: v.$grisoscuro;
                     }
                     .cancelado{
                         color: v.$barprogress;
+                    }
+                    .factura{
+                        color: v.$azul;
+                    }
+                    .habilitar{
+                        color: v.$verde1;
                     }
                 }
                

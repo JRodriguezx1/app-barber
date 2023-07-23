@@ -6,40 +6,48 @@
                 <a id="crearcita" class="btnsmall" href=""> + Crear</a>
             </div>
             <div class="citas__filtros">
-                <div class="citas__profesional">
-                    <select class="formulario__select" name="filtro" id="selectprofesional" required>
-                        <option value="" disabled selected>-- Seleccione --</option>
-                        <?php foreach($profesionales as $profesional):  ?>
-                        <option value="<?php echo $profesional->id??''; ?>" > <?php echo $profesional->nombre.' '.$profesional->apellido; ?> </option>
-                        <?php endforeach; ?>
-                    </select>
-                    <div class="citas__consultar">
-                        <button class="btnsmall" id="filtros-personalizado">Consultar</button>
+                <div class="citas__contenedorprofesional">
+                    <p>Citas por profesional y fecha</p>
+                    <div class="citas__profesional">
+                        <select class="formulario__select" name="filtro" id="selectprofesional" required>
+                            <option value="" disabled selected>-- Seleccione --</option>
+                            <?php foreach($profesionales as $profesional):  ?>
+                            <option value="<?php echo $profesional->id??''; ?>" > <?php echo $profesional->nombre.' '.$profesional->apellido; ?> </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="citas__consultar">
+                            <button class="btnsmall" id="filtros-personalizado">Consultar</button>
+                        </div>
                     </div>
                 </div>
                 <div class="citas__busqueda">
-                    <form action="">
-                        <select class="formulario__select" name="filtro" id="selectprofesional" required>
+                    <!--<select class="formulario__select" name="filtro" id="selectprofesional" required>
                             <option value="" disabled selected>-- Seleccione --</option>
                             <option value="0" > Cedula </option>
                             <option value="1" > Nombre </option>
                             <option value="2" > Estado </option>
-                        </select>
+                        </select>-->
+                    <form action="/admin/citas/consultaxestadoxname" method="POST">
                         <div class="btn_busqueda">
-                            <input class="formulario__input" type="text" name="buscar" placeholder="buscar" required value="<?php echo $info[0]->buscar ?? ''; ?>">
-                            <label for="busqueda"><i class="lupa fa-solid fa-magnifying-glass"></i></label>
-                            <input id="busqueda" type="submit" value="Buscar">
+                            <input class="formulario__input" type="text" name="consulta" placeholder="buscar por estado" required value="<?php echo $estado ?? ''; ?>">
+                            <label for="estado"><i class="lupa fa-solid fa-magnifying-glass"></i></label>
+                            <input id="estado" type="submit" name="columna" value="estado">
+                        </div>
+                    </form>
+                    <form action="/admin/citas/consultaxestadoxname" method="POST">
+                        <div class="btn_busqueda">
+                            <input class="formulario__input" type="text" name="consulta" placeholder="buscar por nombre" required value="<?php echo $nombre ?? ''; ?>">
+                            <label for="nombre"><i class="lupa fa-solid fa-magnifying-glass"></i></label>
+                            <input id="nombre" type="submit" name="columna" value="nombre">
                         </div>
                     </form>
                 </div>
             </div>
             <div class="citas__fecha">
-                <form class="formulario" action="">
-                    <div class="formulario__campo">
-                        <label class="formulario__label" for="fecha">FECHA:</label>
-                        <input class="formulario__input" id="fecha" type="date" name="fecha" value="<?php echo $fecha??'';?>">
-                    </div>
-                </form>
+                <div class="">
+                    <label class="formulario__label" for="fecha">FECHA:</label>
+                    <input class="formulario__input" id="fecha" type="date" name="fecha" value="<?php echo $fecha??'';?>">
+                </div> 
             </div>
         </div>
 
@@ -74,7 +82,7 @@
                         <td class=""><?php echo $cita->fecha_fin; ?></td>         
                         <td class=""><?php echo $cita->hora_fin; ?></td>
                         <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; //echo $cita->estado; ?></td>
-                        <td class="accionestd"> <div class="acciones-iconos" data-dctogeneral="<?php echo $cita->usuario->dctogeneral->dcto; ?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i></div></td>
+                        <td class="accionestd"> <div class="acciones-iconos" data-promodcto="<?php echo $cita->dcto??'';?>" data-promodctovalor="<?php echo $cita->dctovalor??'';?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i><i class="factura fa-regular fa-note-sticky"></i></div></td>
                     </tr>   
                     <?php endforeach; ?>
                 </tbody>

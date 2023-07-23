@@ -30,9 +30,9 @@
                     cancelButton: 'sweetbtncancel'
                 },
                 title: 'Pago De Servicio',
-                html: `<form class="formulario formclientes" action="/admin/facturacion" method="POST">
+                html: `<form class="formulario modalform" action="/admin/facturacion" method="POST">
                             <input type="hidden" name="idcita" value="1">
-                            <input type="hidden" name="valor_servicio" value="" >
+                            <input type="hidden" name="total" value="" >
                             <input type="hidden" name="dcto" value="0">
                             <input type="hidden" name="valordcto" value="0">
 
@@ -44,8 +44,8 @@
                             </div>
 
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="total">Total a pagar:</label>
-                                <input class="formulario__input" type="number" id="total" name="total" value="" readonly required>
+                                <label class="formulario__label" for="valor_servicio">Total a pagar:</label>
+                                <input class="formulario__input" type="number" id="valor_servicio" name="valor_servicio" value="" readonly required>
                             </div>
                             
                             <div class="formulario__campo-2r">
@@ -101,24 +101,24 @@
             selectservice.addEventListener('change', e=>cargarvalorservicio(e));
         }
         function cargarvalorservicio(e){
-            const total = document.querySelector('#total');
+            const valor_servicio = document.querySelector('#valor_servicio');
             const valorservice = servicios.filter(element =>element.id == e.target.value);
-            total.value = valorservice[0].precio;
-            document.querySelector('input[name=valor_servicio]').value = total.value;
+            valor_servicio.value = valorservice[0].precio;
             document.querySelector('#recibido').value = '';
             document.querySelector('#devolucion').value = '';
         }
 
         function calculo(){
             const devolucion = document.querySelector('#devolucion');
-            const inputtotal = parseInt(document.querySelector('#total').value);
+            const valorservicio = parseInt(document.querySelector('#valor_servicio').value);
             const recibido = parseInt(document.querySelector('#recibido').value); 
-                if(recibido>=inputtotal){
-                   devolucion.value = recibido-inputtotal;
+                if(recibido>=valorservicio){
+                   devolucion.value = recibido-valorservicio;
                    //devolucion.style.color = "rgb(240, 101, 72)"; 
                 }else{
-                    devolucion.value = '';
+                    devolucion.value = 0;
                 }
+                document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
         }
 
         //////////////// funcion contadores de caracteres /////////////////////

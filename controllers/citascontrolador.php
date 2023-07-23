@@ -29,10 +29,17 @@ class citascontrolador{
             $citas = citas::find('id', $id);
             $citas->compara_objetobd_post($_POST);  //validar el campo hora
             
-            $valorcita = servicios::uncampo('id', $_POST['nameservicio'], 'precio');
-            $servicio = servicios::uncampo('id', $_POST['nameservicio'], 'nombre');
+            $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
+            $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
             $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
+            $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
             $citas->valorcita = $valorcita;
+            $citas->dcto = 0;
+            $citas->dctovalor = 0;
+            if($fidelizacion){
+                $citas->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
+                $citas->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
+            }
             $citas->nameservicio = $servicio;
             $citas->nameprofesional = $profesional;
 
@@ -154,16 +161,26 @@ class citascontrolador{
         date_default_timezone_set('America/Bogota');
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $cita = new citas($_POST); //validar el campo hora
-            $valorcita = servicios::uncampo('id', $_POST['nameservicio'], 'precio');
-            $servicio = servicios::uncampo('id', $_POST['nameservicio'], 'nombre');
+
+            $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
+            $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
             $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
+            $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
             $cita->valorcita = $valorcita;
+            if($fidelizacion){
+                $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
+                $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
+            }
             $cita->nameservicio = $servicio;
             $cita->nameprofesional = $profesional;
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
-                $r = $cita->crear_guardar();
-                if($r[0])$alertas['exito'][] = "Cita Creada";
+                //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
+                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
+                if(empty($citaunica)){
+                    $r = $cita->crear_guardar();
+                    if($r[0])$alertas['exito'][] = "Cita Creada";
+                }else{ $alertas['exito'][] = "Error actualize la pagina"; }
             }
         }
 
@@ -250,6 +267,37 @@ class citascontrolador{
             }
         }
         $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'alertas'=>$alertas]);
+    }
+
+
+    public static function consultaxestadoxname(Router $router){
+        $alertas = []; $ids = ""; $estado=''; $nombre='';
+        
+        if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+            //$citas = citas::inner_join("SELECT *FROM citas WHERE estado LIKE "."'%{$_POST['estado']}%'"." ORDER BY id DESC;"/* ORDER BY id ASC LIMIT 10 OFFSET {$paginacion->offset()}*/);
+            if($_POST['columna'] == 'estado'){
+                $estado = $_POST['consulta'];
+                $citas = citas::filtro_nombre($_POST['columna'], $_POST['consulta'], 'id');
+            }else{
+                $nombre = $_POST['consulta'];
+                $usuarios = usuarios::filtro_nombre($_POST['columna'], $_POST['consulta'], 'id');
+                foreach($usuarios as $key => $value){
+                    if(array_key_last($usuarios) == $key){
+                        $ids.= $value->id;
+                    }else{
+                        $ids.= $value->id.', '; 
+                    }
+                }
+                if($ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario IN($ids) ORDER BY id DESC;");
+                if(!$ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario IN('') ORDER BY id DESC;");
+            }
+            foreach($citas as $cita){
+                $cita->usuario = usuarios::find('id', $cita->id_usuario);
+                $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
+            }
+        }
+        $profesionales = empleados::all();
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'alertas'=>$alertas, 'estado'=>$estado, 'nombre'=>$nombre]);
     }
 
     

@@ -3,14 +3,6 @@
 
 .inicio{
     @include m.contenedor100;
-    .heading{
-        i{
-            margin-right: 1rem;
-            color: v.$grisraton;
-        }
-        color: v.$grisoscuro;
-        margin-bottom: 2rem;
-    }
     .bloques{
         &__grid{
             @include m.grid(2, 2rem);

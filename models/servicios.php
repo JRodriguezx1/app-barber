@@ -4,11 +4,12 @@ namespace Model;
 
 class servicios extends ActiveRecord {
     protected static $tabla = 'servicios';
-    protected static $columnasDB = ['id', 'nombre', 'precio', 'duracion', 'dcto', 'dctovalor', 'dctodescp'];
+    protected static $columnasDB = ['id', 'id_fidelizacion', 'nombre', 'precio', 'duracion', 'dcto', 'dctovalor', 'dctodescp'];
     
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
+        $this->id_fidelizacion = $args['id_fidelizacion'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
         $this->precio = $args['precio'] ?? '';
         $this->duracion = $args['duracion'] ?? '';
@@ -29,7 +30,6 @@ class servicios extends ActiveRecord {
             $this->duracion = 0;
         }
         return self::$alertas;
-
     }
 
 }

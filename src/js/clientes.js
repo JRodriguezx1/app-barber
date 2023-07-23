@@ -2,7 +2,7 @@
     if(document.querySelector('.clientes')){
         const crearcliente = document.querySelector('#crearcliente');
         const editar = document.querySelectorAll('#editar');
-        const eliminar = document.querySelectorAll('#eliminar');
+        const hab_desh = document.querySelectorAll('#hab_desh');
         let objform = {
             titulo: '',
             url: '',
@@ -21,6 +21,20 @@
             objform.apellido = '';
             objform.movil = '';
             objform.email = '';
+            objform.password = `<div class="formulario__campo">
+                                    <label class="formulario__label" for="password">Password</label>
+                                    <div class="formulario__dato">
+                                        <input class="formulario__input" type="password" placeholder="Password del cliente" id="password" name="password" required>
+                                        <label data-num="12" class="count-charts" for="">12</label>
+                                    </div>
+                                </div>
+                                <div class="formulario__campo">
+                                    <label class="formulario__label" for="password2">Repetir Password</label>
+                                    <div class="formulario__dato">
+                                        <input class="formulario__input" type="password" placeholder="Repetir Password" id="password2" name="password2" required>
+                                        <label data-num="12" class="count-charts" for="">12</label>
+                                    </div>
+                                </div>`;
             formulariocliente(objform, 0);
             countchars();
         });
@@ -35,6 +49,7 @@
                 objform.apellido = tr.children[2].textContent;
                 objform.movil = tr.children[3].textContent;
                 objform.email = tr.children[4].textContent;
+                objform.password = '';
                 formulariocliente(objform, e.target.parentElement.dataset.id);
                 countchars();
             });
@@ -42,14 +57,14 @@
 
 
         function formulariocliente(objform, id){
-            let { titulo, url, submit, nombre, apellido, movil, email} = objform;
+            let { titulo, url, submit, nombre, apellido, movil, email, password} = objform;
             Swal.fire({
                 customClass: {
                     confirmButton: 'sweetbtnconfirm',
                     cancelButton: 'sweetbtncancel'
                 },
                 title: titulo,
-                html: `<form class="formulario formclientes" action="${url}" method="POST">
+                html: `<form class="formulario modalform" action="${url}" method="POST">
                             <input type="hidden" name="id" value="${id}" >
 
                             <div class="formulario__campo">
@@ -80,20 +95,7 @@
                                     <label data-num="40" class="count-charts" for="">40</label>
                                 </div>
                             </div>
-                            <div class="formulario__campo">
-                                <label class="formulario__label" for="password">Password</label>
-                                <div class="formulario__dato">
-                                    <input class="formulario__input" type="password" placeholder="Password del cliente" id="password" name="password" required>
-                                    <label data-num="12" class="count-charts" for="">12</label>
-                                </div>
-                            </div>
-                            <div class="formulario__campo">
-                                <label class="formulario__label" for="password2">Repetir Password</label>
-                                <div class="formulario__dato">
-                                    <input class="formulario__input" type="password" placeholder="Repetir Password" id="password2" name="password2" required>
-                                    <label data-num="12" class="count-charts" for="">12</label>
-                                </div>
-                            </div>
+                            ${password}
                             <input class="clientes-btn" type="submit" value="${submit}">
                        </form>`,
                 showCancelButton: false,
@@ -103,22 +105,26 @@
 
         /////////////// eliminar cliente ////////////////
 
-        eliminar.forEach(element => {
+        hab_desh.forEach(element => {
             element.addEventListener('click', (e)=>{
+
+                let mensaje = "Desea bloquear el cliente?";
+                if(e.target.classList.contains('habilitar'))mensaje = "Desea habilitar el cliente?";
+
                 const id = e.target.parentElement.dataset.id;
                 Swal.fire({
                     customClass: {
                         confirmButton: 'sweetbtnconfirm',
                         cancelButton: 'sweetbtncancel'
                     },
-                    title: 'Desea bloquear el cliente?',
+                    title: mensaje,
                     showCancelButton: true,
                     confirmButtonText: 'Si',
                     cancelButtonText: 'No',
                     
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location = `/admin/clientes/eliminar?id=${id}`;
+                        window.location = `/admin/clientes/hab_desh?id=${id}`;
                     } 
                 })
             });

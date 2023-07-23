@@ -1,56 +1,44 @@
 <div class="fidelizacion">
-    <h2 class="text-center">Fidelizacion</h2>
-    
+    <h4 class="dashboard__heading2"><i class="fa-solid fa-pen-to-square"></i><?php echo $titulo; ?> </h4>
+
     <div class="fidelizacion__contenedor">
-        <div class="fidelizacion__nuevo">
-            <form class="formulario" action="/admin/fidelizacion/crear" method="POST">
-                <H4 class="fidelizacion__heading">Ingresar Descuento</H4>
-                <fieldset class="formulario__fieldset">
-                    <div class="formulario__campo">
-                        <label class="formulario__label" for="idservicio">Servicio</label>
-                        <select class="formulario__select" name="idservicio" id="idservicio" required>
-                            <option value="" disabled selected> Seleccionar Servicio</option>
-                            <?php foreach($servicios as $servicio): ?>
-                                <option value="<?php echo $servicio->id??''; ?>"><?php echo $servicio->nombre??''; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-                    <div class="formulario__campo">
-                        <label class="formulario__label" for="descripcion">Descripcion</label>
-                        <div class="formulario__dato">
-                            <input id="negocio" class="formulario__input" type="text" placeholder="Descripcion del descuento" id="descripcion" name="descripcion" value="<?php echo $fidelizacion->descripcion??''; ?>" required>
-                            <label data-num="42" class="count-charts" for="">42</label>
-                        </div>
-                    </div>
-            
-                    <div class="formulario__campo">
-                        <label class="formulario__label" for="descuento">Descuento</label>
-                        <input id="negocio" class="formulario__input" type="number" min="1" max="100" placeholder="Descuento en porcentaje %" id="descuento" name="descuento" value="<?php echo $fidelizacion->descuento ?? '';?>" required>
-                    </div>
-
-                    <div class="formulario__campo">
-                        <label class="formulario__label" for="fecha">Fecha De Finalizacion:</label>
-                        <input class="formulario__input" id="fecha" type="date" name="fecha">
-                    </div>
-                </fieldset>
-                
-                <input class="formulario__submit" type="submit" value="Ingresar">
-            </form>
-            <div class="fidelizacion__dctoindividual text-center">
-                <p>Ver descuentos individuales</p>
-                <a class="btnsmall" href="/admin/fidelizacion/dctoindividual">Ingresar</a>
-            </div>
-        </div> <!-- fin nuevo -->
-        <div class="fidelizacion__registradas">
-            <H4 class="fidelizacion__heading text-center">Historial de descuentos globales</H4>
-        
-            <ul class="fidelizacion__ul">
-                <li class="fidelizacion__li">
-                <p>Descuento del mes del 25% en corte para hombre</p><div class="opciones"><p>Fecha: </p><p>15-7-2023</p><p>15-7-2023</p><button class="btnmini">Eliminar</button></div>   
-                </li>
-            </ul>
+        <?php require_once __DIR__ .'/../../templates/alertas.php'; ?>
+        <div class="fidelizacion__creardescuento">
+            <a class="btnsmall" href="/admin/fidelizacion/creardctoxproduct"><i class="fa-solid fa-plus"></i> Crear Descuento</a>
         </div>
-    </div>
+        <div class="fidelizacion__tabla">
+            <table class="tabla">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Categoria</th>
+                        <th>Producto</th>
+                        <th>Valor</th>
+                        <th>Dcto (%)</th>
+                        <th>Valor Final</th>
+                        <th>Fecha Fin</th>
+                        <th>estado</th>
+                        <th class="accionesth">Acciones</th>
+                    </tr>
+                </thead>
+                    
+                <tbody>
+                    <?php foreach($descuentos as $dcto): ?>
+                        <tr class="<?php echo $dcto->estado?'':'reprogramar';?>">
+                            <td class=""><?php echo $dcto->id; ?></td> 
+                            <td class=""><?php echo $dcto->categoria; ?></td> 
+                            <td class=""><?php echo $dcto->nombreservicio; ?></td>
+                            <td class="">$<?php echo $dcto->precioservicio; ?></td>
+                            <td class=""><?php echo $dcto->porcentaje.'%'.' - $'.$dcto->valor;?></td>
+                            <td class="">$<?php echo $dcto->precioservicio-$dcto->valor;?></td>        
+                            <td class=""><?php echo $dcto->fecha_fin; ?></td>
+                            <td class=""><?php echo $dcto->estado?'Activo':'No-activo'; ?></td>
+                            <td class="accionestd"> <div class="acciones-iconos" data-id="<?php echo $dcto->id;?>"><i class="sendmsj fa-solid fa-envelope-circle-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i></div></td>
+                        </tr>   
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div> <!-- fin fidelizacion__tabla -->
 
+    </div>
 </div>

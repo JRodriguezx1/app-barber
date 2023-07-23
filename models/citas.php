@@ -18,8 +18,8 @@ class citas extends ActiveRecord {
         $this->estado = $args['estado'] ?? 'Pendiente';
         $this->duracion = $args['duracion'] ?? '';
         $this->valorcita = $args['valorcita'] ?? '';
-        $this->dcto = $args['dcto'] ?? '';
-        $this->dctovalor = $args['dctovalor'] ?? '';
+        $this->dcto = $args['dcto'] ?? '0';
+        $this->dctovalor = $args['dctovalor'] ?? '0';
         $this->nameservicio = $args['nameservicio'] ?? '';
         $this->nameprofesional = $args['nameprofesional'] ?? '';
     }

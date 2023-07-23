@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Model\servicios;
+use Model\fidelizacion;
 use MVC\Router;  //namespace\clase
  
 class servicioscontrolador{
@@ -17,7 +18,7 @@ class servicioscontrolador{
             $alertas = $servicios->validarservicios();
             if(empty($alertas)){
                 $r = $servicios->crear_guardar();
-                if($r){
+                if($r[0]){
                     $alertas['exito'][] = "Servicio agregado";
                 }else{
                     $alertas['error'][] = "Hubo un error";
@@ -37,7 +38,13 @@ class servicioscontrolador{
             if(empty($alertas)){
                 $r = $servicios->actualizar();
                 if($r){
-                    $alertas['exito'][] = "Servicio actualizado";
+                    /////modicar el valor de dcto de la tabla fidelizacion/////
+                    $dcto = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['id'], 'estado'=>1]);
+                    $dcto[0]->valor = round(($dcto[0]->porcentaje*($servicios->precio))/100);
+                    $r1 = $dcto[0]->actualizar();
+                    if($r1){
+                        $alertas['exito'][] = "Servicio actualizado";
+                    }else{'Volver actualizar datos de servicio';}
                 }else{
                     $alertas['error'][] = "Hubo un error";
                 }

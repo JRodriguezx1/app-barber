@@ -9,6 +9,7 @@ use Model\citas;
 use Model\empserv;
 use Model\empleados;
 use Model\usuarios;
+use Model\fidelizacion;
 use MVC\Router;  //namespace\clase
 use Twilio\Rest\Client;
  
@@ -48,7 +49,13 @@ class controladorcliente{
         }
         //debuguear($citas);
 
-        $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'alertas'=>$alertas]);
+        $promociones = fidelizacion::idregistros('estado', 1);
+        foreach($promociones as $promo){
+            $promo->nombreproducto = servicios::uncampo('id', $promo->product_serv, 'nombre');
+            $promo->precioproducto = servicios::uncampo('id', $promo->product_serv, 'precio');
+        }
+
+        $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'promociones'=>$promociones, 'alertas'=>$alertas]);
     }
 
     public static function enviarcita(){
@@ -57,16 +64,24 @@ class controladorcliente{
         $idusuario = $_SESSION['id'];
         $cita = new citas($_POST);
         $cita->id_usuario = $idusuario;
-        $valorcita = servicios::uncampo('id', $_POST['nameservicio'], 'precio');
-        $servicio = servicios::uncampo('id', $_POST['nameservicio'], 'nombre');
+        $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
+        $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
         $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
+        $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
         $cita->valorcita = $valorcita;
+        if($fidelizacion){
+            $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
+            $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
+        }
         $cita->nameservicio = $servicio;
         $cita->nameprofesional = $profesional;
         $alertas = $cita->validarcitas();
         if(empty($alertas)){
-            $r = $cita->crear_guardar();
-
+            //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
+            $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
+            if(empty($citaunica)){
+                $r = $cita->crear_guardar();
+            }else{ $r = [false, 0]; }
             //////////////////enviar sms por whatsapp////////////
             /*
             $sid = "AC81feeb3abcf6563f2a8f9b32904f8ae0";

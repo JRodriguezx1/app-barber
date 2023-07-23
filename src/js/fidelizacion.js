@@ -1,31 +1,30 @@
 (function(){
-    if(document.querySelector('.dctoindividual')){
-        const editar = document.querySelectorAll('#editar');
-        const eliminar = document.querySelectorAll('#eliminar');
+    if(document.querySelector('.fidelizacion')){
 
+        const editar = document.querySelectorAll('.programar');
+        const eliminar = document.querySelectorAll('.cancelado');
+        const sendmsj = document.querySelectorAll('.sendmsj');
         let obj = {
-            nombre: '',
-            descripcion: '',
-            dcto: '',
-            fecha_fin: ''
+
         }
-        
 
         editar.forEach(Element => {
             Element.addEventListener('click', (e)=>{ 
-                const id = e.target.parentElement.dataset.id;
                 const tr = e.target.parentElement.parentElement.parentElement;
-                obj.nombre = tr.children[1].textContent;
-                obj.fecha_fin = tr.children[3].textContent;
-                obj.descripcion = tr.children[4].textContent;
-                obj.dcto = tr.children[5].textContent;
-                formulariocliente(id);
-                countchars();
+                obj.id = e.target.parentElement.dataset.id;
+                obj.nombreproducto = tr.children[2].textContent;
+                obj.valorservicio = tr.children[3].textContent.slice(1);
+                obj.dcto = tr.children[4].textContent;
+                obj.valorfinal = tr.children[5].textContent;
+                obj.fecha_fin = tr.children[6].textContent;
+                console.log(obj);
+                formulariocliente(obj);
+                //countchars();
             });
         });
 
 
-        function formulariocliente(id){
+        function formulariocliente(obj){
     
             Swal.fire({
                 customClass: {
@@ -33,32 +32,34 @@
                     cancelButton: 'sweetbtncancel'
                 },
                 title: 'Actualizar Oferta',
-                html: `<form class="formulario formclientes" action="/admin/fidelizacion/editar_dctoindividual" method="POST">
-                            <input type="hidden" name="id" value="${id}" >
-
-                            <div class="formulario__campo">
-                                <label class="formulario__label" for="nombre">Nombre:</label>
-                                <div class="formulario__dato">
-                                    <input class="formulario__input" type="text" value="${obj.nombre}" readonly required>
-                                </div>
-                            </div>
-
-                            <div class="formulario__campo">
-                                <label class="formulario__label" for="descripcion">Descripcion:</label>
-                                <div class="formulario__dato">
-                                    <input class="formulario__input" type="text" placeholder="Descripcion de la oferta" id="descripcion" name="descripcion" value="${obj.descripcion}" required>
-                                    <label data-num="42" class="count-charts" for="">42</label>
-                                </div>
-                            </div>
+                html: `<form class="formulario modalform" action="/admin/fidelizacion/editar_dctoxproduct" method="POST">
+                            <input type="hidden" name="id" value="${obj.id}" >
+                            
+                            <span class="nameuser">${obj.nombreproducto}</span>
+                            <span class="precio">Valor: ${obj.valorservicio}</span>
+                            <span class="nameuser">Dcto: ${obj.dcto}</span>
+                            <span class="nameuser">Valor Final: ${obj.valorfinal}</span>
                             
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="descuento">Descuento</label>
-                                <input class="formulario__input" min="1" max="100" type="number" placeholder="Descuento en porcentaje" id="descuento" name="descuento" value="${obj.dcto}" requiered>
+                                <label class="formulario__label" for="tipo">Tipo De Dcto: </label>
+                                <select class="formulario__select" name="tipo" id="tipo" required>
+                                    <option value="" disabled selected> Seleccionar tipo de dcto</option>
+                                    <option value="porcentaje">Porcentaje</option>
+                                    <option value="valor">Valor</option>
+                                </select>
+                            </div>
+                            <div class="formulario__campo">
+                                <label class="formulario__label" for="dcto1">Descuento</label>
+                                <input class="formulario__input" id="dcto1" type="number" min="" max="" name="dcto1" value="" disabled required>
+                            </div>
+                            <div class="formulario__campo">
+                                <label class="formulario__label" for="dcto2" id="dcto2Valor">Valor</label>
+                                <input class="formulario__input" id="dcto2" type="number" min="" max="" name="dcto2" value="" readonly required>
                             </div>
 
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="fecha">Fecha</label>
-                                <input class="formulario__input" type="date" id="fecha" name="fecha" value="${obj.fecha_fin}" requiered>
+                                <label class="formulario__label" for="fecha_fin">Fecha De Finalizacion</label>
+                                <input class="formulario__input" type="date" id="fecha_fin" name="fecha_fin" value="${obj.fecha_fin}" requiered>
                             </div>
                             
                             <input class="clientes-btn" type="submit" value="Actualizar">
@@ -66,7 +67,50 @@
                 showCancelButton: false,
                 showConfirmButton: false,  
             });
+            eventos();
         }
+
+
+        function eventos(){
+            const dcto1 = document.querySelector('#dcto1');
+            const tipodcto = document.querySelector('#tipo');
+            tipodcto.addEventListener('change', (e)=>{
+                dcto1.disabled = false;
+                imprimirvalor(dcto1.value, tipodcto);
+            });
+    
+            dcto1.addEventListener('input', (e)=>{
+                imprimirvalor(e.target.value, tipodcto);  
+            });
+        }
+
+
+        function imprimirvalor(valoringresado, tipodcto){
+            const dcto1 = document.querySelector('#dcto1');
+            const dcto2 = document.querySelector('#dcto2');
+            const dcto2Valor = document.querySelector('#dcto2Valor');
+            if(tipodcto.options[tipodcto.options.selectedIndex].value == 'porcentaje'){
+                dcto1.min = 0;
+                dcto1.max = 100;
+                dcto2Valor.textContent = "Valor";
+                if(valoringresado>100)dcto1.value = 100;
+                if(valoringresado<0)dcto1.value = 0;
+                dcto2.value = Math.round((obj.valorservicio*dcto1.value)/100);
+            }
+            if(tipodcto.options[tipodcto.options.selectedIndex].value == 'valor'){
+                dcto1.min = 0;
+                dcto1.max = obj.valorservicio;
+                dcto2Valor.textContent = "Valor (%)";
+                if(valoringresado>parseInt(obj.valorservicio))dcto1.value = obj.valorservicio;
+                if(valoringresado<0)dcto1.value = 0;
+                dcto2.value = Math.round((dcto1.value*100)/obj.valorservicio);
+            }  
+        }
+/*
+        function borrarhtml(elemento){
+            horasdisponibles = [];
+            while(elemento.firstElementChild)elemento.removeChild(elemento.firstElementChild);
+        }*/
 
         /////////////// eliminar oferta del cliente ////////////////
 
@@ -85,14 +129,31 @@
                     
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location = `/admin/fidelizacion/eliminar_dctoindividual?id=${id}`;
+                        //Swal.fire('Eliminado', '', 'success');
+                        window.location = `/admin/fidelizacion?id=${id}`;
+
                     } 
                 })
+            });
+        });
+
+        /////////////////////// enviar msj a clientes ///////////////////////
+
+        sendmsj.forEach(element => {
+            element.addEventListener('click', (e)=>{
+                const id = e.target.parentElement.dataset.id;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'clase y metodo de mensaje no configurado!',
+                    footer: 'Innovatech quindio'
+                  })
             });
         });
     
         //////////////// funcion contadores de caracteres /////////////////////
         
+        /*
         function countchars(){
             const numinput = document.querySelectorAll('.count-charts');  
             numinput.forEach(element =>{ //element es cada label
@@ -108,6 +169,7 @@
                 });
             });
         }
+        countchars();*/
     }
 
 })();

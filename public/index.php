@@ -48,6 +48,10 @@ $router->get('/', [paginacontrolador::class, 'index']);
 
 /////area de administracion/////
 $router->get('/admin/dashboard', [dashboardcontrolador::class, 'index']);
+$router->get('/admin/perfil', [dashboardcontrolador::class, 'perfil']);
+$router->post('/admin/perfil', [dashboardcontrolador::class, 'perfil']);
+$router->get('/admin/perfil/cambiarpassword', [dashboardcontrolador::class, 'cambiarpassword']);
+$router->post('/admin/perfil/cambiarpassword', [dashboardcontrolador::class, 'cambiarpassword']);
 
 $router->get('/admin/servicios', [servicioscontrolador::class, 'index']);
 $router->post('/admin/servicios/crear', [servicioscontrolador::class, 'index']);
@@ -65,19 +69,19 @@ $router->post('/admin/citas/consultaxprofesxfecha', [citascontrolador::class, 'c
 $router->get('/admin/citas/filtroxfecha', [citascontrolador::class, 'filtroxfecha']); 
 $router->post('/admin/citas/crear', [citascontrolador::class, 'crear']);  //se llama desde citas.js cuando admin crea la cita por el cliente
 $router->post('/admin/citas/finalizar', [citascontrolador::class, 'finalizar']);  //se llama desde finalizcita.js cuando admin termina o finaliza la cita
+$router->post('/admin/citas/consultaxestadoxname', [citascontrolador::class, 'consultaxestadoxname']);
 
 $router->get('/admin/clientes', [clientescontrolador::class, 'index']);
 $router->post('/admin/clientes', [clientescontrolador::class, 'index']); //filtro de busqueda
 $router->post('/admin/clientes/crear', [clientescontrolador::class, 'crear']);
 $router->post('/admin/clientes/actualizar', [clientescontrolador::class, 'actualizar']);
 $router->get('/admin/clientes/detalle', [clientescontrolador::class, 'detalle']);
-$router->get('/admin/clientes/eliminar', [clientescontrolador::class, 'eliminar']);
+$router->get('/admin/clientes/hab_desh', [clientescontrolador::class, 'hab_desh']);
 
-$router->get('/admin/fidelizacion', [fidelizacioncontrolador::class, 'index']);
-$router->post('/admin/fidelizacion/crear', [fidelizacioncontrolador::class, 'crear']); //llamada de metodo para crear dcto global
-$router->get('/admin/fidelizacion/dctoindividual', [fidelizacioncontrolador::class, 'dctoindividual']);
-$router->post('/admin/fidelizacion/editar_dctoindividual', [fidelizacioncontrolador::class, 'editar_dctoindividual']);
-$router->get('/admin/fidelizacion/eliminar_dctoindividual', [fidelizacioncontrolador::class, 'eliminar_dctoindividual']);
+$router->get('/admin/fidelizacion', [fidelizacioncontrolador::class, 'index']);  //tambein es llamado desde fidelizacion.js cuando se elimina oferta
+$router->get('/admin/fidelizacion/creardctoxproduct', [fidelizacioncontrolador::class, 'creardctoxproduct']);
+$router->post('/admin/fidelizacion/creardctoxproduct', [fidelizacioncontrolador::class, 'creardctoxproduct']);
+$router->post('/admin/fidelizacion/editar_dctoxproduct', [fidelizacioncontrolador::class, 'editar_dctoxproduct']);
 
 $router->get('/admin/configuracion', [configcontrolador::class, 'index']);
 $router->post('/admin/configuracion/actualizar', [configcontrolador::class, 'actualizar']); //metodo para actualizar negocio
@@ -100,6 +104,8 @@ $router->get('/admin/api/cancelarcita', [controladorcliente::class, 'cancelarcit
 $router->get('/admin/api/allclientes', [clientescontrolador::class, 'allclientes']); // me trae todos los clientes o usuarios desde citas.js
 $router->get('/admin/api/alldays', [dashboardcontrolador::class, 'alldays']); // me trae todos los dias desde graficas.js
 $router->get('/admin/api/totalcitas', [dashboardcontrolador::class, 'totalcitas']);
+$router->get('/admin/api/detallepagoxcita', [factcontrolador::class, 'detallepagoxcita']); //api se ejecuta en el modulo de citas en admin
+$router->get('/admin/api/anularpagoxcita', [factcontrolador::class, 'anularpagoxcita']); //api se ejecuta en el modulo de citas en admin
 
 /////area de clientes/////
 $router->get('/Cliente/app', [controladorcliente::class, 'index']);

@@ -2,7 +2,7 @@
     if(document.querySelector('#dash-cliente')){
 
         let horasdisponibles = [], horacitas = [];
-        const divhoras = document.querySelector('#horas'); //donde se poenen las horas
+        const divhoras = document.querySelector('#horas'); //donde se ponen las horas
 
         function calcularhorarios(horaInicio, horaFin) {
             const horarioActual = new Date(`01/01/2000 ${horaInicio}`);
@@ -37,7 +37,6 @@
         let fechadesc, malla, citas;
         let onlyfechadesc, onlymalla, onlycitas;
 
-
         (async ()=>{
             try {
                 const url = "/admin/api/getfechadesc"; //llamado a la API REST para trer todas las fechas de descanso de todos los empleados.
@@ -59,7 +58,7 @@
             }
         })();
 
-        (async ()=>{
+        /*(async ()=>{
             try {
                 const url = "/admin/api/getcitas"; //llamado a la API REST para trer toda las citas desde la fecha actual hasta posterior
                 const respuesta = await fetch(url); 
@@ -68,7 +67,28 @@
             } catch (error) {
                 console.log(error);
             }
-        })(); 
+        })(); */
+        
+        const obtenercitas = async()=>{
+            try {
+                const url = "/admin/api/getcitas"; //llamado a la API REST para trer toda las citas desde la fecha actual hasta posterior
+                const respuesta = await fetch(url); 
+                citas = await respuesta.json();
+            } catch (error){
+                console.log(error);
+            }
+        }
+        obtenercitas();
+
+        setInterval(() => {
+            obtenercitas();
+            if(!select_date.value == "" && document.querySelector('.cliente__hora')){
+                const dia = new Date(select_date.value);
+                borrarhtml(divhoras);
+                validarfechaydia(select_date.value, dia.getUTCDay());
+            }
+            //gethoras(r2)
+        }, 3100);
 
         ///////////seleccionar empleado o profesional //////////////
         professionals.addEventListener('change', (e)=>{
@@ -188,6 +208,8 @@
                         setTimeout(() => {
                             window.location.reload();
                         }, 1500);
+                    }else{
+                        Swal.fire('No fue posible agendar cita, Intentalo de nuevo', '', 'error')
                     }
                 } 
             })
@@ -199,13 +221,14 @@
             const id_servicio = document.querySelector('#servicio').options[document.querySelector('#servicio').options.selectedIndex].value;
             const hoy = new Date();
 
+
             datos.append('id_empserv', id_empserv.dataset.id);
             //datos.append('fecha_inicio', hoy.toLocaleDateString().replace(/\//g, '-')); //fecha actual
             datos.append('fecha_inicio', hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate());
             datos.append('fecha_fin', select_date.value);
-            datos.append('hora', hoy.toLocaleTimeString());
+            datos.append('hora', hoy.toLocaleTimeString([], {hour12: false}));
             datos.append('hora_fin', horacita);
-            datos.append('nameservicio', id_servicio);
+            datos.append('idservicio', id_servicio);
             datos.append('nameprofesional', id_empserv.value);
             try {
                 const url = "/admin/api/enviarcita";

@@ -37,9 +37,9 @@
             profesionales.appendChild(option);
             empleados.forEach(element => {
                 const option = document.createElement('OPTION');
-                option.value = element.idempleado;
+                option.value = element.idempleado;  //id de la tabla empleados
                 option.textContent = element.nombre;
-                option.dataset.id = element.id;
+                option.dataset.id = element.id;   //id de la tabla empserv
                 profesionales.appendChild(option);
             });
         });

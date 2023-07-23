@@ -61,6 +61,7 @@ class ActiveRecord {
         $sql .= ") VALUES('";
         $sql .= $string2;
         $sql .= "');";
+        $sql = str_replace("''", 'NULL', $sql);
         $resultado = self::$db->query($sql);
         return [$resultado, self::$db->insert_id];  //insert_id retorna el ultimo registro insertado en la bd
            //  [true/false, id=1,2,3...00] = [0,1] 
@@ -215,14 +216,14 @@ class ActiveRecord {
     }
 
 
-    public static function filtro_nombre($columna, $nombre, $orden){   //metodo que trae los registros con el nombre especificado
+    public static function filtro_nombre($columna, $nombre, $orden){   //metodo que trae los registros con el nombre especificado y los ordena descendentemente
         $sql = "SELECT *FROM ".static::$tabla." WHERE {$columna} LIKE "."'%{$nombre}%'"." ORDER BY {$orden} DESC;";
         $resultado = self::consultar_sql($sql);
         return $resultado;
     }
 
 
-    public static function idregistros($colum, $id){ ////metodo que busca todos los registro qu pertenecen a un id
+    public static function idregistros($colum, $id){ ////metodo que busca todos los registro que pertenecen a un id
         $sql = "SELECT *FROM ".static::$tabla." WHERE $colum = '${id}';";
         $resultado = self::consultar_Sql($sql);
         return $resultado;

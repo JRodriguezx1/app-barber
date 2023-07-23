@@ -1,5 +1,5 @@
 <div class="inicio">
-    <h4 class="heading"><i class="fa-solid fa-building-circle-check"></i><?php echo $titulo; ?> </h4>
+    <h4 class="dashboard__heading2"><i class="fa-solid fa-building-circle-check"></i><?php echo $titulo; ?> </h4>
     
     <div class="bloques">
         <div class="bloques__grid">
@@ -11,7 +11,6 @@
                 </div>
             </div>
 
-            <!-- ingresos -->
             <div class="bloques__bloque">
                 <p class="bloques__heading">Servicios Hoy</p>
                 <div class="bloques__contenido">
@@ -20,7 +19,6 @@
                 </div>
             </div>
 
-            <!-- menos lugares disponibles -->
             <div class="bloques__bloque">
                 <p class="bloques__heading">Clientes</p>
                 <div class="bloques__contenido">
@@ -29,7 +27,6 @@
                 </div>
             </div>
 
-            <!-- mas lugares disponibles -->
             <div class="bloques__bloque">
                 <p class="bloques__heading">Empleados</p>
                 <div class="bloques__contenido">
@@ -45,7 +42,7 @@
         <div class="datos__contenedorgraficas">
             <div class="datos__grafica1">
                 <h4 class="datos__titulograficas">GRAFICAS</h4>
-                <p>Profit</p>
+                <p>PRODUCIDO</p>
                 <canvas id="servicios-grafica"></canvas>
             </div>
 
@@ -63,7 +60,7 @@
                             <p class="tipoperfil"><?php echo $usuario['admin']==1?'Admin':''; ?></p>
                         </div>
                         <div class="datos__btn">
-                            <a class="btnsmall" href="">Perfil <i class="fa-solid fa-arrow-right"></i></a>
+                            <a class="btnsmall" href="/admin/perfil">Perfil <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -72,7 +69,7 @@
                         <p class="textheading">Daily Earning</p>
                         <p class="text">This Day</p>
                         <h3 class="dailyearning"></h3>
-                        <a class="btnsmall" href="">Ver Mas <i class="fa-solid fa-arrow-right"></i></a>
+                        <a class="btnsmall" href="/admin/facturacion">Ver Mas <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                     <div class="rueda">
                         <div class="afuera">

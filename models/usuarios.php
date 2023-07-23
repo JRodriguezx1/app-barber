@@ -20,7 +20,7 @@ class usuarios extends ActiveRecord {
         $this->confirmado = $args['confirmado'] ?? 0;
         $this->token = $args['token'] ?? '';
         $this->admin = $args['admin'] ?? 0;
-        $this->idfidelizacion = $args['idfidelizacion'] ?? '1';
+        $this->idfidelizacion = $args['idfidelizacion'] ?? null;
         $this->ciudad = $args['ciudad'] ?? '';
         $this->direccion = $args['direccion'] ?? '';
         $this->habilitar = $args['habilitar'] ?? '1';

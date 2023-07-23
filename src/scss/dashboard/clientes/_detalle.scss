@@ -40,31 +40,7 @@
     }
 
     ////////////fidelizacion////////////
-    &__descuento{
-        margin-top: 2rem;
-        @include m.xl_tablet{
-            display: flex;
-        }
-        .ingreso-dcto{
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-        }
-    }
-    &__dctosvigentes{
-        margin-top: 2rem;
-        @include m.xl_tablet{
-            margin-top: 0;
-        }
-        .dctovigenteheading{
-            margin-top: 0;
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: v.$grisoscuro;
-            text-transform: uppercase;
-        }
-        margin-left: 1rem;
-    }
+   
 
     ///////////historial////////////////
     &__historial{
@@ -98,9 +74,10 @@
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 2rem;
+        gap: 4rem;
     }
     &__servicio{
+        
         p{ margin: 0; 
         color: v.$grisoscuro;}
         .fecha{

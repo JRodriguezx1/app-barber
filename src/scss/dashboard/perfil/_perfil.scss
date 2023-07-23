@@ -1,0 +1,65 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.perfil{
+    @include m.contenedor100;
+    &__contenedor{
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        @include m.xl_tablet{
+            flex-direction: row;
+        }
+    }
+    &__col1{
+        text-align: center;
+        background-color: v.$blanco;
+        //adding: 4rem 5rem;
+    }
+    &__img{
+        i{
+            font-size: 7rem;
+            background-color: rgba(85,110,230,.25);
+            padding: 3rem;
+            border-radius: 50%;
+            color: v.$blanco;
+        }
+        padding: 4rem 5rem 0 5rem;
+        border-bottom: 1px solid v.$grisclaro;
+    }
+    &__nombre{
+        font-size: 1.8rem;
+        color: v.$gris;
+        font-weight: 600;
+    }
+    &__cuenta{
+        color: v.$grisraton;
+        font-weight: 500;
+    }
+    &__contact{
+        padding: 3rem 2rem 0 2rem;
+        text-align: left;
+        label{
+            color: v.$grisraton;
+            font-size: 1.2rem;
+        }
+    }
+    &__email, &__phone{
+        color: v.$gris;
+        margin-top: .4rem;
+    }
+    
+    &__col2{
+        background-color: v.$blanco;
+        padding: 2rem;
+        flex: 1;
+        .cambiarpassword{
+            color: v.$grisoscuro;
+            display: block;
+            text-align: end;
+        }
+    }
+    &__contenedorform{
+        @include m.contenedor-sm;
+    }
+}

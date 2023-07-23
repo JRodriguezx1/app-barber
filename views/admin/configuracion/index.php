@@ -15,34 +15,34 @@
             <form class="formulario" action="/admin/configuracion/actualizar" enctype="multipart/form-data" method="POST">
                 <fieldset class="formulario__fieldset">
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="nombre">Nombre</label>
+                        <label class="formulario__label" for="nombre del negocio">Nombre</label>
                         <div class="formulario__dato">
                             <input id="negocio" class="formulario__input" type="text" placeholder="Nombre del negocio" id="nombre" name="nombre" value="<?php echo $negocio->nombre??''; ?>" required>
                             <label data-num="42" class="count-charts" for="">42</label>
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="ciudad">Ciudad</label>
+                        <label class="formulario__label" for="ciudad del negocio">Ciudad</label>
                         <div class="formulario__dato">
                             <input id="negocio" class="formulario__input" type="text" placeholder="ciudad del negocio" id="ciudad" name="ciudad" value="<?php echo $negocio->ciudad ?? '';?>" required>
                             <label data-num="40" class="count-charts" for="">40</label>
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="direccion">Direccion</label>
+                        <label class="formulario__label" for="direccion del negocio">Direccion</label>
                         <div class="formulario__dato">
                             <input id="negocio" class="formulario__input" type="text" placeholder="Direccion del negocio" id="direccion" name="direccion" value="<?php echo $negocio->direccion ?? '';?>" required>
                             <label data-num="56" class="count-charts" for="">56</label>
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="telefono">Telefono</label>
+                        <label class="formulario__label" for="telefono del negocio">Telefono</label>
                         <div class="formulario__dato">
                             <input id="negocio" class="formulario__input" type="number" placeholder="telefono fijo de contacto" id="telefono" name="telefono" value="<?php echo $negocio->telefono ?? '';?>">
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="movil">Movil</label>
+                        <label class="formulario__label" for="movil del negocio">Movil</label>
                         <div class="formulario__dato">
                             <input id="negocio" class="formulario__input" type="number" min="3000000000" max="3777777777" placeholder="Movil de contacto" id="movil" name="movil" value="<?php echo $negocio->movil ?? '';?>" required>
                         </div>

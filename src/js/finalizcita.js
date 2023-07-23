@@ -46,13 +46,14 @@
             })
         }
 
+
         //////////////////////Finalizar clita /////////////////////////////
 
         finalizarcitas.forEach(fincita => {
             fincita.addEventListener('click', e=>{
                 const tr = e.target.parentElement.parentElement.parentElement;
                 const estado = tr.children[7].textContent;
-                if(estado === "Pendiente"){ //se pasa el id de la cita y su estado  
+                if(estado === "Pendiente"){   
                     formulariopagar();
                     cargardatoscliente(e);
                 }
@@ -66,10 +67,11 @@
                     cancelButton: 'sweetbtncancel'
                 },
                 title: 'Terminar Cita',
-                html: `<form class="formulario formclientes" action="/admin/citas/finalizar?pagina=1" method="POST">
+                html: `<form class="formulario modalform" action="/admin/citas/finalizar?pagina=1" method="POST">
                             <input type="hidden" name="id" value="" >
                             <input type="hidden" name="valor_servicio" value="" >
-                            <input type="hidden" name="valordcto" value="0" >
+                            <input type="hidden" name="dcto" value="0" >
+                            <input type="hidden" name="total" value="" >
 
                             <p class="orden"></p>
                             <span class="nameuser"></span>
@@ -79,16 +81,16 @@
                             <div class="">
 
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="dcto">Aplicar Dcto:</label>
-                                <select class="formulario__select" name="dcto" id="dcto">
+                                <label class="formulario__label" for="valordcto">Aplicar Promocion:</label>
+                                <select class="formulario__select" name="valordcto" id="valordcto">
                                     <option value="" disabled selected> Seleccionar Dcto</option>
-                                    <option value="0"> Sin Descuento</option>
+                                    <option data-dcto="0" value="0"> Sin Descuento</option>
                                 </select> 
                             </div>
 
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="total">Total: </label>
-                                <input class="formulario__input" type="number" id="total" name="total" value="" readonly required>
+                                <label class="formulario__label" for="totalpagar">Total A Pagar: </label>
+                                <input class="formulario__input" type="number" id="totalpagar" name="totalpagar" value="" readonly required>
                             </div>
                             
                             <div class="formulario__campo-2r">
@@ -135,7 +137,8 @@
         }
 
         function cargardatoscliente(e){
-            const dcto = e.target.parentElement.dataset.dctogeneral;
+            const dcto = e.target.parentElement.dataset.promodcto||0; //dcto en porcentaje
+            const dctovalor = e.target.parentElement.dataset.promodctovalor||0;  //dcto en valor
             const tr = e.target.parentElement.parentElement.parentElement;
             const idcita = tr.children[0].textContent;
             const nombre = tr.children[1].textContent;
@@ -149,37 +152,41 @@
             document.querySelector('.nameservice').textContent = servicio;
             document.querySelector('.precio').textContent = 'Precio: $'+valueservice;
 
-            const selectdcto = document.querySelector('#dcto');
-            const option = document.createElement('option');
-            option.textContent = dcto+'%';
-            option.value = dcto;
-            selectdcto.appendChild(option);
+            const selectdcto = document.querySelector('#valordcto');
+            if(parseInt(dcto)){
+                const option = document.createElement('option');
+                option.textContent = dcto+'%'+' - '+'$'+dctovalor;
+                option.value = dctovalor; //dcto en valor
+                option.dataset.dcto = dcto;
+                selectdcto.appendChild(option);
+            }
             selectdcto.addEventListener('change', aplicardcto);
-
-            const total = document.querySelector('#total');
-            total.value = valueservice;
-            total.addEventListener('input', calculo);
+            const totalpagar = document.querySelector('#totalpagar');
+            totalpagar.value = valueservice;
+            totalpagar.addEventListener('input', calculo);
         }
 
         function aplicardcto(e){
-            document.querySelector('#total').value = valueservice; //se reinicia el valor original del servicio
-            const dcto = parseInt(e.target.value);
-            const total = parseInt(document.querySelector('#total').value);
-            document.querySelector('#total').value = total - ((dcto*total)/100);
-            document.querySelector('#valordcto').value = total - document.querySelector('#total').value;
+            document.querySelector('#totalpagar').value = valueservice; //se reinicia el valor original del servicio
+            const dctovalor = parseInt(e.target.value);
+            const totalpagar = parseInt(document.querySelector('#totalpagar').value);
+            document.querySelector('#totalpagar').value = totalpagar - dctovalor;
+            const dcto = e.target.options[this.options.selectedIndex].dataset.dcto;
+            document.querySelector('input[name=dcto]').value = dcto;  //input hidden para enviar dcto en porcentaje a bd
             calculo();
         }
 
         function calculo(){
             const devolucion = document.querySelector('#devolucion');
-            const inputtotal = parseInt(document.querySelector('#total').value);
+            const inputtotalpagar = parseInt(document.querySelector('#totalpagar').value);
             const recibido = parseInt(document.querySelector('#recibido').value); 
-                if(recibido>=inputtotal){
-                   devolucion.value = recibido-inputtotal;
-                   //devolucion.style.color = "rgb(240, 101, 72)"; 
-                }else{
-                    devolucion.value = '';
-                }
+            if(recibido>=inputtotalpagar){
+               devolucion.value = recibido-inputtotalpagar;
+               //devolucion.style.color = "rgb(240, 101, 72)"; 
+            }else{
+                devolucion.value = 0;
+            }
+            document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
         }
 
         //////////////// funcion contadores de caracteres /////////////////////

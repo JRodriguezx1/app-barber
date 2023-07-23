@@ -17,7 +17,7 @@
     &__campo{
         display: flex;
         flex-direction: column;
-        gap: .8rem;
+        gap: .6rem;
         margin: 0 0 1.5rem 0;
     }
     &__contenedor-icono{
@@ -45,7 +45,7 @@
     &__input, &__select{
         outline: none;
         font-size: 1.4rem;
-        padding: 1rem;
+        padding: .8rem;
         border: 1px solid darken(v.$grisclaro, 20);
         border-radius: .5rem;
         &--file{

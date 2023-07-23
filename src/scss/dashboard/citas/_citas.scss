@@ -11,19 +11,22 @@
     &__acciones{
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        //gap: 2rem;
         margin-bottom: 1rem;
         @include m.xl_tablet{
             flex-direction: row;
             justify-content: space-between;
             //align-items: center;
-            gap: 0rem;
+            gap: 1rem;
         }
        // margin-bottom: 1rem;
     }
 
     &__crear{
        // align-self: center;
+       a{
+           white-space: nowrap;
+       }
        border-bottom: 1px solid v.$grisclaro;
        padding-bottom: 1rem;
        @include m.xl_tablet{
@@ -35,38 +38,60 @@
     &__filtros{
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 1rem;
 
-        @include m.telefono{
+        @include m.tablet{
             flex-direction: row;
             justify-content: space-around;
+            gap: 3rem;
+            border-bottom: 1px solid v.$grisclaro;
         }
-        
-        
-        border-bottom: 1px solid v.$grisclaro;
-        padding-bottom: 1rem;
+        padding: 1rem 0;
         @include m.xl_tablet{
-            gap: 8rem;
+            gap: 5rem;
             border-bottom: none;
             padding: 0;
         }
     }
 
+    &__contenedorprofesional{
+        p{
+            margin: 0 0 .5rem 0;
+            text-align: center;
+            color: v.$grisoscuro;
+        }
+        border-bottom: 1px solid v.$grisclaro;
+        padding-bottom: 1rem;
+        @include m.tablet{
+            border-bottom: none;
+            padding: 0; 
+        }
+    }
+
     &__profesional{
-        text-align: center;
+        //text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        .formulario__select{
+           // max-width: 20rem;
+           width: 100%;
+           max-width: 26rem;
+        }
     }
     &__consultar{
-        margin-top: .4rem;
-        text-align: center;
+        //margin-top: .4rem;
+        //text-align: center;
     }
 
     &__busqueda{
         text-align: center;
-        .formulario__select{
-            width: auto;
-            @include m.telefono{
-                width: 100%;
-            }
+        padding-bottom: 1rem;
+        border-bottom: 1px solid v.$grisclaro;
+        @include m.tablet{
+            border-bottom: none;
+            padding: 0; 
         }
         .btn_busqueda{
             margin-top: .4rem;
@@ -78,6 +103,9 @@
                 border-bottom-right-radius: 0;
                 outline: none;
                 width: auto;
+                @include m.tablet{
+                    width: 100%;
+                }
             }
             label{
                 padding: 0 1rem;
@@ -89,16 +117,46 @@
                 border-bottom-right-radius: .5rem;
                 border-left: none;
             }
-            #busqueda{
+            #estado, #nombre{
                 display: none;
             }
         }
     }
     &__fecha{
-
+        @include m.tablet{
+            margin-top: 1rem;
+        }
+        @include m.xl_tablet{
+            margin-top: 0rem;
+        }
+        .formulario__label{
+            margin-bottom: .8rem;
+        }
     }
 
     &__tabla{
         overflow-x: scroll;
+    }
+}
+
+///////////////estilos del modal del detalle del recibo en citas./////////////////
+
+.recibo{
+    &__datos{
+        margin-top: 1rem;
+    }
+    &__dato{
+        display: flex;
+        align-items: center;
+    }
+    &__titulo{
+        margin: 0 0 0 0;
+        font-size: 1.4rem;
+        color: v.$grisoscuro;
+        font-weight: 600;
+    }
+    &__texto{
+        margin: 0 0 0 .5rem;
+        font-size: 1.4rem;
     }
 }

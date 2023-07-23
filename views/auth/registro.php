@@ -9,27 +9,27 @@
     <form class="formulario" action="/registro" method="POST">
         <div class="formulario__campo">
             <label class="formulario__label" for="nombre">Nombre</label>
-            <input class="formulario__input" type="text" placeholder="Tu Nombre" id="nombre" name="nombre" value="<?php echo $usuario->nombre??'';?>" requiered>
+            <input class="formulario__input" type="text" placeholder="Tu Nombre" id="nombre" name="nombre" value="<?php echo $usuario->nombre??'';?>" required>
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="apellido">Apellido</label>
-            <input class="formulario__input" type="text" placeholder="Tu Apellido" id="apellido" name="apellido" value="<?php echo $usuario->apellido??'';?>" requiered>
+            <input class="formulario__input" type="text" placeholder="Tu Apellido" id="apellido" name="apellido" value="<?php echo $usuario->apellido??'';?>" required>
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="movil">Movil</label>
-            <input class="formulario__input" type="number" placeholder="Tu Movil" id="movil" name="movil" value="<?php echo $usuario->movil??'';?>" requiered>
+            <input class="formulario__input" type="number" placeholder="Tu Movil" id="movil" name="movil" value="<?php echo $usuario->movil??'';?>" required>
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="email">Email</label>
-            <input class="formulario__input" type="email" placeholder="Tu Email" id="email" name="email" value="<?php echo $usuario->email??'';?>" requiered>
+            <input class="formulario__input" type="email" placeholder="Tu Email" id="email" name="email" value="<?php echo $usuario->email??'';?>" required>
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="password">Password</label>
-            <input class="formulario__input" type="password" placeholder="Tu Password" id="password" name="password" requiered>
+            <input class="formulario__input" type="password" placeholder="Tu Password" id="password" name="password" required>
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="password2">Repetir Password</label>
-            <input class="formulario__input" type="password" placeholder="Repetir Password" id="password2" name="password2" requiered>
+            <input class="formulario__input" type="password" placeholder="Repetir Password" id="password2" name="password2" required>
         </div>
         <input class="formulario__submit--login" type="submit" value="Crear Cuenta">
     </form>

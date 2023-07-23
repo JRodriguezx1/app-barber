@@ -127,7 +127,7 @@
         crearcita.addEventListener('click', (e)=>{ ////crear cita
             e.preventDefault();
             const usuario = `<div class="formulario__campo">
-                                <label class="formulario__label" for="servicio">Seleccione Usuario: </label>
+                                <label class="formulario__label" for="usuario">Seleccione Usuario: </label>
                                 <select class="formulario__select" name="id_usuario" id="usuario" required>
                                     <option value="" disabled selected> -Selecionar- </option>
                                 </select>
@@ -157,26 +157,26 @@
                     cancelButton: 'sweetbtncancel'
                 },
                 title: titulo,
-                html: `<form class="formulario formclientes" action="${action}" method="POST">
+                html: `<form class="formulario modalform" action="${action}" method="POST">
                             <input type="hidden" id="id_empserv" name="id_empserv" value="" >
                             <input type="hidden" id="hora_fin" name="hora_fin" value="" >
 
                             <div class="">
                                 ${usuario}
                                 <div class="formulario__campo">
-                                    <label class="formulario__label" for="servicio">Seleccione Servicio: </label>
-                                    <select class="formulario__select" name="nameservicio" id="servicios" required>
+                                    <label class="formulario__label" for="servicios">Seleccione Servicio: </label>
+                                    <select class="formulario__select" name="idservicio" id="servicios" required>
                                         <option value="" disabled selected> -Selecionar- </option>
                                     </select>
                                 </div>
                                 <div class="formulario__campo">
-                                    <label class="formulario__label" for="profesional">Seleccione Profesional: </label>
+                                    <label class="formulario__label" for="professionals">Seleccione Profesional: </label>
                                     <select class="formulario__select" name="nameprofesional" id="professionals" required>
                                         <option value="" disabled selected> -Selecionar- </option>
                                     </select>
                                 </div>
                                 <div class="formulario__campo">
-                                    <label class="formulario__label" for="fecha">Seleccionar Fecha:</label>
+                                    <label class="formulario__label" for="date">Seleccionar Fecha:</label>
                                     <input class="formulario__input" id="date" name="fecha_fin" type="date" disabled required>
                                 </div>
                             </div>
@@ -207,7 +207,7 @@
             const selectservicios = document.querySelector('#servicios');
             servicios.forEach(element => {
                 const option = document.createElement('OPTION');
-                option.value = element.id;
+                option.value = element.id; //id de la tabla servicio
                 option.textContent = element.nombre;
                 selectservicios.appendChild(option);
             });
@@ -228,9 +228,9 @@
             professionals.appendChild(option);
             empleados.forEach(element => {
                 const option = document.createElement('OPTION');
-                option.value = element.idempleado;
+                option.value = element.idempleado; //id de la tabla empleados
                 option.textContent = element.nombre;
-                option.dataset.id = element.id;
+                option.dataset.id = element.id;  //id de la tabla empserv
                 professionals.appendChild(option); 
             });
             professionals.addEventListener('change', (e)=>{
@@ -423,7 +423,6 @@
 
 
         function deshabilitarfechaanterior(){
-            
             const inputfecha = document.querySelector('#date');
             const fechaactual = new Date();  //en fecha actual esta la fecha actual con hora
             const year = fechaactual.getFullYear(); // obiene el año actual

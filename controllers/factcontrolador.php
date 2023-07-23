@@ -108,4 +108,21 @@ class factcontrolador{
     }
 
      
+    public static function detallepagoxcita(){
+        $id = $_GET['id'];
+        if(!is_numeric($id))return;
+        $factura = facturacion::find('idcita', $id);
+        echo json_encode($factura);
+    }
+
+    public static function anularpagoxcita(){
+        $id = $_GET['id'];
+        if(!is_numeric($id))return;
+        $factura = facturacion::find('id', $id);
+        $cita = citas::find('id', $factura->idcita);
+        $cita->estado = "Cancelado";
+        $a = $cita->actualizar();
+        $r = $factura->eliminar_registro();
+        echo json_encode($r);
+    }
 }

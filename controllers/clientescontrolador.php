@@ -18,11 +18,13 @@ class clientescontrolador{
         session_start();
         isadmin();
         $alertas = [];
+        $buscar = '';
         $clientes = usuarios::whereArray(['confirmado'=>1, 'admin'=>0]); //me trae los usuario que esten confirmados y no admin
 
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             if($_POST['filtro']!='all')
-            $clientes = usuarios::filtro_nombre($_POST['filtro'], $_POST['buscar'], 'id');
+                $clientes = usuarios::filtro_nombre($_POST['filtro'], $_POST['buscar'], 'id');
+                $buscar = $_POST['buscar'];
 /*
             if($_POST['filtro'] == "cedula"){
                 $registros_total = estudiantes::inner_join("SELECT COUNT(*) FROM estudiantes WHERE cedula LIKE '{$_POST['buscar']}%';");
@@ -31,7 +33,7 @@ class clientescontrolador{
                 }*/
         }
 
-        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas]);
+        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas, 'buscar'=>$buscar]);
     }
 
     public static function crear(Router $router){
@@ -59,7 +61,7 @@ class clientescontrolador{
                     $usuario->creartoken();
 
                     //enviar el email
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token, $_POST['password']);
                     $email->enviarConfirmacion();
 
                 //guardar cliente recien creado en bd  
@@ -79,6 +81,7 @@ class clientescontrolador{
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $cliente = usuarios::find('id', $_POST['id']);
             $cliente->compara_objetobd_post($_POST);
+            $cliente->password2 = $cliente->password;
             $alertas = $cliente->validar_nueva_cuenta();
             $alertas = $cliente->validarEmail();
             if(empty($alertas)){
@@ -91,7 +94,7 @@ class clientescontrolador{
     }
 
 
-    public static function eliminar(Router $router){
+    public static function hab_desh(Router $router){
         session_start();
         isadmin();
         $alertas = [];  
@@ -100,21 +103,24 @@ class clientescontrolador{
 
         $cliente = usuarios::find('id', $id);
         if($cliente){
-            //$r = $cliente->eliminar_registro();
-            $cliente->habilitar = 0;
+            if($cliente->habilitar){
+                $cliente->habilitar = 0;
+                $alertas['exito'][] = 'Cliente bloqueado de la base de datos';
+            }else{
+                $cliente->habilitar = 1;
+                $alertas['exito'][] = 'Cliente habilitado de la base de datos';
+            }
             $r = $cliente->actualizar();
         }else{
             header('Location: /admin/clientes');
         }
 
-        if($r){
-            $alertas['exito'][] = 'Cliente bloqueado de la base de datos';
-        }else{
-            $alertas['exito'][] = 'hubo un error';
-        }
+        if(!$r)$alertas['exito'][] = 'hubo un error';
+        
         $clientes = usuarios::whereArray(['confirmado'=>1, 'admin'=>0]);
         $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas]);
     }
+
 
     public static function detalle(Router $router){
         session_start();
