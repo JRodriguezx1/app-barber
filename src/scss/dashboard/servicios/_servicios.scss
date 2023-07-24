@@ -1,11 +1,16 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
 
-.servicios{
+.servicios {
     @include m.contenedor100;
     &__titulos{
         background-color: v.$blanco;
         padding-top: 1rem;
+        @include m.desktop { 
+            background-color: v.$blanco;
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
         p{
             margin-bottom: 0;
             padding-bottom: 3rem;
@@ -13,9 +18,9 @@
     }
     &__contenedor{
         @include m.tablet{
-            display: flex;
-            justify-content: space-between;
-            
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            padding-top: 1.5rem;
         }
     }
 
@@ -60,6 +65,7 @@
         padding: 1rem 1rem 0 1rem;
         color: v.$grisoscuro;
         transition: all .8s ease;
+        
         h4{
             position: relative;
         }
@@ -119,5 +125,16 @@
          font-size: 2.2rem;
          transition: all .8s ease;
     }
-
+    &__lista {
+        @include m.desktop { 
+            padding: 0;
+            width: 100%;
+        }
+    }
 }
+.servicios__botonCrearServicios {
+    width: 100%;
+    border-radius: 1rem;
+    background-color: v.$azuloscuro;
+}
+

@@ -1,25 +1,50 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
 
-.headerapp{
-    height: 100vh;
-    background-image: linear-gradient(to left, rgba(v.$negro, .1), rgba(v.$negro, 1)), url(/build/img/barberapp.webp);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+.headerapp {
+    @include m.tablet { 
+        background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portada.jpg);
+        // //linear-gradient(to left, rgba(v.$negro, .1), rgba(v.$negro, 1)), 
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+    
+    // height: 10%;
+    @include m.xl_desktop { 
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portada.jpg);
+    }
     &__contenedor{
         position: relative;
+        background-color: v.$azuloscuro;
         @include m.contenedor;
         height: 100vh;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        @include m.tablet { 
+            background-color: transparent;
+        }
     }
     &__barra{
-        padding-top: 2rem;
-        @include m.tablet{
+        background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portadamoviltransp.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        height: 50%;
+       
+        // padding-top: 2rem;
+        @include m.tablet {
+            background-image: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: auto;
+            margin-top: 2rem;
+            margin-right: 2rem;
         }
     }
     &__logo{
@@ -37,12 +62,22 @@
         display: none;
         @include m.tablet{
         display: flex;
-        justify-content: space-evenly;
-        align-items: center;
+        justify-content: right;
+        gap: 11rem;
+        text-transform: uppercase;
+        }
+        @include m.xl_tablet { 
+            gap: 17rem;
+        }
+        @include m.xl_desktop { 
+            gap: 23rem;
         }
         a{
             color: v.$blanco;
-            font-size: 1.5rem;
+            font-size: 1.7rem;
+            &:hover {
+                color: v.$rosa;
+            }
             &:nth-of-type(4){
                 background-color: v.$barprogress;
                 padding: 2rem 4rem;
@@ -57,22 +92,26 @@
 
     &__menu{
         display: block;
+        position: relative;
         @include m.tablet{
             display: none;
         }
     }
     &__menubars{
-        background-color: v.$grisoscuro;
+        background-color: #05145373;
         color: v.$blanco;
         display: flex;
         justify-content: flex-end;
         padding: 1rem 2rem;
+        // border-top-left-radius: 0.8rem;
+        // border-top-right-radius: 0.8rem;
     }
     &__bars{
-        background-color: v.$negro;
+        background-color: #05145373;
         padding: .7rem 1rem;
         display: flex;
         align-items: center;
+        border-radius: .8rem;
         span{
             font-size: 1.6rem;
             font-weight: 600;
@@ -88,62 +127,150 @@
     &__navmenu{
         height: 0rem;
         text-align: center;
-        background-color: rgba(v.$grisoscuro, .6);
+        background-color: #05145373;
         overflow: hidden;
+        position: absolute;
+        z-index: 100;
+        width: 100%;
         a{
             display: block;
             color: v.$blanco;
             margin-bottom: 2rem;
+            text-transform: uppercase;
+            font-weight: 500;
         }
         transition: all .6s ease;
         &.mostrar{
             padding: 1rem;
-            height: 16rem;
+            height: 26rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            text-transform: uppercase;
+            font-weight: 500;
         }
     }
 
     &__contenido{
-        //position: relative;
+        position: absolute;
+        top: 31.8rem;
+        background-color: v.$azuloscuro;
         @include m.tablet{
-            display: flex;
+            display: grid;
+            grid-template-columns: 8fr 8fr;
+            justify-content: center;
             align-items: center;
+            top: 10.8rem;
+            background-color: transparent;
+            @include m.xxl_desktop { 
+                width: 100%;
+            }
         }
-       // background-color: aqua;
-        height: 100%;
     }
     &__texto{
         //background-color: bisque;
-        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        // padding: 5rem 0;
+        
         @include m.tablet{
-            flex: 0 0 55%;
+            // flex: 0 0 55%;
         }
         @include m.xl_tablet{
             flex: 0 0 48%;
         }
-        
-        color: v.$blanco;
-        h1{
-            @include m.texto_fluido(2rem, 5.5rem);
-            //font-family: cursive;
-        }
-        p{
-            line-height: 1.5;
-            margin-bottom: 3rem;
-            span{
-                color: v.$azul;
+        color: v.$blanco; 
+    }
+
+    &__logoInnovaTech {
+       
+        img {
+            width: 11rem;
+            margin: 1.5rem 0;
+
+            @include m.telefono { 
+                width: 16rem;
             }
         }
-        a{
+    }
+
+    &__bloqueTexto {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+        h1 {
+            font-family: v.$fuente-secundaria;
+            text-align: center;
+            line-height: 1.38;
+            font-size: 2rem;
+            margin: 0 1.5rem 2rem 1.5rem;
+            text-transform: uppercase;
+            // @include m.texto_fluido(2.5rem, 2.3rem);
+            //font-family: cursive;
+            span {
+                display: block;
+                color: v.$rojo;
+                font-size: 4.3rem;
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+        }
+        p {
+            line-height: 1.5;
+            margin: 0 1.5rem 2.5rem 1.5rem;
+            font-size: 1.1rem;
+            text-align: center;
+            span{
+                color: v.$rojo;
+            }
+            @include m.desktop { 
+                max-width: 80%;
+            }
+            @include m.xxl_desktop { 
+                max-width: 70%;
+            }
+        }
+
+        a { 
             color: v.$blanco;
-            font-size: 1.5rem;
-            background-color: v.$barprogress;
-            padding: 2rem 4rem;
+            background-color: v.$rojo;
+            padding: 1.8rem 4rem;
+            border-radius: .8rem;
+            display: flex;
+            margin: 0 1rem 1rem 1rem;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            border: 1px solid v.$barprogress;
+            @include m.telefono { 
+                font-size: 1.8rem;
+                max-width: 45%;
+                text-align: center;
+            }
+
             &:hover{
                 background-color: transparent;
                 border: 1px solid v.$barprogress;
                 color: v.$barprogress;
             }
         }
+    }     
+}
+
+//Redes Sociales
+.rrss {
+    display: flex;
+    align-items: center;
+    gap: 3.4rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    a {    
+        svg {
+            font-size: 2.8rem;
+        }
     }
-    
 }

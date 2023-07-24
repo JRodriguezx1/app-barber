@@ -1,5 +1,6 @@
 // Fuentes
 $fuente-principal: "Poppins",sans-serif;//'Outfit', sans-serif;
+$fuente-secundaria: 'Ubuntu', sans-serif;
 
 // Tamaño de Media Queries
 $telefono: 480px;
@@ -7,10 +8,11 @@ $tablet: 768px;
 $xl_tablet: 992px;
 $desktop: 1024px;
 $xl_desktop: 1200px;
+$xxl_desktop: 1550px;
 
 // Colores
 $barprogress: rgb(240, 101, 72);
-$rojo: #cb0000;
+$rojo: #ff0000;
 $rosa: #d2095d;
 $verde1: #02db02;
 $verde2:#329f00;
@@ -20,6 +22,7 @@ $azul1: #0da6f3;
 $azul2: #3d72fc;
 $azul3: #3564db;
 $azulclaro: #eff2f7;
+$azuloscuro: #051453;
 $sidebar1: #0c213a; 
 $sidebar2: #064CDB;
 $sidebar3: #30419b; //utilizado en el sidebar

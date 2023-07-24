@@ -9,7 +9,7 @@
         
         @include m.desktop{
             display: flex;
-            gap: 1rem;
+            gap: 2rem;
         }
     }
     &__grafica1{
@@ -144,7 +144,6 @@
                 stroke-dashoffset: 440;
                 //animation: anim1 3s linear forwards;
                 transition: all 3s ease;
-                background-color: aqua;
             }
              
             .animacion{

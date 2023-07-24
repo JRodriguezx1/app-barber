@@ -26,6 +26,12 @@
         @content;
     }
 }
+@mixin xxl_desktop {
+    @media (min-width: v.$xxl_desktop) {
+        @content;
+    }
+}
+
 
 @mixin boton($bgColor, $colorTexto) {
     background-color: $bgColor;

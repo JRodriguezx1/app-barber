@@ -117,3 +117,18 @@
     }
 
 }
+
+.bloqueformulario {
+
+    &__submit {
+
+        &--login {
+            background-color: v.$azuloscuro;
+            width: 100%;
+            border-radius: .4rem;
+            &:hover {
+                background-color: v.$grisblack;
+            }
+        }
+    }
+} 

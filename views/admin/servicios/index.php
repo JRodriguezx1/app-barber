@@ -1,8 +1,9 @@
 
+
 <div class="servicios">
     <div class="servicios__titulos">
         <h2 class="dashboard__heading"><?php echo $titulo; ?> </h2>
-        <p class="dashboard__descripcion">Agrega un servicio nuevo, editalo cambia su precio o descripcion.</p>
+        <p class="dashboard__descripcion">Agrega un servicio nuevo, editalo cambia su precio o descripción.</p> 
     </div>    
     <div class="servicios__contenedor">
         <div class="servicios__campoformulario">
@@ -33,7 +34,7 @@
                         
                     </div>
                     
-                    <input class="formulario__submit" type="submit" value="Crear Servicio">
+                    <input class="formulario__submit servicios__botonCrearServicios" type="submit" value="Crear Servicio">
                 </fieldset>
             </form>
         </div>
@@ -46,10 +47,13 @@
                     <a class="servicios__eliminar" href="#"><i class="fa-solid fa-trash-can"></i></a>
                 </div>
             <?php endforeach; ?>
-
         </div>
     </div>
 </div>
+
+
+
+
 
 
 
