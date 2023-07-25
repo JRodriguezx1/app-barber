@@ -77,6 +77,7 @@ class fidelizacioncontrolador{
         
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $fidelizacion = fidelizacion::find('id', $_POST['id']);
+            $fidelizacion->fecha_fin = $_POST['fecha_fin'];
             if($_POST['tipo']=='valor'){
                 $fidelizacion->valor = $_POST['dcto1'];
                 $fidelizacion->porcentaje = $_POST['dcto2'];
@@ -86,7 +87,7 @@ class fidelizacioncontrolador{
                 $fidelizacion->porcentaje = $_POST['dcto1'];
             }
             $r = $fidelizacion->Actualizar();
-            if($r){$alertas['exito'][] = "Descuento ingresado exitosamente";
+            if($r){$alertas['exito'][] = "Promocion actualizado exitosamente";
             }else{ $alertas['error'][] = "Error Intentalo de nuevo";}
         }
         $descuentos = fidelizacion::all();

@@ -38,14 +38,12 @@
         }
     }
 
-    &__promociones{
+    &__linkpromos{
         
     }
-    &__promocion{
-        @include m.tablet{
-            display: flex;
-            gap: .8rem;
-        }
+    &__linkpromo{
+        background-color: rgb(47, 83, 83);
+        color: v.$blanco;
     }
 
     &__cita{}

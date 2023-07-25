@@ -30,13 +30,8 @@
                     </div>
                 </div>
             </div>
-            <div class="cliente__promociones">
-                <?php foreach($promociones as $promocion):  ?>
-                    <div class="cliente__promocion">
-                        <p><?php echo $promocion->nombreproducto??'';?> con <?php echo $promocion->porcentaje??'';?>% de descuento</p>
-                        <p>Hasta <?php echo $promocion->fecha_fin??'';?></p>
-                    </div>
-                <?php endforeach; ?>
+            <div class="cliente__linkpromos">
+                <a class="cliente__linkpromo" href="/promos">Ofertas - Promociones</a>
             </div>
             <div class="cliente__cita">
                 <div class="cliente__heading"><h4>Reservar Cita</h4></div>

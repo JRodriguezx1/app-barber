@@ -49,13 +49,7 @@ class controladorcliente{
         }
         //debuguear($citas);
 
-        $promociones = fidelizacion::idregistros('estado', 1);
-        foreach($promociones as $promo){
-            $promo->nombreproducto = servicios::uncampo('id', $promo->product_serv, 'nombre');
-            $promo->precioproducto = servicios::uncampo('id', $promo->product_serv, 'precio');
-        }
-
-        $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'promociones'=>$promociones, 'alertas'=>$alertas]);
+        $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'alertas'=>$alertas]);
     }
 
     public static function enviarcita(){

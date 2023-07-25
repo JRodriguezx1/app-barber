@@ -34,33 +34,7 @@
     }
     &__reporte{
         flex: 1;
-        .reporte-listas{
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            .reporte-lista{
-                //border-bottom:  solid 1px darken(v.$grisclaro, 0);
-                &:nth-of-type(2n){
-                    background-color: v.$griswhite;
-                }
-                .lista{
-                    @include m.grid(2, 0rem);
-                    @include m.xl_tablet{
-                        @include m.grid(6, 0rem);
-                    }
-                    p{
-                        margin: 0;
-                        color: v.$grisoscuro;
-                        //font-weight: 400;
-                        padding: 1rem;
-                        span{
-                            color: v.$grisoscuro;
-                            font-weight: 600;
-                        }
-                    }
-                }
-            }
-        }
+        
     } //fin reporte
     &__infogeneral{
         margin-bottom: 1rem;
@@ -87,5 +61,8 @@
             color: v.$grisraton;
             font-weight: 600;
         }
+    }
+    &__tabla{
+        overflow-x: auto;
     }
 }

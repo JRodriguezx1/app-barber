@@ -76,25 +76,37 @@
                             <span>$<?php echo $total??''; ?></span>
                         </div>
                     </div>
-                </div>
-                <ul  class="reporte-listas">
-                    <?php foreach($gestionardia as $value): ?>
-                        <li  class="reporte-lista">
-                            <div class="lista">
-                                <p>Orden: <span><?php echo $value->idcita??''; ?></span></p>
-                                <p>Tipo: <span><?php echo $value->tipo==1?'Cita':'Casual'; ?></span></p>
-                                <p>Hora Pago: <span><?php echo $value->hora_pago??''; ?></span></p>
-                                <p>Costo Servicio: <span>$<?php echo $value->valor_servicio??''; ?></span></p>
-                                <p>Dcto: <span><?php echo $value->dcto??''; ?></span></p>
-                                <p>Pago: <span>$<?php echo $value->total??''; ?></span></p>
-                            </div>
-                            <div>
+                </div> <!-- fact_gestionar__infogeneral -->
 
-                            </div>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
+                <div class="fact_gestionar__tabla">
+                    <table class="tabla">
+                        <thead>
+                            <tr>
+                                <th>Orden:</th>
+                                <th>Tipo:</th>
+                                <th>Hora Pago:</th>
+                                <th>Costo Servicio:</th>
+                                <th>Dcto:</th>
+                                <th>Promo:</th>
+                                <th>Pago:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($gestionardia as $value): ?>
+                                <tr>
+                                    <td><?php echo $value->idcita??'';?></td>
+                                    <td><?php echo $value->tipo==1?'Cita':'Ordinaria';?></td>
+                                    <td><?php echo $value->hora_pago??'';?></td>
+                                    <td>$<?php echo $value->valor_servicio??'';?></td>
+                                    <td>$<?php echo $value->valordcto??'';?></td>
+                                    <td>$<?php echo $value->valorpromo??'';?></td>
+                                    <td>$<?php echo $value->total??'';?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div> <!-- fin reporte -->
         </div>
     </div>
 

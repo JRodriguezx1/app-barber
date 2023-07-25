@@ -45,6 +45,7 @@ $router->get('/confirmar-cuenta', [logincontrolador::class, 'confirmar_cuenta'])
 
 //area publica
 $router->get('/', [paginacontrolador::class, 'index']);
+$router->get('/promos', [paginacontrolador::class, 'promos']);
 
 /////area de administracion/////
 $router->get('/admin/dashboard', [dashboardcontrolador::class, 'index']);
@@ -76,7 +77,7 @@ $router->post('/admin/clientes', [clientescontrolador::class, 'index']); //filtr
 $router->post('/admin/clientes/crear', [clientescontrolador::class, 'crear']);
 $router->post('/admin/clientes/actualizar', [clientescontrolador::class, 'actualizar']);
 $router->get('/admin/clientes/detalle', [clientescontrolador::class, 'detalle']);
-$router->get('/admin/clientes/hab_desh', [clientescontrolador::class, 'hab_desh']);
+$router->get('/admin/clientes/hab_desh', [clientescontrolador::class, 'hab_desh']); //habilitar deshabilitar cliente
 
 $router->get('/admin/fidelizacion', [fidelizacioncontrolador::class, 'index']);  //tambein es llamado desde fidelizacion.js cuando se elimina oferta
 $router->get('/admin/fidelizacion/creardctoxproduct', [fidelizacioncontrolador::class, 'creardctoxproduct']);

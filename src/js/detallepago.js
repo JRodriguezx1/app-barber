@@ -24,7 +24,7 @@
 
         function formulariofactura(resultado, tr){
             console.log(resultado);
-            const {id, idcita, recibido, devolucion, fecha_pago, hora_pago, dcto, valordcto, valor_servicio, total} = resultado;
+            const {id, idcita, recibido, devolucion, fecha_pago, hora_pago, dcto, valordcto, valorpromo, valor_servicio, total} = resultado;
             console.log(recibido);
             Swal.fire({
                 customClass: {
@@ -69,7 +69,11 @@
                                 <p class="recibo__texto">$${devolucion}</p>
                             </div>
                             <div class="recibo__dato">
-                                <p class="recibo__titulo">Dcto Aplicado:</p>
+                                <p class="recibo__titulo">Promo Aplicado:</p>
+                                <p class="recibo__texto">$${valorpromo}</p>
+                            </div>
+                            <div class="recibo__dato">
+                                <p class="recibo__titulo">Dcto Manual:</p>
                                 <p class="recibo__texto">$${valordcto}</p>
                             </div>
                             <div class="recibo__dato">
@@ -99,6 +103,9 @@
                                     actualizarfilacita(tr);
                                     Swal.fire('Anulado!', '', 'success')
                                 }
+                                else{
+                                    Swal.fire('No se permite de dias anteriores!', '', 'error')
+                                }
                             });
                         } 
                       })
@@ -118,7 +125,7 @@
         }
 
         function actualizarfilacita(tr){
-            tr.children[7].textContent = "Cancelado";
+            tr.children[7].textContent = "Pendiente";
             tr.classList.remove('tr-resaltar');
         }
     }

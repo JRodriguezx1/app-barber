@@ -2,7 +2,7 @@
     <div class="headerapp__contenedor">
         <div class="headerapp__barra">
             <div class="headerapp__logo">
-                <!-- <a href="/"><img loading="lazy" src="/build/img/<?php echo $logo; ?>" alt="logo barberia"></a> -->
+                <!-- <a href="/"><img loading="lazy" src="/build/img/<?php //echo $logo; ?>" alt="logo barberia"></a> -->
             </div> 
             <nav class="headerapp__nav">
                 <a href="/">Home</a>

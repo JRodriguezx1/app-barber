@@ -180,7 +180,7 @@ class citascontrolador{
                 if(empty($citaunica)){
                     $r = $cita->crear_guardar();
                     if($r[0])$alertas['exito'][] = "Cita Creada";
-                }else{ $alertas['exito'][] = "Error actualize la pagina"; }
+                }else{ $alertas['error'][] = "Error actualize la pagina"; }
             }
         }
 
@@ -222,7 +222,7 @@ class citascontrolador{
 
         $profesionales = empleados::all();
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
-            $cita = citas::find('id', $_POST['id']);
+            $cita = citas::find('id', $_POST['id']);  // $_POST['id'] viene de finalizcita.js
             $cita->estado = 'Finalizada';
             $cita->fecha_fin = date('Y-m-d');  //si la cita fue programada para un dia determinado y se realiza antes, la fecha de la cita se corre para el dia en que se paga o realiza
             $r2 = $cita->actualizar();

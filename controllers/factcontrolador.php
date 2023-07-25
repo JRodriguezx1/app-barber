@@ -118,11 +118,18 @@ class factcontrolador{
     public static function anularpagoxcita(){
         $id = $_GET['id'];
         if(!is_numeric($id))return;
+        date_default_timezone_set('America/Bogota');
+        $fechaactual = new \DateTime(date('Y-m-d'));
         $factura = facturacion::find('id', $id);
-        $cita = citas::find('id', $factura->idcita);
-        $cita->estado = "Cancelado";
-        $a = $cita->actualizar();
-        $r = $factura->eliminar_registro();
+        $fechadepago = new \DateTime($factura->fecha_pago);
+        if($fechadepago==$fechaactual){
+            $cita = citas::find('id', $factura->idcita);
+            $cita->estado = "Pendiente";
+            $a = $cita->actualizar();
+            $r = $factura->eliminar_registro();
+        }else{
+            $r = false;
+        }
         echo json_encode($r);
     }
 }

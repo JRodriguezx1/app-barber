@@ -1,9 +1,9 @@
 <div class="lineaencabezado">
-    <h1>Barería Latino Armenia</h1>
+    <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 <main class="auth bloqueauth">
     <a class="bloqueauth__logocliente" href="#">
-        <img src="/build/img/latino.png" alt="Logo Cliente">
+        <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
     <h2 class="auth__heading bloqueauth__iniciarsesion"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
     <p class="auth__texto bloqueauth__subtitulo">Tu cuenta appbarber</p>

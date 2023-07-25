@@ -48,7 +48,7 @@ class logincontrolador{
         } //cierre de $_SERVER['REQUEST_METHOD'] === 'POST'
 
         $alertas = usuarios::getAlertas();
-       $router->render('auth/login', ['alertas'=>$alertas, 'titulo'=>'iniciar sesion', 'logo'=>negocio::uncampo('id', 1, 'logo')]);   //  'autenticacion/login' = carpeta/archivo
+       $router->render('auth/login', ['alertas'=>$alertas, 'titulo'=>'iniciar sesion', 'negocio'=>negocio::get(1)]);   //  'autenticacion/login' = carpeta/archivo
     }
 
 
@@ -86,7 +86,7 @@ class logincontrolador{
         }
 
         $alertas = usuarios::getAlertas();
-        $router->render('auth/olvide', ['alertas'=>$alertas, 'titulo'=>'recuperar', 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+        $router->render('auth/olvide', ['alertas'=>$alertas, 'titulo'=>'recuperar', 'negocio'=>negocio::get(1)]);
     }
 
 
@@ -123,7 +123,7 @@ class logincontrolador{
             }
         }
         $alertas = usuarios::getAlertas();
-        $router->render('auth/recuperarpass', ['alertas'=>$alertas, 'error'=>$error, 'titulo'=>'recuperar', 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+        $router->render('auth/recuperarpass', ['alertas'=>$alertas, 'error'=>$error, 'titulo'=>'recuperar', 'negocio'=>negocio::get(1)]);
     }
 
 
@@ -166,13 +166,13 @@ class logincontrolador{
             }
         } //cierre del if $_SERVER[REQUEST_METHOD]
        
-        $router->render('auth/registro', ['usuario'=>$usuario, 'alertas'=>$alertas, 'titulo'=>'crear cuenta', 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+        $router->render('auth/registro', ['usuario'=>$usuario, 'alertas'=>$alertas, 'titulo'=>'crear cuenta', 'negocio'=>negocio::get(1)]);
     } //cierre del metodo
 
 
 
     public static function mensaje(Router $router){
-        $router->render('auth/mensaje', ['titulo'=>'mensaje', 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+        $router->render('auth/mensaje', ['titulo'=>'mensaje', 'negocio'=>negocio::get(1)]);
     } 
 
 
@@ -194,7 +194,7 @@ class logincontrolador{
         }
 
         $alertas = usuarios::getAlertas();
-        $router->render('auth/confirmar_cuenta', ['alertas'=>$alertas, 'titulo'=>'confirma cuenta', 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+        $router->render('auth/confirmar_cuenta', ['alertas'=>$alertas, 'titulo'=>'confirma cuenta', 'negocio'=>negocio::get(1)]);
     }
 
      

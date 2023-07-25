@@ -70,7 +70,8 @@
                 html: `<form class="formulario modalform" action="/admin/citas/finalizar?pagina=1" method="POST">
                             <input type="hidden" name="id" value="" >
                             <input type="hidden" name="valor_servicio" value="" >
-                            <input type="hidden" name="dcto" value="0" >
+                            <input type="hidden" name="valordcto" value="0" >
+                            <input type="hidden" name="promodcto" value="0" >
                             <input type="hidden" name="total" value="" >
 
                             <p class="orden"></p>
@@ -81,8 +82,8 @@
                             <div class="">
 
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="valordcto">Aplicar Promocion:</label>
-                                <select class="formulario__select" name="valordcto" id="valordcto">
+                                <label class="formulario__label" for="valorpromodcto">Aplicar Promocion:</label>
+                                <select class="formulario__select" name="valorpromo" id="valorpromodcto">
                                     <option value="" disabled selected> Seleccionar Dcto</option>
                                     <option data-dcto="0" value="0"> Sin Descuento</option>
                                 </select> 
@@ -137,8 +138,8 @@
         }
 
         function cargardatoscliente(e){
-            const dcto = e.target.parentElement.dataset.promodcto||0; //dcto en porcentaje
-            const dctovalor = e.target.parentElement.dataset.promodctovalor||0;  //dcto en valor
+            const promodcto = e.target.parentElement.dataset.promodcto||0; //dcto en porcentaje
+            const valorpromodcto = e.target.parentElement.dataset.promodctovalor||0;  //dcto de promocion en valor
             const tr = e.target.parentElement.parentElement.parentElement;
             const idcita = tr.children[0].textContent;
             const nombre = tr.children[1].textContent;
@@ -152,39 +153,41 @@
             document.querySelector('.nameservice').textContent = servicio;
             document.querySelector('.precio').textContent = 'Precio: $'+valueservice;
 
-            const selectdcto = document.querySelector('#valordcto');
-            if(parseInt(dcto)){
+            const selectdcto = document.querySelector('#valorpromodcto');
+            if(parseInt(promodcto)){
                 const option = document.createElement('option');
-                option.textContent = dcto+'%'+' - '+'$'+dctovalor;
-                option.value = dctovalor; //dcto en valor
-                option.dataset.dcto = dcto;
+                option.textContent = promodcto+'%'+' - '+'$'+valorpromodcto;
+                option.value = valorpromodcto; //dcto en valor
+                option.dataset.dcto = promodcto;
                 selectdcto.appendChild(option);
             }
-            selectdcto.addEventListener('change', aplicardcto);
+            selectdcto.addEventListener('change', aplicarpromo);
             const totalpagar = document.querySelector('#totalpagar');
             totalpagar.value = valueservice;
             totalpagar.addEventListener('input', calculo);
         }
 
-        function aplicardcto(e){
+        function aplicarpromo(e){
             document.querySelector('#totalpagar').value = valueservice; //se reinicia el valor original del servicio
-            const dctovalor = parseInt(e.target.value);
+            const valorpromodcto = parseInt(e.target.value);
             const totalpagar = parseInt(document.querySelector('#totalpagar').value);
-            document.querySelector('#totalpagar').value = totalpagar - dctovalor;
-            const dcto = e.target.options[this.options.selectedIndex].dataset.dcto;
-            document.querySelector('input[name=dcto]').value = dcto;  //input hidden para enviar dcto en porcentaje a bd
+            document.querySelector('#totalpagar').value = totalpagar - valorpromodcto;
+            const promodcto = e.target.options[this.options.selectedIndex].dataset.dcto;
+            document.querySelector('input[name=promodcto]').value = promodcto;  //input hidden para enviar dcto en porcentaje a bd
             calculo();
         }
 
         function calculo(){
-            const devolucion = document.querySelector('#devolucion');
+            const valordcto = document.querySelector('input[name=valordcto]'); //para dcto manual
             const inputtotalpagar = parseInt(document.querySelector('#totalpagar').value);
+            const devolucion = document.querySelector('#devolucion');
             const recibido = parseInt(document.querySelector('#recibido').value); 
             if(recibido>=inputtotalpagar){
                devolucion.value = recibido-inputtotalpagar;
                //devolucion.style.color = "rgb(240, 101, 72)"; 
             }else{
                 devolucion.value = 0;
+                valordcto.value = inputtotalpagar - recibido; //descuento manual
             }
             document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
         }

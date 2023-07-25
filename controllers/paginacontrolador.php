@@ -4,6 +4,7 @@ namespace Controllers;
 
 use Model\negocio;
 use Model\fidelizacion;
+use Model\servicios;
 //use DateTime;
 use MVC\Router;
 
@@ -24,6 +25,15 @@ class paginacontrolador{
             }
         }
         $router->render('paginas/index', ['titulo'=>'app salon', 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+    }
+
+    public static function promos(Router $router){
+        $promociones = fidelizacion::idregistros('estado', 1);
+        foreach($promociones as $promo){
+            $promo->nombreproducto = servicios::uncampo('id', $promo->product_serv, 'nombre');
+            $promo->precioproducto = servicios::uncampo('id', $promo->product_serv, 'precio');
+        }
+        $router->render('paginas/promos', ['titulo'=>'app salon', 'promociones'=>$promociones, 'logo'=>negocio::uncampo('id', 1, 'logo')]);
     }
 }
 

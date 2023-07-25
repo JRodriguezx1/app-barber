@@ -4,7 +4,7 @@ namespace Model;
 
 class facturacion extends ActiveRecord {
     protected static $tabla = 'facturacion';
-    protected static $columnasDB = ['id', 'idcita', 'id_pagosxdia', 'tipo', 'nota', 'hora_pago', 'fecha_pago', 'valor_servicio', 'dcto', 'valordcto',  'recibido', 'devolucion', 'total'];
+    protected static $columnasDB = ['id', 'idcita', 'id_pagosxdia', 'tipo', 'nota', 'hora_pago', 'fecha_pago', 'valor_servicio', 'dcto', 'valordcto', 'promodcto', 'valorpromo', 'recibido', 'devolucion', 'total'];
     
     public function __construct($args = [])
     {
@@ -18,6 +18,8 @@ class facturacion extends ActiveRecord {
         $this->valor_servicio = $args['valor_servicio'] ?? '';
         $this->dcto = $args['dcto'] ?? 0;
         $this->valordcto = $args['valordcto'] ?? 0;
+        $this->promodcto = $args['promodcto'] ?? 0;
+        $this->valorpromo = $args['valorpromo'] ?? 0;
         $this->recibido = $args['recibido'] ?? '';
         $this->devolucion = $args['devolucion'] ?? '';
         $this->total = $args['total'] ?? '';

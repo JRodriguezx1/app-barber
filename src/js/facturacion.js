@@ -109,14 +109,16 @@
         }
 
         function calculo(){
-            const devolucion = document.querySelector('#devolucion');
+            const valordcto = document.querySelector('input[name=valordcto]'); //para dcto manual
             const valorservicio = parseInt(document.querySelector('#valor_servicio').value);
+            const devolucion = document.querySelector('#devolucion');
             const recibido = parseInt(document.querySelector('#recibido').value); 
                 if(recibido>=valorservicio){
                    devolucion.value = recibido-valorservicio;
                    //devolucion.style.color = "rgb(240, 101, 72)"; 
                 }else{
                     devolucion.value = 0;
+                    valordcto.value = valorservicio - recibido; //descuento manual
                 }
                 document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
         }
