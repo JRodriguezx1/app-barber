@@ -8,6 +8,7 @@ use Model\citas;
 use Model\empserv;
 use Model\servicios;
 use Model\empleados;
+use Model\mediospago;
 
 use MVC\Router;  //namespace\clase
  
@@ -95,6 +96,9 @@ class factcontrolador{
                     $value->empleado = empleados::uncampo('id', $value->idempleado, 'nombre').' '.empleados::uncampo('id', $value->idempleado, 'apellido');
                 }
             }
+            if($value->idmediospago){
+                $value->idmediospago = mediospago::uncampo('id', $value->idmediospago, 'mediopago');
+            }
             $valorservicios+= $value->total; //facturacion de todos los servicios con sus precios originales
             if($value->dcto != 0){
                 $numdctos++;
@@ -104,6 +108,9 @@ class factcontrolador{
             $devoluciones+= $value->devolucion;
         }
         $total = pagosxdia::uncampo('id', $id, 'computarizado');
+        ///*********************** *////
+        ///mostrar los servicios y el dinero total de cada empleado
+        ///***********************// */
         $router->render('admin/facturacion/gestionar', ['titulo'=>'facturacion', 'fecha'=>$fecha, 'gestionardia'=>$gestionardia, 'numservicios'=>$numservicios, 'valorservicios'=>$valorservicios, 'numdctos'=>$numdctos, 'valordctos'=>$valordctos, 'recibidos'=>$recibidos, 'devoluciones'=>$devoluciones, 'total'=>$total, 'alertas'=>$alertas]);
     }
 

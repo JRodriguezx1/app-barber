@@ -92,7 +92,7 @@
             let empleado;
             const divtags = document.querySelectorAll('.pagina4 .formulario__tag');
             divtags.forEach(divtag => {divtag.remove()}); //eliminar previamente los skills para cargarlos nuevamente 
-            eliminaremployee.href = "/admin/configuracion/eliminaremployee?id="+e.target.value;
+            eliminaremployee.href = "/admin/adminconfig/eliminaremployee?id="+e.target.value;
             empleado = empleadosapi.filter(element => element.id == e.target.value); //obtengo solo un empleado elegido
             cargarempleado(empleado);
         });

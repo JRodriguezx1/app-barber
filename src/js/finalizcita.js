@@ -55,6 +55,7 @@
                 const estado = tr.children[7].textContent;
                 if(estado === "Pendiente"){   
                     formulariopagar();
+                    obtenermediospago();
                     cargardatoscliente(e);
                 }
             });
@@ -92,6 +93,13 @@
                             <div class="formulario__campo">
                                 <label class="formulario__label" for="totalpagar">Total A Pagar: </label>
                                 <input class="formulario__input" type="number" id="totalpagar" name="totalpagar" value="" readonly required>
+                            </div>
+
+                            <div class="formulario__campo">
+                                <label class="formulario__label" for="mediopago">Elegir Medio De Pago:</label>
+                                <select class="formulario__select" name="idmediospago" id="mediopago">
+                                    <option value="" disabled selected> Seleccionar medio pago</option>
+                                </select> 
                             </div>
                             
                             <div class="formulario__campo-2r">
@@ -135,6 +143,30 @@
             });
             document.querySelector('#recibido').addEventListener('input', calculo);
             countchars();
+        }
+
+        ///////////////////////////traer los medios de pago /////////////////////////
+        const obtenermediospago = async()=>{
+            try {
+                const url = "/admin/api/getmediospago";
+                const respuesta = await fetch(url);
+                const mediospago = await respuesta.json();
+                cargarmediospago(mediospago);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        function cargarmediospago(mediospago){
+            const selectmediospago = document.querySelector('#mediopago');
+            mediospago.forEach(element => {
+                if(element.estado==='1'){
+                    const option = document.createElement('OPTION');
+                    option.value = element.id;
+                    option.textContent = element.mediopago;
+                    selectmediospago.appendChild(option);
+                }
+            });
         }
 
         function cargardatoscliente(e){
@@ -183,11 +215,14 @@
             const devolucion = document.querySelector('#devolucion');
             const recibido = parseInt(document.querySelector('#recibido').value); 
             if(recibido>=inputtotalpagar){
-               devolucion.value = recibido-inputtotalpagar;
-               //devolucion.style.color = "rgb(240, 101, 72)"; 
+                devolucion.value = recibido-inputtotalpagar;
+                //devolucion.style.color = "rgb(240, 101, 72)"; 
+                valordcto.value = 0; //descuento manual
+                console.log(valordcto.value);
             }else{
                 devolucion.value = 0;
                 valordcto.value = inputtotalpagar - recibido; //descuento manual
+                console.log(valordcto.value);
             }
             document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
         }

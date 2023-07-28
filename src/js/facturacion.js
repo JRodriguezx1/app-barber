@@ -18,12 +18,13 @@
 
         const pagar = document.querySelector('#pagar');
         pagar.addEventListener('click', ()=>{
-            formulariopagar(0);
+            formulariopagar();
+            obtenermediospago();
             countchars();
         });
         
 
-        function formulariopagar(id){
+        function formulariopagar(){
             Swal.fire({
                 customClass: {
                     confirmButton: 'sweetbtnconfirm',
@@ -46,6 +47,13 @@
                             <div class="formulario__campo">
                                 <label class="formulario__label" for="valor_servicio">Total a pagar:</label>
                                 <input class="formulario__input" type="number" id="valor_servicio" name="valor_servicio" value="" readonly required>
+                            </div>
+
+                            <div class="formulario__campo">
+                                <label class="formulario__label" for="mediopago">Elegir Medio De Pago:</label>
+                                <select class="formulario__select" name="idmediospago" id="mediopago">
+                                    <option value="" disabled selected> Seleccionar medio pago</option>
+                                </select> 
                             </div>
                             
                             <div class="formulario__campo-2r">
@@ -88,6 +96,30 @@
             });
             document.querySelector('#recibido').addEventListener('input', calculo);
             cargarservicios();
+        }
+
+        ///////////////////////////traer los medios de pago /////////////////////////
+        const obtenermediospago = async()=>{
+            try {
+                const url = "/admin/api/getmediospago";
+                const respuesta = await fetch(url);
+                const mediospago = await respuesta.json();
+                cargarmediospago(mediospago);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        function cargarmediospago(mediospago){
+            const selectmediospago = document.querySelector('#mediopago');
+            mediospago.forEach(element => {
+                if(element.estado==='1'){
+                    const option = document.createElement('OPTION');
+                    option.value = element.id;
+                    option.textContent = element.mediopago;
+                    selectmediospago.appendChild(option);
+                }
+            });
         }
 
         function cargarservicios(){

@@ -33,7 +33,7 @@
                             <td class="">$<?php echo $dcto->precioservicio-$dcto->valor;?></td>        
                             <td class=""><?php echo $dcto->fecha_fin; ?></td>
                             <td class=""><?php echo $dcto->estado?'Activo':'No-activo'; ?></td>
-                            <td class="accionestd"> <div class="acciones-iconos" data-id="<?php echo $dcto->id;?>"><i class="sendmsj fa-solid fa-envelope-circle-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i></div></td>
+                            <td class="accionestd"> <div class="acciones-iconos" data-id="<?php echo $dcto->id;?>"><?php if($dcto->estado):?><i class="sendmsj fa-solid fa-envelope-circle-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><?php endif; ?><i class="cancelado fa-solid fa-x"></i></div></td>
                         </tr>   
                     <?php endforeach; ?>
                 </tbody>

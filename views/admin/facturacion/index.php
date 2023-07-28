@@ -1,6 +1,6 @@
 
 <div class="facturacion">
-    <h2 class="dashboard__heading">Historial de pagos</h2>
+    
     <div class="facturacion__contenedor">
     <?php require_once __DIR__ .'/../../templates/alertas.php'; ?>
         <div class="facturacion__filtros">
@@ -14,6 +14,7 @@
                 <span id="pagar" class="btnsmall">Registrar Pago</span>
             </div>
         </div>
+        <h2 class="dashboard__heading">HISTORIAL DE PAGOS</h2>
         <div class="facturacion__tabla">
             <table class="tabla">
                 <thead>

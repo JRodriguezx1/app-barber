@@ -21,7 +21,7 @@ class paginacontrolador{
             $fechapromo = new \DateTime($promo->fecha_fin); 
             if($fechaactual>$fechapromo){
                 $promo->estado = 0;
-                $r = $promo[$key]->actualizar();
+                $r = $promos[$key]->actualizar();
             }
         }
         $router->render('paginas/index', ['titulo'=>'app salon', 'logo'=>negocio::uncampo('id', 1, 'logo')]);

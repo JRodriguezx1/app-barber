@@ -37,7 +37,8 @@ class controladorcliente{
             }  
         }
 
-        $citas = citas::idregistros('id_usuario', $_SESSION['id']);
+        //$citas = citas::idregistros('id_usuario', $_SESSION['id']);
+        $citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario = {$_SESSION['id']} AND estado = 'Pendiente' ORDER BY fecha_fin DESC;");
         foreach($citas as $cita){
            /* if($cita->id_empserv){
                 $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
@@ -52,7 +53,7 @@ class controladorcliente{
         $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'alertas'=>$alertas]);
     }
 
-    public static function enviarcita(){
+    public static function enviarcita(){ //api llamada desde dash_client_assign.js
         session_start();
         $alertas = [];
         $idusuario = $_SESSION['id'];
@@ -94,7 +95,7 @@ class controladorcliente{
         echo json_encode($r);
     }
 
-    public static function getcitas(){
+    public static function getcitas(){  //api llamado desde dash_cliente_assign.js
         $alertas = [];
         date_default_timezone_set('America/Bogota');
         //$citas = citas::inner_join('SELECT * FROM citas WHERE fecha_fin >= CURDATE();');

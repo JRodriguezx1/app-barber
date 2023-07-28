@@ -1,7 +1,7 @@
 <div class="fact_gestionar">
     <h2 class="dashboard__heading">Reportes Del Dia</h2>
     <div class="fact_gestionar__contenedor">
-    <div ><a class="btnsmall" href="/admin/facturacion"><i class="fa-solid fa-arrow-left"></i>Atras</a></div>
+        <div><a class="btnsmall" href="/admin/facturacion"><i class="fa-solid fa-arrow-left"></i>Atras</a></div>
         <div class="fact_gestionar__contenido">
             <div class="fact_gestionar__cierre">
                 <form class="formulario" action="" method="POST">
@@ -85,6 +85,7 @@
                                 <th>Orden:</th>
                                 <th>Tipo:</th>
                                 <th>Hora Pago:</th>
+                                <th>Medio Pago:</th>
                                 <th>Costo Servicio:</th>
                                 <th>Dcto:</th>
                                 <th>Promo:</th>
@@ -97,6 +98,7 @@
                                     <td><?php echo $value->idcita??'';?></td>
                                     <td><?php echo $value->tipo==1?'Cita':'Ordinaria';?></td>
                                     <td><?php echo $value->hora_pago??'';?></td>
+                                    <td><?php echo $value->idmediospago??'';?></td>
                                     <td>$<?php echo $value->valor_servicio??'';?></td>
                                     <td>$<?php echo $value->valordcto??'';?></td>
                                     <td>$<?php echo $value->valorpromo??'';?></td>
@@ -107,7 +109,7 @@
                     </table>
                 </div>
             </div> <!-- fin reporte -->
-        </div>
+        </div> <!-- fin fact_gestionar__contenido -->
     </div>
 
 </div>

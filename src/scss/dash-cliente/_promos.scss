@@ -1,0 +1,17 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+.promociones{
+
+    .promocion{
+        &:nth-of-type(n){
+            background-color: brown;
+        }
+        &:nth-of-type(2n){
+            background-color: rgb(94, 54, 54);
+        }
+        &:nth-of-type(3n){
+            background-color: rgb(53, 189, 65);
+        }
+    }
+}

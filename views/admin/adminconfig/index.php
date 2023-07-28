@@ -1,4 +1,4 @@
-<div class="informacion configuración">
+<div class="informacion administracion">
     <p>Complete la informacion</p>
     <div class="barraprogreso">
         <div class="barraprogreso__barra">
@@ -12,7 +12,7 @@
     <div class="negocio__grid">
         <h4>Informacion Del Negocio</h4>
         <div class="negocio__form">
-            <form class="formulario" action="/admin/configuracion/actualizar" enctype="multipart/form-data" method="POST">
+            <form class="formulario" action="/admin/adminconfig/actualizar" enctype="multipart/form-data" method="POST">
                 <fieldset class="formulario__fieldset">
                     <div class="formulario__campo">
                         <label class="formulario__label" for="nombre del negocio">Nombre</label>
@@ -102,7 +102,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> <!-- fin hegocio__info -->
 
 <div class="configuracion">
     <div class="configuracion__grid">
@@ -110,12 +110,13 @@
             <span id="pagina1">Empleados</span>
             <span id="pagina2">Malla</span>
             <span id="pagina3">Fecha desc..</span>
-            <span id="pagina4">Update Data</span>
+            <span id="pagina4">Editar Empleando</span>
+            <span id="pagina5">Configuración</span>
         </nav>
         <!-- crear empleado-->
         <div class="paginas pagina1">
             <h4 class="configuracion__heading">datos del empleado</h4>
-            <form class="formulario" action="/admin/configuracion/crear_empleado" method="POST">
+            <form class="formulario" action="/admin/adminconfig/crear_empleado" method="POST">
                 <?php include __DIR__.'/empleado.php'; ?>
                 <input class="formulario__submit" type="submit" value="Crear Empleado">
             </form>
@@ -124,7 +125,7 @@
         <!--malla-->
         <div class="paginas pagina2 pagina2malla">
             <h4 class="configuracion__heading">malla</h4>
-            <form class="formulario" action="/admin/configuracion/actualizarmalla" method="POST">
+            <form class="formulario" action="/admin/adminconfig/actualizarmalla" method="POST">
 
                 <div class="formulario__elegirempleado">
                     <label class="formulario__label" for="categorias">Elegir Empleado: </label>
@@ -138,7 +139,7 @@
 
                 <div class="malla">
                     <div class="dia">
-                        <div class="nombre-dia">
+                        <div class="stylecheckbox">
                             <input type="checkbox" data-id="1" id="lunes" name="dia[lunes]" value="1">
                             <label for="lunes">Lunes</label>
                         </div>
@@ -159,7 +160,7 @@
                         </div>
                     </div>
                     <div class="dia">
-                        <div class="nombre-dia">
+                        <div class="stylecheckbox">
                             <input type="checkbox" data-id="2" id="martes" name="dia[martes]" value="2">
                             <label for="martes">Martes</label>
                         </div>
@@ -180,7 +181,7 @@
                         </div>
                     </div>
                     <div class="dia">
-                        <div class="nombre-dia">
+                        <div class="stylecheckbox">
                             <input type="checkbox" data-id="3" id="miercoles" name="dia[miercoles]" value="3">
                             <label for="miercoles">Miercoles</label>
                         </div>
@@ -201,7 +202,7 @@
                         </div>
                     </div>
                     <div class="dia">
-                        <div class="nombre-dia">
+                        <div class="stylecheckbox">
                             <input type="checkbox" data-id="4" id="jueves" name="dia[jueves]" value="4">
                             <label for="jueves">Jueves</label>
                         </div>
@@ -222,7 +223,7 @@
                         </div>
                     </div>
                     <div class="dia">
-                        <div class="nombre-dia">
+                        <div class="stylecheckbox">
                             <input type="checkbox" data-id="5" id="viernes" name="dia[viernes]" value="5">
                             <label for="viernes">Viernes</label>
                         </div>
@@ -243,7 +244,7 @@
                         </div>
                     </div>
                     <div class="dia">
-                        <div class="nombre-dia">
+                        <div class="stylecheckbox">
                             <input type="checkbox" data-id="6" id="sabado" name="dia[sabado]" value="6">
                             <label for="sabado">Sabado</label>
                         </div>
@@ -264,7 +265,7 @@
                         </div>
                     </div>
                     <div class="dia">
-                        <div class="nombre-dia">
+                        <div class="stylecheckbox">
                             <input type="checkbox" data-id="7" id="domingo" name="dia[domingo]" value="7">
                             <label for="domingo">Domingo</label>
                         </div>
@@ -318,7 +319,7 @@
 
         <div class="paginas pagina3 descpagina3">
             <h4 class="configuracion__heading">Fechas manuales de descanso</h4>
-            <form class="formulario" action="/admin/configuracion/fechadesc" method="POST">
+            <form class="formulario" action="/admin/adminconfig/fechadesc" method="POST">
                 <div class="registrasfechas">
                     <div class="formulario__campo">
                         <label class="formulario__label" for="categorias">Elegir Empleado: </label>
@@ -344,7 +345,7 @@
         <!--update empleado-->
         <div class="paginas pagina4">
             <h4 class="configuracion__heading">Actualizar datos del empleado</h4>
-            <form class="formulario" action="/admin/configuracion/update_employee" method="POST">
+            <form class="formulario" action="/admin/adminconfig/update_employee" method="POST">
                 
                 <div class="formulario__elegirempleado">
                     <label class="formulario__label" for="categorias">Elegir Empleado: </label>
@@ -364,5 +365,28 @@
                 
             </form>
         </div>  <!--fin update empleado-->
+
+        <!-- configuración - medios de pago -->
+        <div class="paginas pagina5">
+            <div class="mediospago">
+                <h4 class="configuracion__heading">Medios De Pago</h4>
+                <div class="mediospago__form">
+                    <?php foreach($mediospago as $value): ?>
+                    <div class="mediospago__mediopago">
+                        <div class="stylecheckbox">
+                            <input type="checkbox" id="<?php echo $value->mediopago??'';?>" name="mediopago" value="<?php echo $value->id??'';?>" <?php echo $value->id==1?'disabled':'';?>>
+                            <label for="<?php echo $value->mediopago??'';?>"><?php echo $value->mediopago??'';?></label>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+                <div class="mediospago__btn">
+                    <span id="btnmediopago" class="btnsmall"><i class="fa-solid fa-plus"></i> Actualizar</span>
+                </div>
+            </div>
+            <!-- <input type="color" name="color" value="" id="color" /> -->
+        </div>
+
     </div> <!--fin configuracion__grid-->
+
 </div>

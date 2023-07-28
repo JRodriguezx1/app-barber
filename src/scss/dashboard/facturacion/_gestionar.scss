@@ -31,11 +31,15 @@
     &__cierre{
         flex: 0 0 19%;
         margin-bottom: 2rem;
+        //flex-basis: calc(40% - 1rem);
     }
     &__reporte{
         flex: 1;
-        
+        //flex: 0 0 77%;
+        //flex-basis: calc(55% - 1rem);
+        overflow: hidden;    
     } //fin reporte
+
     &__infogeneral{
         margin-bottom: 1rem;
         @include m.grid(2, 1rem);

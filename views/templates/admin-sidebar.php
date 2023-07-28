@@ -30,9 +30,9 @@
             <span class="dashboard__menu-texto">fidelizacion</span>
         </a>
 
-        <a href="/admin/configuracion" class="dashboard__enlace <?php echo validar_string_url('/configuracion')?'dashboard__enlace--actual':''; ?>" >
+        <a href="/admin/adminconfig" class="dashboard__enlace <?php echo validar_string_url('/adminconfig')?'dashboard__enlace--actual':''; ?>" >
             <i class="fa-solid fa-gears"></i>
-            <span class="dashboard__menu-texto">configuración</span>
+            <span class="dashboard__menu-texto">administracion</span>
         </a>
     </nav>
 </aside>

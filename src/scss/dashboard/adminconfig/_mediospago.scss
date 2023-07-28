@@ -1,0 +1,25 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.mediospago{
+    &__form{
+        //display: flex;
+        //gap: 1rem;
+        @include m.grid(1, 1rem);
+        @include m.telefono{
+            @include m.grid(2, 1rem);
+        }
+        @include m.tablet{
+            @include m.grid(3, 1rem);
+        }
+        @include m.xl_tablet{
+            @include m.grid(4, 1rem);
+        }
+    }
+    &__mediopago{
+        display: flex;
+    }
+    &__btn{
+        margin-top: 1rem;
+    }
+}

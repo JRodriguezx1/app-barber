@@ -208,7 +208,7 @@ class citascontrolador{
     }
 
 
-    public static function finalizar(Router $router){ //llamado desde finalizcitas.js
+    public static function finalizar(Router $router){ //llamado desde finalizcita.js
         $alertas = [];
         date_default_timezone_set('America/Bogota');
         

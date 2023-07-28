@@ -17,23 +17,24 @@
         selectemployee.addEventListener('change', (e)=>{
             const turnosemployee = malla['empleado_'+e.target.value]; //arreglo de obj donde cada obj es el dia con su turno
             limpiarmalla(); //limpiar malla previamente
-            turnosemployee.forEach(dia => {
-                const {inicioturno, inidescanso, findescanso, finturno} = dia;
-                let horas = new Array(inicioturno, inidescanso, findescanso, finturno);
-                const radio = document.querySelector(`input[data-id="${dia.id_dia}"]`);
-                radio.checked = true;
-                for(let i=0; i<4; i++)radio.parentElement.nextElementSibling.children[i].disabled = false;
+            if(turnosemployee)
+                turnosemployee.forEach(dia => {
+                    const {inicioturno, inidescanso, findescanso, finturno} = dia;
+                    let horas = new Array(inicioturno, inidescanso, findescanso, finturno);
+                    const radio = document.querySelector(`input[data-id="${dia.id_dia}"]`);
+                    radio.checked = true;
+                    for(let i=0; i<4; i++)radio.parentElement.nextElementSibling.children[i].disabled = false;
 
-                document.querySelector(`#entrada[data-id="${dia.id_dia}"]`).value = inicioturno.substring(0,2)+':'+inicioturno.substring(2,4);
-                let select = document.querySelector(`#inidescanso[data-id="${dia.id_dia}"]`);
-                
-                for(let i = 0; i<3; i++){
-                    putoptions(select, parseInt(horas[i])); //llenar las options de los input select
-                    for(let j = 0; j<select.options.length; j++)
-                        if(select.options[j].value == parseInt(horas[i+1]))select.options[j].selected = true;
-                    select = select.nextElementSibling;
-                }
-            });  
+                    document.querySelector(`#entrada[data-id="${dia.id_dia}"]`).value = inicioturno.substring(0,2)+':'+inicioturno.substring(2,4);
+                    let select = document.querySelector(`#inidescanso[data-id="${dia.id_dia}"]`);
+                    
+                    for(let i = 0; i<3; i++){
+                        putoptions(select, parseInt(horas[i])); //llenar las options de los input select
+                        for(let j = 0; j<select.options.length; j++)
+                            if(select.options[j].value == parseInt(horas[i+1]))select.options[j].selected = true;
+                        select = select.nextElementSibling;
+                    }
+                });  
         });
 
         function putoptions(select, hora){

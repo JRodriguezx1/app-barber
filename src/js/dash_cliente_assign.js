@@ -71,7 +71,7 @@
         
         const obtenercitas = async()=>{
             try {
-                const url = "/admin/api/getcitas"; //llamado a la API REST para trer toda las citas desde la fecha actual hasta posterior
+                const url = "/admin/api/getcitas"; //llamado a la API REST para trer toda las citas desde la fecha actual hasta posterior, en controladorcliente.php
                 const respuesta = await fetch(url); 
                 citas = await respuesta.json();
             } catch (error){
@@ -231,7 +231,7 @@
             datos.append('idservicio', id_servicio);
             datos.append('nameprofesional', id_empserv.value);
             try {
-                const url = "/admin/api/enviarcita";
+                const url = "/admin/api/enviarcita";  //llama api en controladorcliente.php
                 const respuesta = await fetch(url, {method: 'POST', body: datos}); 
                 const resultado = await respuesta.json();  
                 if(resultado[0]){

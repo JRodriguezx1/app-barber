@@ -4,13 +4,14 @@ namespace Model;
 
 class facturacion extends ActiveRecord {
     protected static $tabla = 'facturacion';
-    protected static $columnasDB = ['id', 'idcita', 'id_pagosxdia', 'tipo', 'nota', 'hora_pago', 'fecha_pago', 'valor_servicio', 'dcto', 'valordcto', 'promodcto', 'valorpromo', 'recibido', 'devolucion', 'total'];
+    protected static $columnasDB = ['id', 'idcita', 'id_pagosxdia', 'idmediospago', 'tipo', 'nota', 'hora_pago', 'fecha_pago', 'valor_servicio', 'dcto', 'valordcto', 'promodcto', 'valorpromo', 'recibido', 'devolucion', 'total'];
     
     public function __construct($args = [])
     {
         $this->id = $args['id'] ?? null;
         $this->idcita = $args['idcita'] ?? '';
         $this->id_pagosxdia = $args['id_pagosxdia']??'';
+        $this->idmediospago = $args['idmediospago']??1;
         $this->tipo = $args['tipo'] ?? '';
         $this->nota = $args['nota'] ?? '';
         $this->hora_pago = $args['hora_pago'] ?? date('h:i:s');  // hora actual

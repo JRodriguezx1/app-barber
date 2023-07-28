@@ -51,6 +51,6 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-        </div> <!-- fin clientes -->
+        </div> <!-- fin clientes__tabla -->
     </div> <!-- fin citas contenedor -->
 </div>

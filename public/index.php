@@ -14,6 +14,7 @@ use Controllers\factcontrolador;
 use Controllers\citascontrolador;
 use Controllers\clientescontrolador;
 use Controllers\fidelizacioncontrolador;
+use Controllers\adminconfigcontrolador;
 use Controllers\configcontrolador;
 ///////controlador del cliente ///////////
 use Controllers\controladorcliente;
@@ -84,20 +85,20 @@ $router->get('/admin/fidelizacion/creardctoxproduct', [fidelizacioncontrolador::
 $router->post('/admin/fidelizacion/creardctoxproduct', [fidelizacioncontrolador::class, 'creardctoxproduct']);
 $router->post('/admin/fidelizacion/editar_dctoxproduct', [fidelizacioncontrolador::class, 'editar_dctoxproduct']);
 
-$router->get('/admin/configuracion', [configcontrolador::class, 'index']);
-$router->post('/admin/configuracion/actualizar', [configcontrolador::class, 'actualizar']); //metodo para actualizar negocio
-$router->post('/admin/configuracion/crear_empleado', [configcontrolador::class, 'crear_empleado']); //metodo para crear cliente
-$router->post('/admin/configuracion/update_employee', [configcontrolador::class, 'update_employee']); //metodo para actualizar empleado
-$router->get('/admin/configuracion/eliminaremployee', [configcontrolador::class, 'eliminaremployee']);
-$router->post('/admin/configuracion/actualizarmalla', [configcontrolador::class, 'actualizarmalla']); //metodo para actualizar malla a empleado
-$router->post('/admin/configuracion/fechadesc', [configcontrolador::class, 'fechadesc']); //metodo para ingresar fecha especial de descanso
+$router->get('/admin/adminconfig', [adminconfigcontrolador::class, 'index']);
+$router->post('/admin/adminconfig/actualizar', [adminconfigcontrolador::class, 'actualizar']); //metodo para actualizar negocio
+$router->post('/admin/adminconfig/crear_empleado', [adminconfigcontrolador::class, 'crear_empleado']); //metodo para crear cliente
+$router->post('/admin/adminconfig/update_employee', [adminconfigcontrolador::class, 'update_employee']); //metodo para actualizar empleado
+$router->get('/admin/adminconfig/eliminaremployee', [adminconfigcontrolador::class, 'eliminaremployee']);
+$router->post('/admin/adminconfig/actualizarmalla', [adminconfigcontrolador::class, 'actualizarmalla']); //metodo para actualizar malla a empleado
+$router->post('/admin/adminconfig/fechadesc', [adminconfigcontrolador::class, 'fechadesc']); //metodo para ingresar fecha especial de descanso
 ///apis///
 $router->get('/admin/api/getservices', [servicioscontrolador::class, 'getservices']); //fetch en facturacion.js
 $router->post('/admin/api/eliminarservicio', [servicioscontrolador::class, 'eliminar']); //fetch en servicios.js
-$router->get('/admin/api/getAllemployee', [configcontrolador::class, 'getAllemployee']); //fetch en empleados.js
-$router->get('/admin/api/getmalla', [configcontrolador::class, 'getmalla']); //fetch en malla.js y en dash_cliente_assign.js
-$router->get('/admin/api/getfechadesc', [configcontrolador::class, 'getfechadesc']);  //fetch en fechadesc.js y en dash_cliente_assign.js
-$router->get('/admin/api/deletefechadesc', [configcontrolador::class, 'deletefechadesc']);  //metodo para eliminar fecha llamado desde fechadesc.js
+$router->get('/admin/api/getAllemployee', [adminconfigcontrolador::class, 'getAllemployee']); //fetch en empleados.js
+$router->get('/admin/api/getmalla', [adminconfigcontrolador::class, 'getmalla']); //fetch en malla.js y en dash_cliente_assign.js
+$router->get('/admin/api/getfechadesc', [adminconfigcontrolador::class, 'getfechadesc']);  //fetch en fechadesc.js y en dash_cliente_assign.js
+$router->get('/admin/api/deletefechadesc', [adminconfigcontrolador::class, 'deletefechadesc']);  //metodo para eliminar fecha llamado desde fechadesc.js
 $router->get('/admin/api/getemployee_services', [citascontrolador::class, 'getemployee_services']); //metodo llamado desde dash_cliente.js
 $router->post('/admin/api/enviarcita', [controladorcliente::class, 'enviarcita']);  // api llamada desde dash_cliente_assign.js
 $router->get('/admin/api/getcitas', [controladorcliente::class, 'getcitas']);  //llamado desde dash_liente_assign.js
@@ -107,6 +108,8 @@ $router->get('/admin/api/alldays', [dashboardcontrolador::class, 'alldays']); //
 $router->get('/admin/api/totalcitas', [dashboardcontrolador::class, 'totalcitas']);
 $router->get('/admin/api/detallepagoxcita', [factcontrolador::class, 'detallepagoxcita']); //api se ejecuta en el modulo de citas en admin
 $router->get('/admin/api/anularpagoxcita', [factcontrolador::class, 'anularpagoxcita']); //api se ejecuta en el modulo de citas en admin
+$router->get('/admin/api/getmediospago', [configcontrolador::class, 'getmediospago']); //api llamada desde configuracion.js
+$router->post('/admin/api/setmediospago', [configcontrolador::class, 'setmediospago']); //api llamada desde configuracion.js para setear los medios de pago
 
 /////area de clientes/////
 $router->get('/Cliente/app', [controladorcliente::class, 'index']);
