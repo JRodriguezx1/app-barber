@@ -51,7 +51,7 @@
                     </div>
                     <div class="formulario__campo">
                         <label class="formulario__label" for="fecha_fin">Fecha De Finalizacion</label>
-                        <input class="formulario__input" id="fecha_fin" type="date" name="fecha_fin" required>
+                        <input class="formulario__input" id="fecha_fin" type="date" name="fecha_fin" disabled required>
                     </div> 
                 </fieldset>
                 

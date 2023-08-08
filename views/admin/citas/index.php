@@ -6,6 +6,7 @@
                 <a id="crearcita" class="btnsmall" href=""> + Crear</a>
             </div>
             <div class="citas__filtros">
+                <?php if($user['admin']>1): ?>
                 <div class="citas__contenedorprofesional">
                     <p>Citas por profesional y fecha</p>
                     <div class="citas__profesional">
@@ -20,6 +21,7 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
                 <div class="citas__busqueda">
                     <!--<select class="formulario__select" name="filtro" id="selectprofesional" required>
                             <option value="" disabled selected>-- Seleccione --</option>
@@ -68,22 +70,22 @@
                 </thead>
                     
                 <tbody>
-                    <?php foreach($citas as $cita): ?>
-                    <tr class="<?php if($cita->id_empserv==null&&$cita->estado=='Pendiente') echo 'reprogramar';
-                                    if($cita->estado=='Finalizada') echo 'tr-resaltar'
-                                ?>">
-                        <td class=""><?php echo $cita->id; ?></td> 
-                        <td class=""><?php echo $cita->usuario->nombre.' '.$cita->usuario->apellido; ?></td>         
-                        <td class=""><?php echo $cita->usuario->cedula; ?></td>
-                        <!--<td class="" data-precio="<?php //echo $cita->servicio->precio??''; ?>"><?php //echo $cita->servicio->nombre??''; ?></td>
-                        <td class=""><?php //echo $cita->empleado->nombre??'';?> <?php //echo $cita->empleado->apellido??''?></td> -->
-                        <td class="" data-precio="<?php echo $cita->valorcita??''; ?>"><?php echo $cita->nameservicio??''; ?></td>
-                        <td class=""><?php echo $cita->nameprofesional??'';?></td>
-                        <td class=""><?php echo $cita->fecha_fin; ?></td>         
-                        <td class=""><?php echo $cita->hora_fin; ?></td>
-                        <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; //echo $cita->estado; ?></td>
-                        <td class="accionestd"> <div class="acciones-iconos" data-promodcto="<?php echo $cita->dcto??'';?>" data-promodctovalor="<?php echo $cita->dctovalor??'';?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i><i class="factura fa-regular fa-note-sticky"></i></div></td>
-                    </tr>   
+                    <?php foreach($citas as $cita):  ?>
+                        <tr class="<?php if($cita->id_empserv==null&&$cita->estado=='Pendiente') echo 'reprogramar';
+                                        if($cita->estado=='Finalizada') echo 'tr-resaltar'
+                                    ?>">
+                            <td class=""><?php echo $cita->id; ?></td> 
+                            <td class=""><?php echo $cita->usuario->nombre.' '.$cita->usuario->apellido; ?></td>         
+                            <td class=""><?php echo $cita->usuario->cedula; ?></td>
+                            <!--<td class="" data-precio="<?php //echo $cita->servicio->precio??''; ?>"><?php //echo $cita->servicio->nombre??''; ?></td>
+                            <td class=""><?php //echo $cita->empleado->nombre??'';?> <?php //echo $cita->empleado->apellido??''?></td> -->
+                            <td class="" data-precio="<?php echo $cita->valorcita??''; ?>"><?php echo $cita->nameservicio??''; ?></td>
+                            <td class=""><?php echo $cita->nameprofesional??'';?></td>
+                            <td class=""><?php echo $cita->fecha_fin; ?></td>         
+                            <td class=""><?php echo $cita->hora_fin; ?></td>
+                            <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; //echo $cita->estado; ?></td>
+                            <td class="accionestd"> <div class="acciones-iconos" data-promodcto="<?php echo $cita->dcto??'';?>" data-promodctovalor="<?php echo $cita->dctovalor??'';?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i><i class="factura fa-regular fa-note-sticky"></i></div></td>
+                        </tr>  
                     <?php endforeach; ?>
                 </tbody>
             </table>

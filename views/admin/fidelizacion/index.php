@@ -4,7 +4,7 @@
     <div class="fidelizacion__contenedor">
         <?php require_once __DIR__ .'/../../templates/alertas.php'; ?>
         <div class="fidelizacion__creardescuento">
-            <a class="btnsmall" href="/admin/fidelizacion/creardctoxproduct"><i class="fa-solid fa-plus"></i> Crear Descuento</a>
+            <a class="btnsmall" href="<?php echo $user['admin']>2?'/admin/fidelizacion/creardctoxproduct':''?>"><i class="fa-solid fa-plus"></i> Crear Descuento</a>
         </div>
         <div class="fidelizacion__tabla">
             <table class="tabla">
@@ -16,6 +16,7 @@
                         <th>Valor</th>
                         <th>Dcto (%)</th>
                         <th>Valor Final</th>
+                        <th>Inicio</th>
                         <th>Fecha Fin</th>
                         <th>estado</th>
                         <th class="accionesth">Acciones</th>
@@ -32,8 +33,11 @@
                             <td class=""><?php echo $dcto->porcentaje.'%'.' - $'.$dcto->valor;?></td>
                             <td class="">$<?php echo $dcto->precioservicio-$dcto->valor;?></td>        
                             <td class=""><?php echo $dcto->fecha_fin; ?></td>
-                            <td class=""><?php echo $dcto->estado?'Activo':'No-activo'; ?></td>
-                            <td class="accionestd"> <div class="acciones-iconos" data-id="<?php echo $dcto->id;?>"><?php if($dcto->estado):?><i class="sendmsj fa-solid fa-envelope-circle-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><?php endif; ?><i class="cancelado fa-solid fa-x"></i></div></td>
+                            <td class=""><?php echo $dcto->fecha_fin; ?></td>
+                            <td class=""><?php if($dcto->estado==0){echo 'No-activo';}if($dcto->estado==1){echo 'Activo';}if($dcto->estado==2){echo 'Pendiente';}?></td>
+                            <?php if($user['admin']>2): ?>
+                            <td class="accionestd"> <div class="acciones-iconos" data-id="<?php echo $dcto->id;?>"><?php if($dcto->estado): if($dcto->estado==1){?><i class="sendmsj fa-solid fa-envelope-circle-check"></i><?php } ?><i class="programar fa-solid fa-tablet-screen-button"></i><?php endif; ?><i class="cancelado fa-solid fa-x"></i></div></td>
+                            <?php endif; ?>
                         </tr>   
                     <?php endforeach; ?>
                 </tbody>

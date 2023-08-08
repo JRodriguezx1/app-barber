@@ -268,6 +268,21 @@ class ActiveRecord {
         return array_shift($total);
     }
 
+    //numero total de registros de una tabla q cumplan multiples condiciones de una sola columna
+    public static function numreg_multiwhere($colum, $datos=[]){
+        $sql = "SELECT COUNT(*) FROM ".static::$tabla." WHERE $colum IN("; // WHERE $colum = '${id}';";
+        foreach($datos as $key => $value){
+            if(array_key_last($datos) == $key){ 
+                $sql.= $value.");";
+            }else{
+                $sql.= $value.", ";
+            }
+        } //SELECT COUNT(*) FROM citas WHERE id_empserv IN(24, 25, 37);
+        $resultado = self::$db->query($sql);
+        $total = $resultado->fetch_assoc();
+        return array_shift($total);
+    }
+
 
     //suma numerica de una columna segun id
     public static function sumcolum($colum, $id, $colsum){
@@ -285,6 +300,19 @@ class ActiveRecord {
         return $resultado;  
     }
 
+    //paginar registros q cumplan ciertas condiciones, toma numero de registros por pagina y el offset
+    public static function paginarwhere($Nregistros_porpagina, $offset, $colum, $array = []){
+        $sql = "SELECT *FROM ".static::$tabla." WHERE $colum IN(";
+        foreach($array as $key => $value){
+            if(array_key_last($array) == $key){
+                $ql.= "'{$value}');";
+            }else{
+                $ql.= "'{$value}', ";
+            }
+        }
+        $resultado = self::consultar_sql($sql);  
+        return $resultado;  
+    }
     
     //// busqueda con where con multiples opciones
     public static function whereArray($array = []){ ////
@@ -321,7 +349,18 @@ class ActiveRecord {
         $valorcampo = $resultado->fetch_assoc();
         return array_shift($valorcampo);
     }
-    
+
+
+    public static function multicampos($colum, $id, $campo){ /// se trae varios valores o campos segun el id que se le pase
+        $sql = "SELECT ".static::$tabla.".".$campo." FROM ".static::$tabla." WHERE $colum = '${id}';";
+        $resultado = self::$db->query($sql);
+        $array = [];
+        while($row = $resultado->fetch_assoc()){  
+            $array[] = $row[$campo];
+        }
+        $resultado->free();
+        return $array;
+    }
 
     public static function consultar_sql($sql){
         $resultado = self::$db->query($sql);  // consulta la bd se trae toda la tabla 

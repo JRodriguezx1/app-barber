@@ -1,0 +1,43 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.creacioncuentas{
+    margin-top: 2rem;
+    &__habilitaremp{
+        @include m.contenedor-sm;
+    }
+    &__setearpass{
+        @include m.contenedor-sm;
+    }
+    &__userprincipal{
+        @include m.contenedor-sm;
+    }
+    &__subheading{
+        text-transform: uppercase;
+        font-size: 1.8rem;
+    }
+    &__rolessubmit{
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+    &__roles{
+        @include m.telefono{
+            display: flex;
+            gap: 1rem;
+        }
+    }
+    &__rol{
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        gap: .6rem;
+        &:nth-of-type(1){
+            margin-bottom: .7rem;
+            @include m.telefono{
+                margin: 0;
+            }
+        }
+        
+    }
+}

@@ -3,7 +3,7 @@
 </div>
 
 <main class="auth bloqueauth">
-    <a class="bloqueauth__logocliente" href="#">
+    <a class="bloqueauth__logocliente" href="/">
         <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
     <h2 class="auth__heading mensajetitulo"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->

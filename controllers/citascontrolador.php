@@ -20,8 +20,11 @@ class citascontrolador{
         isadmin();
         $alertas = [];
 
-        //$citas = citas::all();
-
+        if($_SESSION['admin']==1){ // cuando es cuenta empleado
+            $empleadoid = usuarios::uncampo('id', $_SESSION['id'], 'empleadoid'); //id del empleado
+            $ids_empserv = empserv::multicampos('idempleado', $empleadoid, 'id'); //[24, 25, ..]ids del empleado en relacion con los servicios
+            $stridsempserv = implode(', ', $ids_empserv); // = "24, 25, 37, ..."
+        }
         $profesionales = empleados::all();
 
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){ //cuando se actualiza/reprograma cita
@@ -47,18 +50,26 @@ class citascontrolador{
             if(empty($alertas)){
                 $r = $citas->actualizar();
                 if($r)$alertas['exito'][] = 'Cita Actualizada';
-            }
-            
+            } 
         }
+        
         $pagina_actual = $_GET['pagina'];
         $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
         if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');
        
         $registros_por_pagina = 10;
-        $registros_total = citas::numregistros();
+        if($_SESSION['admin']>1){
+            $registros_total = citas::numregistros(); //para usuario admin
+        }else{ $registros_total = citas::numreg_multiwhere('id_empserv', $ids_empserv); } //para usuario empleado
+        
         $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total, '/admin/citas');
         if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
-        $citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
+        
+        if($_SESSION['admin']>1){
+            $citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
+        }else{ //para cuenta empleado
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};"); //metodo = ->multipaginar()
+        }
 
         foreach($citas as $cita){
             $cita->usuario = usuarios::find('id', $cita->id_usuario);
@@ -71,11 +82,12 @@ class citascontrolador{
             }
         }
 
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 
     public static function consultaxprofesxfecha(Router $router){
+        session_start();
         $alertas = []; $ids = "";
         
         /*$pagina_actual = $_GET['pagina'];
@@ -114,7 +126,7 @@ class citascontrolador{
         }
         
         $profesionales = empleados::all();
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 
@@ -123,6 +135,11 @@ class citascontrolador{
         isadmin();
         $alertas = [];
 
+        if($_SESSION['admin']==1){
+            $empleadoid = usuarios::uncampo('id', $_SESSION['id'], 'empleadoid'); //id del empleado
+            $ids_empserv = empserv::multicampos('idempleado', $empleadoid, 'id'); //[24, 25, ..]ids del empleado en relacion con los servicios
+            $stridsempserv = implode(', ', $ids_empserv);
+        }
         $profesionales = empleados::all();
 
         /*$pagina_actual = $_GET['pagina'];
@@ -130,7 +147,11 @@ class citascontrolador{
         if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');*/
 
         $fecha = $_GET['fecha'];
-        $citas = citas::idregistros('fecha_fin', $fecha);
+        if($_SESSION['admin']>1){
+            $citas = citas::idregistros('fecha_fin', $fecha);
+        }else{
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) AND fecha_fin = '$fecha';");
+        }
 
         /*$registros_por_pagina = 10;
         $registros_total = count($citas);
@@ -150,11 +171,17 @@ class citascontrolador{
         }
 
         
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'fecha'=>$fecha, 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'fecha'=>$fecha, 'user'=>$_SESSION, 'alertas'=>$alertas]);
         //echo json_encode(123);
     }
 
     public static function crear(Router $router){
+        session_start();
+        if($_SESSION['admin']==1){
+            $empleadoid = usuarios::uncampo('id', $_SESSION['id'], 'empleadoid'); //id del empleado
+            $ids_empserv = empserv::multicampos('idempleado', $empleadoid, 'id'); //[24, 25, ..]ids del empleado en relacion con los servicios
+            $stridsempserv = implode(', ', $ids_empserv);
+        }
         $alertas = [];
 
         $profesionales = empleados::all();
@@ -189,10 +216,18 @@ class citascontrolador{
         if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');
        
         $registros_por_pagina = 10;
-        $registros_total = citas::numregistros();
+        if( $_SESSION['admin']>1){
+            $registros_total = citas::numregistros(); //para usuario admin
+        }else{ $registros_total = citas::numreg_multiwhere('id_empserv', $ids_empserv); }
+        
         $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total, '/admin/citas');
         if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
-        $citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
+        
+        if($_SESSION['admin']>1){
+            $citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
+        }else{
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};");
+        }
 
         foreach($citas as $cita){
             $cita->usuario = usuarios::find('id', $cita->id_usuario);
@@ -204,11 +239,17 @@ class citascontrolador{
                 $cita->empleado = empleados::find('id', $cita->idempleado);
             }
         }
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 
     public static function finalizar(Router $router){ //llamado desde finalizcita.js
+        session_start();
+        if($_SESSION['admin']==1){
+            $empleadoid = usuarios::uncampo('id', $_SESSION['id'], 'empleadoid'); //id del empleado
+            $ids_empserv = empserv::multicampos('idempleado', $empleadoid, 'id'); //[24, 25, ..]ids del empleado en relacion con los servicios
+            $stridsempserv = implode(', ', $ids_empserv);
+        }
         $alertas = [];
         date_default_timezone_set('America/Bogota');
         
@@ -251,10 +292,17 @@ class citascontrolador{
         if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');
        
         $registros_por_pagina = 10;
-        $registros_total = citas::numregistros();
+        if( $_SESSION['admin']>1){
+            $registros_total = citas::numregistros(); //para usuario admin
+        }else{ $registros_total = citas::numreg_multiwhere('id_empserv', $ids_empserv); }
         $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total, '/admin/citas');
         if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
-        $citas = citas::paginar($registros_por_pagina, $paginacion->offset());
+        
+        if($_SESSION['admin']>1){
+            $citas = citas::paginar($registros_por_pagina, $paginacion->offset());
+        }else{
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};");
+        }
 
         foreach($citas as $cita){
             $cita->usuario = usuarios::find('id', $cita->id_usuario);
@@ -266,19 +314,29 @@ class citascontrolador{
                 $cita->empleado = empleados::find('id', $cita->idempleado);
             }
         }
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 
     public static function consultaxestadoxname(Router $router){
+        session_start();
+        if($_SESSION['admin']==1){
+            $empleadoid = usuarios::uncampo('id', $_SESSION['id'], 'empleadoid'); //id del empleado
+            $ids_empserv = empserv::multicampos('idempleado', $empleadoid, 'id'); //[24, 25, ..]ids del empleado en relacion con los servicios
+            $stridsempserv = implode(', ', $ids_empserv);
+        }
         $alertas = []; $ids = ""; $estado=''; $nombre='';
         
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             //$citas = citas::inner_join("SELECT *FROM citas WHERE estado LIKE "."'%{$_POST['estado']}%'"." ORDER BY id DESC;"/* ORDER BY id ASC LIMIT 10 OFFSET {$paginacion->offset()}*/);
             if($_POST['columna'] == 'estado'){
                 $estado = $_POST['consulta'];
-                $citas = citas::filtro_nombre($_POST['columna'], $_POST['consulta'], 'id');
-            }else{
+                if($_SESSION['admin']>1){
+                    $citas = citas::filtro_nombre($_POST['columna'], $_POST['consulta'], 'id');
+                }else{
+                    $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) AND estado LIKE '%{$_POST['consulta']}%' ORDER BY id DESC;");
+                }
+            }else{  //consulta por nombre de cliente usuario
                 $nombre = $_POST['consulta'];
                 $usuarios = usuarios::filtro_nombre($_POST['columna'], $_POST['consulta'], 'id');
                 foreach($usuarios as $key => $value){
@@ -288,8 +346,14 @@ class citascontrolador{
                         $ids.= $value->id.', '; 
                     }
                 }
-                if($ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario IN($ids) ORDER BY id DESC;");
-                if(!$ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario IN('') ORDER BY id DESC;");
+                $citas = [];
+                if($_SESSION['admin']>1){
+                    if($ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario IN($ids) ORDER BY id DESC;");
+                    //if(!$ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario IN('') ORDER BY id DESC;");
+                }else{
+                    if($ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) AND id_usuario IN($ids) ORDER BY id DESC;");
+                    //if(!$ids)$citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario IN('') ORDER BY id DESC;");
+                }
             }
             foreach($citas as $cita){
                 $cita->usuario = usuarios::find('id', $cita->id_usuario);
@@ -297,7 +361,7 @@ class citascontrolador{
             }
         }
         $profesionales = empleados::all();
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'alertas'=>$alertas, 'estado'=>$estado, 'nombre'=>$nombre]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'alertas'=>$alertas, 'estado'=>$estado, 'user'=>$_SESSION, 'nombre'=>$nombre]);
     }
 
     

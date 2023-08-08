@@ -1,0 +1,34 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.coloresapp{
+    margin-top: 2rem;
+    &__contenido{
+        #formcolores{
+            display: flex;
+            @include m.telefono{
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+            }
+            input[type='color']{
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                width: 9rem;
+                height: 6rem;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+            }
+            input[type='color']::-webkit-color-swatch{
+                border-radius: 1rem;
+                border: none;   
+            }
+            input[type='color']::-moz-color-swatch{
+                border-radius: 1rem;
+                border: none;
+            }
+        }
+    }
+}

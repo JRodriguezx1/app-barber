@@ -133,7 +133,7 @@
         });
     }
      
-    if(document.querySelector('.alerta')){
+    if(document.querySelector('.alerta')){  //se aplica de manera global
         setTimeout(() => {
             document.querySelector('.alerta').remove();
         }, 5000);

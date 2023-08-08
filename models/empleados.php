@@ -4,7 +4,7 @@ namespace Model;
 
 class empleados extends ActiveRecord {
     protected static $tabla = 'empleados';
-    protected static $columnasDB = ['id', 'nombre', 'apellido', 'cedula', 'movil', 'email', 'fecha_nacimiento', 'genero', 'departamento', 'ciudad', 'direccion', 'dato1', 'dato2'];
+    protected static $columnasDB = ['id', 'nombre', 'apellido', 'cedula', 'movil', 'email', 'fecha_nacimiento', 'genero', 'departamento', 'ciudad', 'direccion', 'restriccion', 'dato2'];
     
     public function __construct($args = [])
     {
@@ -19,7 +19,7 @@ class empleados extends ActiveRecord {
         $this->departamento = $args['departamento'] ?? '';
         $this->ciudad = $args['ciudad'] ?? '';
         $this->direccion = $args['direccion'] ?? '';
-        $this->dato1 = $args['dato1'] ?? '';
+        $this->restriccion = $args['restriccion'] ?? null;
         $this->dato2 = $args['dato2'] ?? '';
     }
 

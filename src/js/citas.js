@@ -8,35 +8,37 @@
         const crearcita = document.querySelector('#crearcita');
         const programar = document.querySelectorAll('.programar');
     
-        filtros.addEventListener('click', ()=>{
-            let idprofesional = selectfiltro.options[selectfiltro.options.selectedIndex].value; //toma el id del select profesional
-    
-            if(idprofesional){
-                Swal.fire({
-                    customClass: {
-                    //confirmButton: 'sweetbtnconfirm',
-                    // cancelButton: 'sweetbtncancel'
-                    },
-                    title: 'Consulta el profesional por fecha:',
-                    html: `<form class="formulario" action="/admin/citas/consultaxprofesxfecha?pagina=1" method="POST">    
-                                <div class="formulario__campo">
-                                    <input class="formulario__input" id="fecha" type="date" name="fecha" value=" " required>
-                                </div>
-                                <input type="hidden" name="profesional" value="${idprofesional}">
-                                <input class="btnsmall" type="submit" value="Consultar">
-                        </form>`,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                    //confirmButtonText: 'Aceptar',
-                    //cancelButtonText: 'Cancelar',
-                })/*.then((result) => {
-                    if (result.isConfirmed) {
-                    Swal.fire('Actualizando', '', 'success')
-                    //modificar el servicio
-                    } 
-                })*/
-            }
-        });
+        if(filtros){
+            filtros.addEventListener('click', ()=>{
+                let idprofesional = selectfiltro.options[selectfiltro.options.selectedIndex].value; //toma el id del select profesional
+        
+                if(idprofesional){
+                    Swal.fire({
+                        customClass: {
+                        //confirmButton: 'sweetbtnconfirm',
+                        // cancelButton: 'sweetbtncancel'
+                        },
+                        title: 'Consulta el profesional por fecha:',
+                        html: `<form class="formulario" action="/admin/citas/consultaxprofesxfecha?pagina=1" method="POST">    
+                                    <div class="formulario__campo">
+                                        <input class="formulario__input" id="fecha" type="date" name="fecha" value=" " required>
+                                    </div>
+                                    <input type="hidden" name="profesional" value="${idprofesional}">
+                                    <input class="btnsmall" type="submit" value="Consultar">
+                            </form>`,
+                        showCancelButton: false,
+                        showConfirmButton: false,
+                        //confirmButtonText: 'Aceptar',
+                        //cancelButtonText: 'Cancelar',
+                    })/*.then((result) => {
+                        if (result.isConfirmed) {
+                        Swal.fire('Actualizando', '', 'success')
+                        //modificar el servicio
+                        } 
+                    })*/
+                }
+            });
+        }
 
         selectfecha.addEventListener('input', e => {
             /*(async ()=>{

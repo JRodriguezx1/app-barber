@@ -49,7 +49,7 @@ class factcontrolador{
             }
         }
         $alldays = pagosxdia::ordenar('id', 'DESC');
-        $router->render('admin/facturacion/index', ['titulo'=>'facturacion', 'alldays'=>$alldays, 'alertas'=>$alertas]);
+        $router->render('admin/facturacion/index', ['titulo'=>'facturacion', 'alldays'=>$alldays, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
@@ -59,7 +59,7 @@ class factcontrolador{
 
         $day = pagosxdia::whereArray(['fecha'=>$fecha]);
 
-        $router->render('admin/facturacion/index', ['titulo'=>'facturacion', 'alldays'=>$day, 'fecha'=>$fecha, 'alertas'=>$alertas]);
+        $router->render('admin/facturacion/index', ['titulo'=>'facturacion', 'alldays'=>$day, 'fecha'=>$fecha, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
@@ -111,7 +111,7 @@ class factcontrolador{
         ///*********************** *////
         ///mostrar los servicios y el dinero total de cada empleado
         ///***********************// */
-        $router->render('admin/facturacion/gestionar', ['titulo'=>'facturacion', 'fecha'=>$fecha, 'gestionardia'=>$gestionardia, 'numservicios'=>$numservicios, 'valorservicios'=>$valorservicios, 'numdctos'=>$numdctos, 'valordctos'=>$valordctos, 'recibidos'=>$recibidos, 'devoluciones'=>$devoluciones, 'total'=>$total, 'alertas'=>$alertas]);
+        $router->render('admin/facturacion/gestionar', ['titulo'=>'facturacion', 'fecha'=>$fecha, 'gestionardia'=>$gestionardia, 'numservicios'=>$numservicios, 'valorservicios'=>$valorservicios, 'numdctos'=>$numdctos, 'valordctos'=>$valordctos, 'recibidos'=>$recibidos, 'devoluciones'=>$devoluciones, 'total'=>$total, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
      

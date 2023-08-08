@@ -1,4 +1,4 @@
-<div class="informacion administracion">
+<div class="informacion administrador">
     <p>Complete la informacion</p>
     <div class="barraprogreso">
         <div class="barraprogreso__barra">
@@ -15,36 +15,39 @@
             <form class="formulario" action="/admin/adminconfig/actualizar" enctype="multipart/form-data" method="POST">
                 <fieldset class="formulario__fieldset">
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="nombre del negocio">Nombre</label>
+                        <label class="formulario__label" for="nombrenegocio">Nombre</label>
                         <div class="formulario__dato">
-                            <input id="negocio" class="formulario__input" type="text" placeholder="Nombre del negocio" id="nombre" name="nombre" value="<?php echo $negocio->nombre??''; ?>" required>
+                            <input id="negocio" class="formulario__input" type="text" placeholder="Nombre del negocio" id="nombrenegocio" name="nombre" value="<?php echo $negocio->nombre??''; ?>" required>
                             <label data-num="42" class="count-charts" for="">42</label>
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="ciudad del negocio">Ciudad</label>
+                        <label class="formulario__label" for="ciudadnegocio">Ciudad</label>
                         <div class="formulario__dato">
-                            <input id="negocio" class="formulario__input" type="text" placeholder="ciudad del negocio" id="ciudad" name="ciudad" value="<?php echo $negocio->ciudad ?? '';?>" required>
+                            <input id="negocio" class="formulario__input" type="text" placeholder="ciudad del negocio" id="ciudadnegocio" name="ciudad" value="<?php echo $negocio->ciudad ?? '';?>" required>
                             <label data-num="40" class="count-charts" for="">40</label>
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="direccion del negocio">Direccion</label>
+                        <label class="formulario__label" for="direccionnegocio">Direccion</label>
                         <div class="formulario__dato">
-                            <input id="negocio" class="formulario__input" type="text" placeholder="Direccion del negocio" id="direccion" name="direccion" value="<?php echo $negocio->direccion ?? '';?>" required>
+                            <input id="negocio" class="formulario__input" type="text" placeholder="Direccion del negocio" id="direccionnegocio" name="direccion" value="<?php echo $negocio->direccion ?? '';?>" required>
                             <label data-num="56" class="count-charts" for="">56</label>
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="telefono del negocio">Telefono</label>
-                        <div class="formulario__dato">
-                            <input id="negocio" class="formulario__input" type="number" placeholder="telefono fijo de contacto" id="telefono" name="telefono" value="<?php echo $negocio->telefono ?? '';?>">
-                        </div>
+                        <label class="formulario__label" for="telefononegocio">Telefono</label>
+                        <input id="negocio" class="formulario__input" type="number" placeholder="telefono fijo de contacto" id="telefononegocio" name="telefono" value="<?php echo $negocio->telefono ?? '';?>">
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="movil del negocio">Movil</label>
+                        <label class="formulario__label" for="movilnegocio">Movil</label>
+                        <input id="negocio" class="formulario__input" type="number" min="3000000000" max="3777777777" placeholder="Movil de contacto" id="movilnegocio" name="movil" value="<?php echo $negocio->movil ?? '';?>" required>
+                    </div>
+                    <div class="formulario__campo">
+                        <label class="formulario__label" for="">Correo Electrónico</label>
                         <div class="formulario__dato">
-                            <input id="negocio" class="formulario__input" type="number" min="3000000000" max="3777777777" placeholder="Movil de contacto" id="movil" name="movil" value="<?php echo $negocio->movil ?? '';?>" required>
+                            <input class="formulario__input" type="email" placeholder="Ingresa correo electrónico" id="email" name="email" value="<?php echo $negocio->email ?? '';?>" required>
+                            <label data-num="50" class="count-charts" for="">50</label>
                         </div>
                     </div>
                     <div class="formulario__campo">
@@ -75,24 +78,24 @@
                             <input id="negocio" class="formulario__input--sociales" type="text" name="instagram" placeholder="Instagram" value="<?php echo $negocio->instagram ?? ''; ?>">
                         </div>
                     </div>
-                    <div class="formulario__campo">
+                    <!--<div class="formulario__campo">
                         <div class="formulario__contenedor-icono">
                             <div class="formulario__icono"><i class="fa-brands fa-tiktok"></i></div>
-                            <input id="negocio" class="formulario__input--sociales" type="text" name="tiktok" placeholder="tiktok" value="<?php echo $negocio->tiktok ?? ''; ?>">
+                            <input id="negocio" class="formulario__input--sociales" type="text" name="tiktok" placeholder="tiktok" value="<?php //echo $negocio->tiktok ?? ''; ?>">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="formulario__campo">
                         <div class="formulario__contenedor-icono">
                             <div class="formulario__icono"><i class="fa-brands fa-youtube"></i></div>
                             <input id="negocio" class="formulario__input--sociales" type="text" name="youtube" placeholder="Youtube" value="<?php echo $negocio->youtube ?? ''; ?>">
                         </div>
                     </div>
-                    <div class="formulario__campo">
+                    <!--<div class="formulario__campo">
                         <div class="formulario__contenedor-icono">
                             <div class="formulario__icono"><i class="fa-brands fa-twitter"></i></div>
-                            <input id="negocio" class="formulario__input--sociales" type="text" name="twitter" placeholder="twitter" value="<?php echo $negocio->twitter ?? ''; ?>">
+                            <input id="negocio" class="formulario__input--sociales" type="text" name="twitter" placeholder="twitter" value="<?php //echo $negocio->twitter ?? ''; ?>">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="formulario__campo">
                         <label class="formulario__label" for="logo">Logo</label>
                         <input class="formulario__input--file" type="file" id="logo" name="logo">
@@ -128,7 +131,7 @@
             <form class="formulario" action="/admin/adminconfig/actualizarmalla" method="POST">
 
                 <div class="formulario__elegirempleado">
-                    <label class="formulario__label" for="categorias">Elegir Empleado: </label>
+                    <label class="formulario__label" for="selectempleadomalla">Elegir Empleado: </label>
                     <select class="formulario__select" name="idempleado" id="selectempleadomalla" required>
                         <option value="" disabled selected> Seleccionar Servicio</option>
                         <?php foreach($empleados as $empleado): ?>
@@ -322,7 +325,7 @@
             <form class="formulario" action="/admin/adminconfig/fechadesc" method="POST">
                 <div class="registrasfechas">
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="categorias">Elegir Empleado: </label>
+                        <label class="formulario__label" for="selectemployeedate">Elegir Empleado: </label>
                         <select class="formulario__select" name="empleado_id" id="selectemployeedate" required>
                             <option value="" disabled selected> Seleccionar Servicio</option>
                             <?php foreach($empleados as $empleado): ?>
@@ -348,7 +351,7 @@
             <form class="formulario" action="/admin/adminconfig/update_employee" method="POST">
                 
                 <div class="formulario__elegirempleado">
-                    <label class="formulario__label" for="categorias">Elegir Empleado: </label>
+                    <label class="formulario__label" for="selectemployee">Elegir Empleado: </label>
                     <select class="formulario__select" name="idempleado" id="selectemployee" required>
                         <option value="" disabled selected> Seleccionar Servicio</option>
                         <?php foreach($empleados as $empleado): ?>
@@ -383,9 +386,101 @@
                 <div class="mediospago__btn">
                     <span id="btnmediopago" class="btnsmall"><i class="fa-solid fa-plus"></i> Actualizar</span>
                 </div>
-            </div>
+            </div> <!-- fin mediospago -->
             <!-- <input type="color" name="color" value="" id="color" /> -->
-        </div>
+            <div class="creacioncuentas"> <!-- creacion de cuentas y roles admin y empleados -->
+                <h4 class="configuracion__heading">Creacion De Cuentas</h4>
+                <div class="creacioncuentas__habilitaremp">
+                    <p class="creacioncuentas__subheading">Habilitar Empleado</p>
+                    <form id="formhabilitarempleado" class="formulario" action="" method="POST">
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="dardealtaselectempleado">Elegir Empleado: </label>
+                            <select class="formulario__select" name="idempleado" id="dardealtaselectempleado" required>
+                                <option value="" disabled selected> Seleccionar Servicio</option>
+                                <?php foreach($empleados as $empleado):
+                                    if($empleado->restriccion!=3): ?>
+                                        <option data-restriccion="<?php echo $empleado->restriccion??'';?>" value="<?php echo $empleado->id??'';?>"><?php echo $empleado->nombre.' '.$empleado->apellido; ?></option>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select> 
+                        </div>
+                        <div class="creacioncuentas__rolessubmit">
+                            <div class="creacioncuentas__roles">
+                                <div class="creacioncuentas__rol">
+                                    <label for="roladmin">Admin</label>
+                                    <input id="roladmin" type="radio" name="admin" value="2" required>
+                                </div>
+                                <div class="creacioncuentas__rol">
+                                    <label for="rolempleado">Empleado</label>
+                                    <input id="rolempleado" type="radio" name="admin" value="1" required>
+                                </div>
+                            </div>
+                            <input class="formulario__submit" type="submit" value="Habilitar">
+                        </div>   
+                    </form>
+                </div>
+                <div class="creacioncuentas__setearpass">
+                    <p class="creacioncuentas__subheading">Setear Passwords</p>
+                    <form id="formsetearpass" class="formulario" action="" method="POST">
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="selectsetearpass">Elegir Empleado: </label>
+                            <select class="formulario__select" name="idempleado" id="selectsetearpass" required>
+                                <option value="" disabled selected> Seleccionar Servicio</option>
+                                <?php foreach($empleados as $empleado): ?>
+                                    <option data-restriccion="<?php echo $empleado->restriccion??'';?>" value="<?php echo $empleado->id??'';?>"><?php echo $empleado->nombre.' '.$empleado->apellido; ?></option>
+                                <?php endforeach; ?>
+                            </select> 
+                        </div>
+                        <input class="formulario__submit" type="submit" value="Reiniciar"> 
+                    </form>
+                </div>
+                <?php if($user['admin']>3): ?>
+                <div class="creacioncuentas__userprincipal">
+                    <p class="creacioncuentas__subheading">Crear Usuario Principal</p>
+                    <form class="formulario" action="/admin/adminconfig/configuracion/crearuserprincipal" method="POST">
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="adminnombre">Nombre</label>
+                            <input class="formulario__input" type="text" placeholder="Ingresar nombre" id="adminnombre" name="nombre" value="" required>
+                        </div>
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="adminapellido">Apellido</label>
+                            <input class="formulario__input" type="text" placeholder="Ingresar apellido" id="adminapellido" name="apellido" value="" required>
+                        </div>
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="adminmovil">Número de Teléfono</label>
+                            <input class="formulario__input" type="number" placeholder="Ingresar número de telefónico" id="adminmovil" name="movil" value="" required>
+                        </div>
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="adminemail">Correo Electrónico</label>
+                            <input class="formulario__input" type="email" placeholder="Ingresar correo electrónico" id="adminemail" name="email" value="" required>
+                        </div>
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="adminpassword">Password</label>
+                            <input class="formulario__input" type="text" placeholder="Ingresar Password" id="adminpassword" name="password" value="" required>
+                        </div>
+                        <input class="formulario__submit" type="submit" value="Crear">  
+                    </form>
+                </div>
+                <?php endif; ?>
+            </div> <!-- fin creacioncuentas -->
+            <div class="coloresapp"> <!-- creacion de cuentas y roles admin y empleados -->
+                <h4 class="configuracion__heading">Colores Principales</h4>
+                <div class="coloresapp__contenido">
+                    <form id="formcolores" class="formulario" action="" method="POST">
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="principal">Principal</label>
+                            <input type="color" id="principal" name="principal" value="<?php echo $negocio->colorprincipal??''; ?>">
+                        </div>
+                        <div class="formulario__campo">
+                            <label class="formulario__label" for="secundario">Secundario</label>
+                            <input type="color" id="secundario" name="secundario" value="<?php echo $negocio->colorsecundario??'';?>">
+                        </div>
+                        <div><input class="formulario__submit" type="submit" value="Aplicar"></div>
+                    </form>
+                </div>
+            </div>
+
+        </div> <!-- fin pagina5 -->
 
     </div> <!--fin configuracion__grid-->
 

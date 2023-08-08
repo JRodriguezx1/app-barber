@@ -33,8 +33,8 @@ class logincontrolador{
                         $_SESSION['login'] = true;
                         $_SESSION['admin'] = $usuario->admin ?? null;  //si no es admin la llave $_SESSION['admin'] = null
 
-                        //redireccion al dashboard del admin o cliente
-                        if($usuario->admin == '1' || $usuario->admin == '2'){
+                        //redireccion al dashboard del superior-admin-empleado o cliente
+                        if($usuario->admin>=1){
                             header('Location: /admin/dashboard');
                         }else{
                             header('Location: /Cliente/app');

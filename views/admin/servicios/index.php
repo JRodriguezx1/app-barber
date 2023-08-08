@@ -34,18 +34,20 @@
                         
                     </div>
                     
-                    <input class="formulario__submit servicios__botonCrearServicios" type="submit" value="Crear Servicio">
+                    <input class="formulario__submit servicios__botonCrearServicios" type="submit" value="Crear Servicio" <?php echo $user['admin']>2?'':'disabled'; ?>>
                 </fieldset>
             </form>
         </div>
         <div class="servicios__lista">
             <?php foreach($servicios as $servicio): ?>
+                <?php if($servicio->estado): ?>
                 <div data-id="<?php echo $servicio->id;?>" id="servicio" class="servicios__servicio">
                     <h4><?php echo $servicio->nombre; ?></h4>
                     <p>Precio: $<span id="precio"> <?php echo $servicio->precio; ?></span></p>
                     <p>Duracion: <span id="duracion"><?php echo $servicio->duracion; ?></span> min</p>
                     <a class="servicios__eliminar" href="#"><i class="fa-solid fa-trash-can"></i></a>
                 </div>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div>
     </div>

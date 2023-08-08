@@ -33,7 +33,7 @@ class clientescontrolador{
                 }*/
         }
 
-        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas, 'buscar'=>$buscar]);
+        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas, 'buscar'=>$buscar, 'user'=>$_SESSION]);
     }
 
     public static function crear(Router $router){
@@ -72,7 +72,7 @@ class clientescontrolador{
                 }
             }
         } 
-        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas]);
+        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
@@ -90,7 +90,7 @@ class clientescontrolador{
             }
         }
         $clientes = usuarios::whereArray(['confirmado'=>1, 'admin'=>0]);
-        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas]);
+        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
@@ -118,7 +118,7 @@ class clientescontrolador{
         if(!$r)$alertas['exito'][] = 'hubo un error';
         
         $clientes = usuarios::whereArray(['confirmado'=>1, 'admin'=>0]);
-        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas]);
+        $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
@@ -141,12 +141,13 @@ class clientescontrolador{
                 $cita->facturacion = facturacion::find('idcita', $cita->id);
             }
         }
-        $router->render('admin/clientes/detalle', ['titulo'=>'clientes', 'cliente'=>$cliente, 'citas'=>$citas, 'alertas'=>$alertas]);
+        $router->render('admin/clientes/detalle', ['titulo'=>'clientes', 'cliente'=>$cliente, 'citas'=>$citas, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
      
 
     public static function allclientes(){  //api llamado desde citas.js
-        $clientes = usuarios::all();
+        //$clientes = usuarios::all();
+        $clientes = usuarios::whereArray(['admin'=>0]);
         foreach($clientes as $cliente){
             $cliente->dctogeneral = fidelizacion::find('id', $cliente->idfidelizacion);
         }

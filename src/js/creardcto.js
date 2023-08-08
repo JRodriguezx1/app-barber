@@ -1,39 +1,22 @@
 (function(){
     if(document.querySelector('.creardescuento')){ //crear dcto en admin/fidelizacion
         
-        //////////////// funcion contadores de caracteres /////////////////////
-        
-        /*
-        function countchars(){
-            const numinput = document.querySelectorAll('.count-charts');  
-            numinput.forEach(element =>{ //element es cada label
-                element.textContent = element.dataset.num-element.previousElementSibling.value.length;
-                element.previousElementSibling.addEventListener('input', (e)=>{ //seleccionamos el input o el textarea en donde se escribe y se le da el evento de teclas
-                    element.textContent = element.dataset.num-e.target.value.length;
-                      
-                    if(element.dataset.num-e.target.value.length <= 0){
-                        let cadena = e.target.value.slice(0, element.dataset.num);
-                        e.target.value = cadena;
-                        element.textContent = 0;
-                    }
-                });
-            });
-        }
-        countchars();*/
         const categoria = document.querySelector('#categoria');
         const product_serv = document.querySelector('#product_serv');
         const tipodcto = document.querySelector('#tipo');
         const dcto1 = document.querySelector('#dcto1');
         const dcto2 = document.querySelector('#dcto2');
         const dcto2Valor = document.querySelector('#dcto2Valor');
+        const fechaini = document.querySelector('#fecha_ini');
         let servicios, valorservicio;
+
+        deshabilitarfechaanterior();
 
         (async()=>{
             try {
                 const url = "/admin/api/getservices"; //llamado a la API REST para trer todos los servicios
                 const respuesta = await fetch(url); 
-                servicios = await respuesta.json(); 
-                console.log(servicios);  
+                servicios = await respuesta.json();   
             } catch (error) {
                 console.log(error);
             }
@@ -103,6 +86,39 @@
         function borrarhtml(elemento){
             horasdisponibles = [];
             while(elemento.firstElementChild)elemento.removeChild(elemento.firstElementChild);
+        }
+
+        fechaini.addEventListener('change', (e)=>{
+            const fechafin = document.querySelector('#fecha_fin');
+            fechafin.disabled = false;
+            const fechaposterior = new Date(e.target.value);
+            fechaposterior.setDate(fechaposterior.getDate()+2);
+            const year = fechaposterior.getFullYear();
+            const mes = fechaposterior.getMonth() + 1;
+            const dia = fechaposterior.getDate();
+            let deshabilitarfecha = `${year}-${mes}-${dia}`;
+            if(mes<10&&dia<10){ deshabilitarfecha = `${year}-0${mes}-0${dia}`; }
+            if(mes<10&&dia>=10){ deshabilitarfecha = `${year}-0${mes}-${dia}`; }
+            if(mes>=10&&dia<10){ deshabilitarfecha = `${year}-${mes}-0${dia}`; }
+            fechafin.min = deshabilitarfecha; 
+        });
+
+        //////////////////// deshabilitar fecha anterior ////////////////////
+
+        function deshabilitarfechaanterior(){
+            const fechaactual = new Date();  //en fecha actual esta la fecha actual con hora
+           
+            fechaactual.setDate(fechaactual.getDate() + 1);
+            const year = fechaactual.getFullYear();
+            const mes = fechaactual.getMonth() + 1;
+            const dia = fechaactual.getDate();
+            let deshabilitarfecha = `${year}-${mes}-${dia}`;
+            
+            if(mes<10&&dia<10){ deshabilitarfecha = `${year}-0${mes}-0${dia}`; }
+            if(mes<10&&dia>=10){ deshabilitarfecha = `${year}-0${mes}-${dia}`; }
+            if(mes>=10&&dia<10){ deshabilitarfecha = `${year}-${mes}-0${dia}`; }
+
+            fechaini.min = deshabilitarfecha; //al input fecha se le agrega atributo min
         }
     }
 

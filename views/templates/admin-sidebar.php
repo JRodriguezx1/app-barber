@@ -29,10 +29,11 @@
             <i class="fa-solid fa-gift"></i>
             <span class="dashboard__menu-texto">fidelizacion</span>
         </a>
-
+        <?php if($user['admin']>2): ?>
         <a href="/admin/adminconfig" class="dashboard__enlace <?php echo validar_string_url('/adminconfig')?'dashboard__enlace--actual':''; ?>" >
             <i class="fa-solid fa-gears"></i>
-            <span class="dashboard__menu-texto">administracion</span>
+            <span class="dashboard__menu-texto">administrador</span>
         </a>
+        <?php endif; ?>
     </nav>
 </aside>

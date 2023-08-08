@@ -4,7 +4,7 @@ namespace Model;
 
 class negocio extends ActiveRecord {
     protected static $tabla = 'negocio';
-    protected static $columnasDB = ['id', 'nombre', 'ciudad', 'direccion', 'telefono', 'movil', 'nit', 'ws', 'facebook', 'instagram', 'tiktok', 'youtube', 'twitter', 'logo'];
+    protected static $columnasDB = ['id', 'nombre', 'ciudad', 'direccion', 'telefono', 'movil', 'email', 'nit', 'ws', 'facebook', 'instagram', 'tiktok', 'youtube', 'twitter', 'logo', 'colorprincipal', 'colorsecundario'];
     
     public function __construct($args = [])
     {
@@ -14,6 +14,7 @@ class negocio extends ActiveRecord {
         $this->direccion = $args['direccion'] ?? '';
         $this->telefono = $args['telefono'] ?? '';
         $this->movil = $args['movil'] ?? '';
+        $this->email = $args['email'] ?? '';
         $this->nit = $args['nit'] ?? '';
         $this->ws = $args['ws'] ?? '';
         $this->facebook = $args['facebook'] ?? '';
@@ -22,6 +23,8 @@ class negocio extends ActiveRecord {
         $this->youtube = $args['youtube'] ?? '';
         $this->twitter = $args['twitter'] ?? '';
         $this->logo = $args['logo'] ?? '';
+        $this->colorprincipal = $args['colorprincipal'] ?? '#051453';
+        $this->colorsecundario = $args['colorsecundario'] ?? '#FFFFFF';
     }
 
     // Validar los servicios
@@ -40,6 +43,12 @@ class negocio extends ActiveRecord {
         }
         if(!$this->movil || strlen($this->movil)>14) {
             self::$alertas['error'][] = 'Movil no valido';
+        }
+        if(!$this->email) {
+            self::$alertas['error'][] = 'El Email es Obligatorio';
+        }
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            self::$alertas['error'][] = 'Email no válido';
         }
         if(!$this->ws || strlen($this->ws)>15) {
             self::$alertas['error'][] = 'Whatsapp no valido';

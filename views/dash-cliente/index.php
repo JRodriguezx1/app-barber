@@ -43,7 +43,9 @@
                             <select class="formulario__select" name="servicio" id="servicio" required>
                                 <option value="" disabled selected> -Selecionar- </option>
                                 <?php foreach($servicios as $service): ?>
-                                <option value="<?php echo $service->id;?>"><?php echo $service->nombre;?> - $<?php echo $service->precio;?></option>
+                                    <?php if($service->estado): ?>
+                                    <option value="<?php echo $service->id;?>"><?php echo $service->nombre;?> - $<?php echo $service->precio;?></option>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>

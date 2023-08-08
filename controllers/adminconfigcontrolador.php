@@ -5,6 +5,7 @@ namespace Controllers;
 use MVC\Router;  //namespace\clase
 use Model\negocio;
 use Model\empleados;
+use Model\usuarios;
 use Model\malla;
 use Model\servicios;
 use Model\empserv;
@@ -15,17 +16,18 @@ use Model\mediospago;
 class adminconfigcontrolador{
 
     public static function index(Router $router){
-        session_start();
+        session_start(); 
         isadmin();
         $alertas = [];
         $negocio = negocio::find('id', 1);
         $servicios = servicios::all();
         $empleados = empleados::all();
         $mediospago = mediospago::all();
-        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'empleados'=>$empleados, 'servicios'=>$servicios, 'mediospago'=>$mediospago, 'alertas'=>$alertas]);
+        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'empleados'=>$empleados, 'servicios'=>$servicios, 'mediospago'=>$mediospago, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
     public static function actualizar(Router $router){ //metodo para el llenado y actualizacion de los datos del negocio
+        session_start();
         $alertas = [];
         $servicios = servicios::all();
         $negocio = negocio::find('id', 1);
@@ -74,11 +76,13 @@ class adminconfigcontrolador{
             }
         }
         $mediospago = mediospago::all();
-        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'servicios'=>$servicios, 'mediospago'=>$mediospago, 'alertas'=>$alertas]);
+        $empleados = empleados::all();
+        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'servicios'=>$servicios, 'mediospago'=>$mediospago, 'mediospago'=>$mediospago, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 
     public static function crear_empleado(Router $router){ //metodo para crear empleado
+        session_start();
         $alertas = []; $trabajador = '';
         $servicios = servicios::all();
         $negocio = negocio::find('id', 1);
@@ -86,11 +90,11 @@ class adminconfigcontrolador{
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $empleado = new empleados($_POST);
             $emplserv = new empserv;
-
             $skills = explode(',', $_POST['servicios']);
             
             if(!$_POST['servicios'])empleados::setAlerta('error', 'No se ha seleccionado las habilidades');
             $alertas = $empleado->validarempleado();
+            //validaremail
             
             if(empty($alertas)){
                 $r = $empleado->crear_guardar();
@@ -98,7 +102,17 @@ class adminconfigcontrolador{
                     foreach($skills as $key => $valor)
                         $array[$key] = ['idempleado'=>$r[1], 'idservicio'=>$valor];
                     $r1 = $emplserv->crear_varios_reg($array);
-                    if($r1[0])$alertas['exito'][] = "Empleado creado correctamente";     
+                    if($r1[0]){ //llevar datos de empleado a tabla de usuarios
+                        $usuario = new usuarios($_POST);
+                        $usuario->password = 'Empleado';
+                        $usuario->hashPassword();
+                        $usuario->confirmado = 0;
+                        $usuario->admin = 0;
+                        $usuario->empleadoid = $r[1];
+                        $usuario->habilitar = 0;
+                        $r2 = $usuario->crear_guardar();
+                        if($r2[0])$alertas['exito'][] = "Empleado creado correctamente";
+                    }     
                 }
             }else{
                 $trabajador = $empleado;
@@ -106,17 +120,19 @@ class adminconfigcontrolador{
         }
         $empleados = empleados::all();
         $mediospago = mediospago::all();
-        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'alertas'=>$alertas]);
+        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 
     public static function update_employee(Router $router){
+        session_start();
         $alertas = []; $trabajador = '';
         $servicios = servicios::all();
         $negocio = negocio::find('id', 1);
 
         $empleado = empleados::find('id', $_POST['idempleado']);
         $emplserv = empserv::idregistros('idempleado', $_POST['idempleado']);
+        $usuario = usuarios::find('empleadoid', $_POST['idempleado']);
         
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $empleado->compara_objetobd_post($_POST);
@@ -126,6 +142,7 @@ class adminconfigcontrolador{
             if(!$_POST['servicios'])empleados::setAlerta('error', 'Debes elegir al menos una habilidad');
             
             $alertas = $empleado->validarempleado();
+            //validaremail
             if(empty($alertas)){
                 $newarray1 = []; $newarray2 = [];
                 
@@ -151,14 +168,18 @@ class adminconfigcontrolador{
                 if($newarray1)$r1 = empserv::eliminar_idregistros('id', $newarray1);
                 if($newarray2)$r2 = $newskills->crear_varios_reg($newarray2);
 
-                if($r)$alertas['exito'][] = "Datos de empleado actualizados";
+                if($r){
+                    $usuario->compara_objetobd_post($_POST);
+                    $ru = $usuario->actualizar();
+                    if($ru)$alertas['exito'][] = "Datos de empleado actualizados";
+                }
             }
         }
         $empleados = empleados::all();
         //*******cuando se de un error por falta de habilidades pasar una variable para leer con js para modificar clase css para resaltar la pagina 3
         //******* o validar la actualizacion de empleados por api rest para recargar pagina*/
         $mediospago = mediospago::all();
-        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'alertas'=>$alertas]);
+        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
     public static function eliminaremployee(Router $router){
@@ -181,7 +202,7 @@ class adminconfigcontrolador{
 
         $empleados = empleados::all();
         $mediospago = mediospago::all();
-        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'alertas'=>$alertas]);
+        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
     public static function getAllemployee(){ //api llamada desde empleado.js entrega todos los empleados con sus skills
@@ -195,6 +216,7 @@ class adminconfigcontrolador{
 
 
     public static function actualizarmalla(Router $router){
+        session_start();
         $alertas = []; $trabajador = '';
         $servicios = servicios::all();
         $negocio = negocio::find('id', 1);
@@ -230,7 +252,7 @@ class adminconfigcontrolador{
             }
         }
         $mediospago = mediospago::all();
-        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'alertas'=>$alertas]);
+        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
     public static function getmalla(){ //api llamada desde malla.js entrega todos los turnos de todos los empleados
@@ -243,7 +265,7 @@ class adminconfigcontrolador{
 
 
     public static function fechadesc(Router $router){
-
+        session_start();
         $alertas = []; $trabajador = '';
         $servicios = servicios::all();
         $negocio = negocio::find('id', 1);
@@ -255,7 +277,7 @@ class adminconfigcontrolador{
             $r = $fechadesc->crear_guardar();
             if($r)$alertas['exito'][] = "Fecha de descanso ingresada correctamente";
         }
-        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'alertas'=>$alertas]);
+        $router->render('admin/adminconfig/index', ['titulo'=>'Administracion', 'negocio'=>$negocio, 'trabajador'=>$trabajador, 'servicios'=>$servicios, 'empleados'=>$empleados, 'mediospago'=>$mediospago, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
     public static function getfechadesc(){ //api llamada desde fechadesc.js entrega todos las fechas de descanso ingresadas de manera manual o especial

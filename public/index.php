@@ -92,6 +92,9 @@ $router->post('/admin/adminconfig/update_employee', [adminconfigcontrolador::cla
 $router->get('/admin/adminconfig/eliminaremployee', [adminconfigcontrolador::class, 'eliminaremployee']);
 $router->post('/admin/adminconfig/actualizarmalla', [adminconfigcontrolador::class, 'actualizarmalla']); //metodo para actualizar malla a empleado
 $router->post('/admin/adminconfig/fechadesc', [adminconfigcontrolador::class, 'fechadesc']); //metodo para ingresar fecha especial de descanso
+
+$router->post('/admin/adminconfig/configuracion/crearuserprincipal', [configcontrolador::class, 'crearuserprincipal']); //crear usuario principal
+
 ///apis///
 $router->get('/admin/api/getservices', [servicioscontrolador::class, 'getservices']); //fetch en facturacion.js
 $router->post('/admin/api/eliminarservicio', [servicioscontrolador::class, 'eliminar']); //fetch en servicios.js
@@ -110,6 +113,9 @@ $router->get('/admin/api/detallepagoxcita', [factcontrolador::class, 'detallepag
 $router->get('/admin/api/anularpagoxcita', [factcontrolador::class, 'anularpagoxcita']); //api se ejecuta en el modulo de citas en admin
 $router->get('/admin/api/getmediospago', [configcontrolador::class, 'getmediospago']); //api llamada desde configuracion.js
 $router->post('/admin/api/setmediospago', [configcontrolador::class, 'setmediospago']); //api llamada desde configuracion.js para setear los medios de pago
+$router->post('/admin/api/habilitarempleado', [configcontrolador::class, 'habilitarempleado']); //api llamada desde configuracion.js para habilitar empleado a ingresar a sistema dashboard
+$router->post('/admin/api/setearpass', [configcontrolador::class, 'setearpass']); //api para setear password
+$router->post('/admin/api/coloresapp', [configcontrolador::class, 'coloresapp']); //api establecer colores app
 
 /////area de clientes/////
 $router->get('/Cliente/app', [controladorcliente::class, 'index']);

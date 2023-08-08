@@ -5,7 +5,7 @@
 <main class="auth bloqueauth">
     <a class="auth__btnatras bloqueauth__btnregresar" href="/">Regresar</a>
 
-    <a class="bloqueauth__logocliente" href="#">
+    <a class="bloqueauth__logocliente" href="/">
         <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
 

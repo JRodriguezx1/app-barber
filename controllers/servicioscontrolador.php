@@ -27,7 +27,7 @@ class servicioscontrolador{
         }
 
         $servicios = servicios::all();
-        $router->render('admin/servicios/index', ['titulo'=>'Servicios', 'servicios'=>$servicios, 'alertas'=>$alertas]);
+        $router->render('admin/servicios/index', ['titulo'=>'Servicios', 'servicios'=>$servicios, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
@@ -51,7 +51,7 @@ class servicioscontrolador{
             }
         }
         $servicios = servicios::all();
-        $router->render('admin/servicios/index', ['titulo'=>'Servicios', 'servicios'=>$servicios, 'alertas'=>$alertas]);
+        $router->render('admin/servicios/index', ['titulo'=>'Servicios', 'servicios'=>$servicios, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
     public static function eliminar(){  //api llamada en servicios.js para eliminar servicio

@@ -56,8 +56,8 @@
                     </div>
                     <div class="datos__admininfo">
                         <div class="datos__perfil">
-                            <p class="nombreperfil"><?php echo $usuario['nombre'] ?></p>
-                            <p class="tipoperfil"><?php echo $usuario['admin']==1?'Admin':''; ?></p>
+                            <p class="nombreperfil"><?php echo $user['nombre'] ?></p>
+                            <p class="tipoperfil"><?php echo $user['admin']==1?'Empleado':'Admin'; ?></p>
                         </div>
                         <div class="datos__btn">
                             <a class="btnsmall" href="/admin/perfil">Perfil <i class="fa-solid fa-arrow-right"></i></a>

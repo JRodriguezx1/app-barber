@@ -53,7 +53,7 @@ class controladorcliente{
         $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'alertas'=>$alertas]);
     }
 
-    public static function enviarcita(){ //api llamada desde dash_client_assign.js
+    public static function enviarcita(){ //api llamada desde dash_client_assign.js para reservar cita desde el dashboard del cliente
         session_start();
         $alertas = [];
         $idusuario = $_SESSION['id'];

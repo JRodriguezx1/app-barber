@@ -49,7 +49,7 @@
         }
 
         function limpiarmalla(){
-            const elemntcheckbox = document.querySelectorAll('INPUT[type="checkbox"]');
+            const elemntcheckbox = document.querySelectorAll('.malla INPUT[type="checkbox"]');
             elemntcheckbox.forEach(Element => {
                 if(Element.checked){ Element.checked = false;
                     for(let i=0; i<4; i++){

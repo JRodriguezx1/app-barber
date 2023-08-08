@@ -17,7 +17,6 @@
                 obj.dcto = tr.children[4].textContent;
                 obj.valorfinal = tr.children[5].textContent;
                 obj.fecha_fin = tr.children[6].textContent;
-                console.log(obj);
                 formulariocliente(obj);
                 //countchars();
             });
@@ -106,11 +105,6 @@
                 dcto2.value = Math.round((dcto1.value*100)/obj.valorservicio);
             }  
         }
-/*
-        function borrarhtml(elemento){
-            horasdisponibles = [];
-            while(elemento.firstElementChild)elemento.removeChild(elemento.firstElementChild);
-        }*/
 
         /////////////// eliminar oferta del cliente ////////////////
 

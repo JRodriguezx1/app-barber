@@ -18,7 +18,6 @@ use Model\servicios;
 class dashboardcontrolador{
 
     public static function index(Router $router) {
-        $usuario = [];
         session_start();
         isadmin();
         date_default_timezone_set('America/Bogota');
@@ -32,7 +31,7 @@ class dashboardcontrolador{
         */
         //$client = new Twilio\Rest\Client($sid, $token);
         
-        $router->render('admin/dashboard/index', ['titulo'=>'Dashboard - Innovatech', 'day'=>$day, 'usuario'=>$_SESSION]);
+        $router->render('admin/dashboard/index', ['titulo'=>'Dashboard - Innovatech', 'day'=>$day, 'user'=>$_SESSION]);
     }
 
     public static function perfil(Router $router) {
@@ -51,7 +50,7 @@ class dashboardcontrolador{
             }
         }
         $usuario = usuarios::find('id', $_SESSION['id']);
-        $router->render('admin/dashboard/perfil', ['titulo'=>'Dashboard - mi perfil', 'usuario'=>$usuario, 'alertas'=>$alertas]);
+        $router->render('admin/dashboard/perfil', ['titulo'=>'Dashboard - mi perfil', 'usuario'=>$usuario, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
     public static function cambiarpassword(Router $router){
@@ -77,7 +76,7 @@ class dashboardcontrolador{
                 $alertas['error'][] = "Password actual no es correcto";
             }
         }
-        $router->render('admin/dashboard/cambiarpassword', ['titulo'=>'Cambio de password', 'alertas'=>$alertas]);
+        $router->render('admin/dashboard/cambiarpassword', ['titulo'=>'Cambio de password', 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
     public static function alldays(){  //api

@@ -25,8 +25,11 @@ function isauth():void  //valida si el usuario esta registrao
 }
 
 function isadmin():void
-{
+{/*
     if($_SESSION['admin']!=1){
+        header('Location: /');
+    }*/
+    if($_SESSION['admin']<1){
         header('Location: /');
     }
 }

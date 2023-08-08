@@ -4,7 +4,7 @@ namespace Model;
 
 class servicios extends ActiveRecord {
     protected static $tabla = 'servicios';
-    protected static $columnasDB = ['id', 'id_fidelizacion', 'nombre', 'precio', 'duracion', 'dcto', 'dctovalor', 'dctodescp'];
+    protected static $columnasDB = ['id', 'id_fidelizacion', 'nombre', 'precio', 'duracion', 'dcto', 'dctovalor', 'dctodescp', 'estado'];
     
     public function __construct($args = [])
     {
@@ -16,6 +16,7 @@ class servicios extends ActiveRecord {
         $this->dcto = $args['dcto'] ?? '0';
         $this->dctovalor = $args['dctovalor'] ?? '0';
         $this->dctodescp = $args['dctodescp'] ?? '';
+        $this->estado = $args['estado'] ?? 1;
     }
 
     // Validar los servicios
