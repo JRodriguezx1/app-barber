@@ -22,7 +22,7 @@
                     </div>
                     <div class="cliente__dato">
                         <p>Movil: </p>
-                        <span><?php echo $usuario->movil??''; ?></span>
+                        <span id="telcliente"><?php echo $usuario->movil??''; ?></span>
                     </div>
                     <div class="cliente__dato">
                         <p>Email: </p>

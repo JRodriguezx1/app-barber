@@ -2,8 +2,6 @@
 
 namespace Controllers;
 
-require __DIR__ . '/../classes/twilio-php-main/src/Twilio/autoload.php';
-
 use Model\servicios;
 use Model\citas;
 use Model\empserv;
@@ -11,7 +9,7 @@ use Model\empleados;
 use Model\usuarios;
 use Model\fidelizacion;
 use MVC\Router;  //namespace\clase
-use Twilio\Rest\Client;
+use Classes\ws_cloud_api;
  
 class controladorcliente{
 
@@ -77,20 +75,10 @@ class controladorcliente{
             if(empty($citaunica)){
                 $r = $cita->crear_guardar();
             }else{ $r = [false, 0]; }
-            //////////////////enviar sms por whatsapp////////////
-            /*
-            $sid = "AC81feeb3abcf6563f2a8f9b32904f8ae0";
-            $token = "64729da944065ae2872c8364f27bdd9e";
-            $twilio = new Client($sid, $token);
-            $message = $twilio->messages
-                    ->create("whatsapp:+573022016786", // to
-                            [
-                                "from" => "whatsapp:+14155238886",
-                                "body" => "mh aprenda lenguaje php..."
-                            ]
-                    );
 
-            print($message->sid);*/
+            //////////////////enviar sms por whatsapp cloud api////////////
+            $wstext = new ws_cloud_api($_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
+            $wstext->send1textws();
         }
         echo json_encode($r);
     }

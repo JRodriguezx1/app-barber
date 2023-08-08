@@ -1,6 +1,7 @@
 (function(){
     if(document.querySelector('#dash-cliente')){
 
+        const telcliente = document.querySelector('#telcliente').textContent;
         let horasdisponibles = [], horacitas = [];
         const divhoras = document.querySelector('#horas'); //donde se ponen las horas
 
@@ -221,12 +222,12 @@
             const id_servicio = document.querySelector('#servicio').options[document.querySelector('#servicio').options.selectedIndex].value;
             const hoy = new Date();
 
-
+            datos.append('telcliente', telcliente);
             datos.append('id_empserv', id_empserv.dataset.id);
             //datos.append('fecha_inicio', hoy.toLocaleDateString().replace(/\//g, '-')); //fecha actual
-            datos.append('fecha_inicio', hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate());
+            datos.append('fecha_inicio', hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate()); //fecha actual de toma de servicio
             datos.append('fecha_fin', select_date.value);
-            datos.append('hora', hoy.toLocaleTimeString([], {hour12: false}));
+            datos.append('hora', hoy.toLocaleTimeString([], {hour12: false})); //hora actual de toma de servicio
             datos.append('hora_fin', horacita);
             datos.append('idservicio', id_servicio);
             datos.append('nameprofesional', id_empserv.value);
