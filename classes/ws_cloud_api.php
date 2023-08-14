@@ -15,9 +15,9 @@ class ws_cloud_api{
 
     public function send1textws(){
         //token de fb
-        $token="EAAEmL8UtZA0UBOzZAx5WweGczLYD4Y39cmRax3BLB2xGt91TWgcSq9LAJKdjq58uMWh2fxlcVLHAXYhCZAmvnQ8DZAs3qj3Fx9SdiMfbFxGuZAyx76E4utPeXdKvElzMQ2xAY4BriPGMCv56nCAGc0vDDKPp3RZBZBTm5QJJsrfRHi7ITubwVG4ZCLxM3hGP9eL6CSAnkxFwQXdVmEzeNgZDZD";
+        $token="EAAEmL8UtZA0UBOwZCYjCTKDQgJJFhXSB3Y3nlWFJeDV3bH1p5rxFLmyf9LnpOmtJQ2EDJabZCU2dhzW71Kn29sPDdg95Toe6ySPUwJ854HXQGGZCEiX4SJ0LsK6yjM80JfOWHWCPxVoxYN1ItrkQlF8L0Ljp91u6glCEafNRcjsKruezWb4tTzLd7ZAXYGMtt";
         //telefono al q se va emviar msj
-        $telefono="573003520420";
+        $telefono="573022016786";
         //url a donde se enviará el mensaje
         $url="https://graph.facebook.com/v17.0/115280074990733/messages";
         //configuración del mensaje
