@@ -1,10 +1,20 @@
-<div class="lineaencabezado">
+<!-- <div class="bloqueauth__bloqueregresar">
+    
+</div> -->
+
+<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
     <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 
-<main class="auth bloqueauth">
-    <a class="auth__btnatras bloqueauth__btnregresar" href="/">Regresar</a>
+<section class="slider">
+    <ul class="slider__contenido">
+        <li class="slider__slide1 slider__slide"></li>
+        <li class="slider__slide2 slider__slide"></li>
+    </ul>
+</section>
 
+<main class="auth bloqueauth">
+    <!-- <a class="auth__btnatras bloqueauth__btnregresar" href="/">Regresar</a> -->
     <a class="bloqueauth__logocliente" href="/">
         <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
@@ -40,7 +50,7 @@
             <label class="formulario__label" for="password2">Repetir Contraseña</label>
             <input class="formulario__input" type="password" placeholder="Confirmar contraseña" id="password2" name="password2" requiered>
         </div>
-        <input class="formulario__submit--login bloqueformulario__submit--login" type="submit" value="Crear Cuenta">
+        <input class="formulario__submit--login bloqueformulario__submit--login" type="submit" value="Crear Cuenta" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
     </form>
 
     <div class="acciones">

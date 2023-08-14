@@ -16,7 +16,7 @@
                 obj.valorservicio = tr.children[3].textContent.slice(1);
                 obj.dcto = tr.children[4].textContent;
                 obj.valorfinal = tr.children[5].textContent;
-                obj.fecha_fin = tr.children[6].textContent;
+                obj.fecha_fin = tr.children[7].textContent;
                 formulariocliente(obj);
                 //countchars();
             });

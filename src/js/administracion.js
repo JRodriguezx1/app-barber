@@ -18,7 +18,6 @@
 
     /////////////////// paginacion de empleado, malla, actualizar-empleado //////////////////
     if(document.querySelector('.cambiopaginas')){ //elemento en views/dash-cliente.php y en viewa/admin/adminconfig/index.php
-        
         const btns_nav_empleados = document.querySelectorAll('.cambiopaginas span');
         btns_nav_empleados[0].classList.add('resaltar'); //resaltamos el primer enlace o btn
         if(document.querySelector('.perfil')){

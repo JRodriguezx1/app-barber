@@ -8,7 +8,7 @@
     }
     &__logo{
         @include m.texto-fluido(2rem, 3rem);
-        color: v.$gris;
+        color: v.$grisoscuro;
         margin-bottom: 2rem;
         text-align: center;
     }
@@ -23,6 +23,7 @@
     .allright{
         color: v.$gris;
         font-weight: 300;
+        line-height: 1.5;
         span{
             color: v.$azul;
             font-weight: 600;

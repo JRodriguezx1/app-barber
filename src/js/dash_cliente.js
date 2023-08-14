@@ -1,7 +1,7 @@
 (function(){
     if(document.querySelector('#dash-cliente')){
         
-        const servicio = document.querySelector('#servicio');
+        const servicio = document.querySelector('#servicio'); //select servicio
         const profesionales = document.querySelector('#profesional');
         const selectdate = document.querySelector('#date');
         //const programar = document.querySelectorAll('.programar');
@@ -15,18 +15,37 @@
                 const url = "/admin/api/getemployee_services"; //llamado a la API REST para trer la relacion de los servicios con sus profesionales
                 const respuesta = await fetch(url); 
                 emplserv = await respuesta.json(); 
-                   
+                validarofertaselected(); 
             } catch (error) {
                 console.log(error);
             }
         })();
 
-
         deshabilitarfechaanterior();
+
+        function validarofertaselected(){
+            const urlparams = new URLSearchParams(window.location.search);
+            const id = urlparams.get('id'); //id del servicio
+            if(id){
+                servicio.classList.add('servicioselected');
+                for(let i = 1; i<=servicio.options.length; i++){
+                    if(servicio.options[i].value == id){
+                        servicio.options[i].selected = true;
+                        break;
+                    }
+                }
+                crearselectprofesionals(id);
+            }
+        }
 
         servicio.addEventListener('change', (e)=>{
             selectdate.disabled = true;
-            const empleados = emplserv.filter(Element => Element.idservicio === e.target.value);
+            servicio.classList.remove('servicioselected');
+            crearselectprofesionals(e.target.value);
+        });
+
+        function crearselectprofesionals(idservice){
+            const empleados = emplserv.filter(Element => Element.idservicio === idservice);
             borrarhtml(profesionales);
             borrarhtml(document.querySelector('#horas'));
             const option = document.createElement('OPTION');
@@ -42,7 +61,7 @@
                 option.dataset.id = element.id;   //id de la tabla empserv
                 profesionales.appendChild(option);
             });
-        });
+        }
 
         function deshabilitarfechaanterior(){
             const fecha = document.querySelector('#date');

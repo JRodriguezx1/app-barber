@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use Model\negocio;
+//use Model\negocio;
 use Model\fidelizacion;
 use Model\servicios;
 //use DateTime;
@@ -12,7 +12,7 @@ use MVC\Router;
 
 class paginacontrolador{
 
-    public static function index(Router $router) {
+    public static function index(Router $router) { //metodo para mostrar la pagina inicial antes del login y registro
         //verificar la fecha de cada promocion para poner su estado en cero '0', inhabilitado. y para las promos pendientes colocar en '1' para activar
         date_default_timezone_set('America/Bogota');
         //$promos = fidelizacion::whereArray(['estado'=>1]);
@@ -35,17 +35,17 @@ class paginacontrolador{
                 $s = $servicio->actualizar();
             }
         }
-
-        $router->render('paginas/index', ['titulo'=>'app salon', 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+    $router->render('paginas/index', ['titulo'=>'app salon'/*, 'logo'=>negocio::uncampo('id', 1, 'logo')*/]);
     }
 
-    public static function promos(Router $router){ //vista de las promociones
+
+    public static function promos(Router $router){ //metodo de la vista de las promociones
         $promociones = fidelizacion::idregistros('estado', 1);
         foreach($promociones as $promo){
             $promo->nombreproducto = servicios::uncampo('id', $promo->product_serv, 'nombre');
             $promo->precioproducto = servicios::uncampo('id', $promo->product_serv, 'precio');
         }
-        $router->render('paginas/promos', ['titulo'=>'app salon', 'promociones'=>$promociones, 'logo'=>negocio::uncampo('id', 1, 'logo')]);
+    $router->render('paginas/promos', ['titulo'=>'app salon', 'promociones'=>$promociones/*, 'logo'=>negocio::uncampo('id', 1, 'logo')*/]);
     }
 }
 

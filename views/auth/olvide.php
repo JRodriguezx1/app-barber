@@ -1,5 +1,5 @@
 
-<div class="lineaencabezado">
+<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
     <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 
@@ -18,11 +18,11 @@
             <input class="formulario__input" type="email" placeholder="Tu Email" id="email" name="email">
         </div>
         
-        <input class="formulario__submit bloqueformulario__submit--login" type="submit" value="Enviar Instrucciones">
+        <input class="formulario__submit bloqueformulario__submit--login" type="submit" value="Enviar Instrucciones" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
     </form>
 
     <div class="acciones">
         <a href="/registro" class="acciones__enlace">¿Aún no tienes cuenta? <br> Obtener una</a>
-        <a href="/olvide" class="acciones__enlace">Olvidaste tu password</a>
+        <a href="/login" class="acciones__enlace">¿Ya tienes cuenta? <br> Iniciar Sesion</a>
     </div>
 </main>

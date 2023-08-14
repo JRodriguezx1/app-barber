@@ -131,7 +131,6 @@
                     const url = "/admin/api/coloresapp";
                     const respuesta = await fetch(url, {method: 'POST', body: datos}); 
                     const resultado = await respuesta.json(); 
-                    console.log(resultado);
                     if(resultado){
                         imprimirmensaje("Colores establecidos exitosamente", 'alerta__exito', document.querySelector('.coloresapp'));
                     }else{
@@ -142,9 +141,53 @@
                 }
             })();
         });
-
         //////////*****************fin definir colores app******************//////////
 
+        (async ()=>{
+            try {
+                const url = "/admin/api/gettimeservice"; //llamado a la API REST
+                const respuesta = await fetch(url); 
+                const gettimeservice = await respuesta.json(); //traer el tiempo de duracion del servicio
+                marcartiemposervicio(gettimeservice);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+
+        function marcartiemposervicio(gettimeservice){
+            const selecttimeserv = document.querySelector('#selecttime');
+            for(let i = 1; i<=selecttimeserv.options.length; i++){
+                if(selecttimeserv.options[i].value == gettimeservice){
+                    selecttimeserv.options[i].selected = true;
+                    break;
+                }
+            }
+        }
+
+        const formtimeserv = document.querySelector('#formtimeserv');
+        formtimeserv.addEventListener('submit', (e)=>{
+            e.preventDefault();
+            const selecttimeserv = document.querySelector('#selecttime');
+            const tiemposervicio = selecttimeserv.options[selecttimeserv.options.selectedIndex].value;
+            const datos = new FormData();
+            datos.append('timeservice', tiemposervicio);
+            (async()=>{
+                try {
+                    const url = "/admin/api/tiemposervicio";
+                    const respuesta = await fetch(url, {method: 'POST', body: datos}); 
+                    const resultado = await respuesta.json(); 
+                    console.log(resultado);
+                    if(resultado){
+                        imprimirmensaje("Tiempo del servicio establecido", 'alerta__exito', document.querySelector('.tiemposervicio'));
+                    }else{
+                        imprimirmensaje("Se produjo un error intentalo nuevamente", 'alerta__error', document.querySelector('.tiemposervicio'));   
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            })();
+        });
+        //////////*****************fin establecer tiempo de servicio******************//////////
 
         function imprimirmensaje(msjtext, tipo, ubicacion){ //muestra mensaje de exito o error
             const mensaje = document.createElement('P');

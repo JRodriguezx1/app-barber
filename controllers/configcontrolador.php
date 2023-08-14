@@ -116,13 +116,37 @@ class configcontrolador{
     public static function coloresapp(){
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $negocio = negocio::find('id', 1);
-            $negocio->compara_objetobd_post($_POST);
-            $r = $negocio->actualizar();
-            if($r){
-                echo json_encode(true);
-            }else{ echo json_encode(false); }
+            if($negocio){
+                $negocio->compara_objetobd_post($_POST);
+                $r = $negocio->actualizar();
+                if($r){
+                    echo json_encode(true);
+                }else{ echo json_encode(false); }
+            }else{echo json_encode(false); }
         }
     }
 
+    public static function tiemposervicio(){
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $negocio = negocio::find('id', 1);
+            if($negocio){
+                $negocio->compara_objetobd_post($_POST);
+                $r = $negocio->actualizar();
+                if($r){
+                    echo json_encode(true);
+                }else{ echo json_encode(false); }
+            }else{ echo json_encode(true); }
+        }
+    }
+
+    public static function gettimeservice(){
+        $timeposervicio = negocio::uncampo('id', 1, 'timeservice');
+        if($timeposervicio){
+            echo json_encode((int)$timeposervicio);
+        }else{
+            echo json_encode(30);
+        }
+        
+    }
 
 }

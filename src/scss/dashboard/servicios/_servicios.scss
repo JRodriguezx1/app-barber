@@ -65,6 +65,7 @@
         padding: 1rem 1rem 0 1rem;
         color: v.$grisoscuro;
         transition: all .8s ease;
+        border-radius: .4rem;
         
         h4{
             position: relative;
@@ -80,6 +81,7 @@
             cursor: pointer;
             scale: 1.1;
             color: v.$blanco;
+            
             a{
                 color: v.$grisclaro;
                 &:hover{
@@ -98,7 +100,8 @@
                content: '';
                width: 0;
                height: 0;
-               background-color: darken(v.$azul2, 10);
+               background-color: darken(v.$azuloscuro, 1.0); //background-color: darken(v.$azul2, 10);
+               border-radius: .4rem;
                position: absolute;
                bottom: 0;
                left: 0; 
@@ -134,7 +137,6 @@
 }
 .servicios__botonCrearServicios {
     width: 100%;
-    border-radius: 1rem;
+    border-radius: .4rem;
     background-color: v.$azuloscuro;
 }
-

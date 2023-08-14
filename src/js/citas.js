@@ -59,11 +59,21 @@
 
         /////////////////////////////////////////////////////////////////////////////////////////
 
-        let horasdisponibles = [], horacitas = [];
+        let gettimeservice=0, horasdisponibles = [], horacitas = [];
         //const divhoras = document.querySelector('#horas'); //donde se poenen las horas
 
         let usuarios, servicios, emplserv, fechadesc, malla, citas;
         let onlyfechadesc, onlymalla, onlycitas;
+
+        (async ()=>{
+            try {
+                const url = "/admin/api/gettimeservice"; //llamado a la API REST
+                const respuesta = await fetch(url); 
+                gettimeservice = await respuesta.json(); //traer el tiempo de duracion del servicio
+            } catch (error) {
+                console.log(error);
+            }
+        })();
 
         (async ()=>{
             try {
@@ -119,7 +129,7 @@
             try {
                 const url = "/admin/api/getcitas"; //llamado a la API REST para trer toda las citas desde la fecha actual hasta posterior
                 const respuesta = await fetch(url); 
-                citas = await respuesta.json(); //se trae las citas de hoy
+                citas = await respuesta.json(); //se trae las citas de hoy en el backend se trae hora y min ej: 08:00
             } catch (error) {
                 console.log(error);
             }
@@ -307,7 +317,8 @@
                 element = element.substring(0,2)+':'+element.substring(2,4);
                 return element;
             });
-            //horacitas = onlycitas.map(element =>  element.hora_fin.slice(3)); //obtengo las horas formato 24 de la bd segun fecha y profesional
+            //obtengo las horas formato 24 de la bd segun fecha y profesional
+            //horacitas = onlycitas.map(element =>  element.hora_fin.slice(3));
             horacitas = onlycitas.map(element =>  element.hora_fin);
 
             for(let i = 0; i<horario1.length-1; i++){
@@ -330,7 +341,7 @@
               const hora = horarioActual.getHours().toString().padStart(2, '0');
               const minutos = horarioActual.getMinutes().toString().padStart(2, '0');
               //console.log(`${hora}:${minutos}`);
-              const validate = horacitas.includes(`${hora}:${minutos}`);
+              const validate = horacitas.includes(`${hora}:${minutos}`); //horacitas arreglo con las horas ya seleccionadas
               if(!validate){
                   //hora1 = ${hora}:${minutos};
                   //horatemp = hora1; + min-servicio, 
@@ -341,11 +352,13 @@
                   //hora1 = elemento del arreglo + su duracion-serv
                   //aumentar en uno al arreglo de horacitas
                   //valido arribo si es si, vuelvo y repito esto
+                  
+                
 
               horasdisponibles = [...horasdisponibles, `${hora}:${minutos}`];
               }
           
-              horarioActual.setTime(horarioActual.getTime() + 30 * 60000); // Agregar 30 minutos al horario actual, 60.000 milisegundos tiene un minuto
+              horarioActual.setTime(horarioActual.getTime() + gettimeservice * 60000); // Agregar 30 minutos al horario actual, 60.000 milisegundos tiene un minuto
             }
         }
 

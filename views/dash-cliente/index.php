@@ -9,8 +9,15 @@
         </div>
         <?php require_once __DIR__ .'/../templates/alertas.php'; ?>
         <div class="paginas pagina1 pagina1cita">
+            <?php if($dctospromos):?>
+                <a href="/promos">
+                    <div class="cliente__linkpromos">
+                        <p class="cliente__linkpromo" ><span>Ofertas y Promociones Vigentes</span> | Ingresa para ver los beneficio que tenemos para tí</p>
+                    </div>
+                </a>
+            <?php endif; ?>
             <div class="cliente__informacion">
-                <div class="cliente__heading"><h4>Informacion Personal</h4></div>
+                <div class="cliente__heading" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;"><h4>Información Personal</h4></div>
                 <div class="cliente__datos">
                     <div class="cliente__dato">
                         <p>Nombre: </p>
@@ -30,11 +37,9 @@
                     </div>
                 </div>
             </div>
-            <div class="cliente__linkpromos">
-                <a class="cliente__linkpromo" href="/promos">Ofertas - Promociones</a>
-            </div>
+            
             <div class="cliente__cita">
-                <div class="cliente__heading"><h4>Reservar Cita</h4></div>
+                <div class="cliente__heading" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;"><h4>Reservar Cita</h4></div>
                 
                 <div class="cliente__disponibilidad">
                     <div class="cliente__select">
@@ -75,7 +80,7 @@
             </div> <!-- fin cita -->
         </div> <!-- fin pagina1 -->
         <div class="paginas pagina2 pagina2historialcitas">
-            <div class="cliente__heading"><h4>Consulta Y Cancelacion De Citas</h4></div>
+            <div class="cliente__heading" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;"><h4>Consulta Y Cancelacion De Citas</h4></div>
             <div class="cliente__nombrecliente"><p><?php echo $usuario->nombre.' '.$usuario->apellido; ?></p></div>
             <!-- poner mensaje de que las citas se pueden cancelar 2 horas antes o un dia antes -->
             <div class="cliente__tablahistorial">
@@ -154,7 +159,7 @@
                         <input class="formulario__input" type="password" placeholder="Ingresa Tu Password" id="password" name="validarpassword" requiered>
                     </div>
                 </div>
-                <input class="formulario__submit--login" type="submit" value="Actualizar">
+                <input class="formulario__submit--login" type="submit" value="Actualizar" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
             </form>
         </div>
         

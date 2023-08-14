@@ -32,7 +32,7 @@
                             <td class="">$<?php echo $dcto->precioservicio; ?></td>
                             <td class=""><?php echo $dcto->porcentaje.'%'.' - $'.$dcto->valor;?></td>
                             <td class="">$<?php echo $dcto->precioservicio-$dcto->valor;?></td>        
-                            <td class=""><?php echo $dcto->fecha_fin; ?></td>
+                            <td class=""><?php echo $dcto->fecha_ini; ?></td>
                             <td class=""><?php echo $dcto->fecha_fin; ?></td>
                             <td class=""><?php if($dcto->estado==0){echo 'No-activo';}if($dcto->estado==1){echo 'Activo';}if($dcto->estado==2){echo 'Pendiente';}?></td>
                             <?php if($user['admin']>2): ?>

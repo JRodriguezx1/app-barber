@@ -2,7 +2,7 @@
 @use 'base/mixins' as m;
 
 .acciones{ //hace referencia a las etiquetas <a>href=""</a> en las paginas de login/registro... etc.
-    margin-top: 2rem;
+    margin: 2rem 1rem 1rem 1rem;
     display: flex;
     justify-content: space-between;
     &__Centrar{

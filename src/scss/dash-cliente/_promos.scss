@@ -1,17 +1,265 @@
 @use 'base/mixins' as m;
 @use 'base/variables' as v;
 
-.promociones{
+.bloquetitulopromo {
+    border: 1px solid v.$griswhite;
+    box-shadow: 0px 10px 10px -6px v.$gris;
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: .4rem;
+    .promotitulo {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        h2 {
+            color: transparent;
+            -webkit-text-stroke: 1px black;
+            text-transform: uppercase;
+            font-size: 2.7rem;
+            font-family: v.$fuente-adicional;
+        }
+        svg {
+            font-size: 2rem;
+            transform: rotate(24deg);
+        }
+    }
+    .promodescripcion {
+        position: relative;
+        p {
+            font-size: 1.2rem;
+        }
+        .promotitulo {
 
-    .promocion{
-        &:nth-of-type(n){
-            background-color: brown;
         }
-        &:nth-of-type(2n){
-            background-color: rgb(94, 54, 54);
+    }
+}
+.promociones {
+    padding: 0;
+    @include m.tablet { 
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @include m.desktop { 
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .bloquepromocion {
+        position: relative;
+        background-color: v.$griswhite;
+        border-radius: .4rem;
+        margin: 1rem;
+        border-radius: .4rem;
+        padding: 1rem;
+        .promocion {
+            border-radius: .4rem;
+            background-color: v.$azuloscuro; 
         }
-        &:nth-of-type(3n){
-            background-color: rgb(53, 189, 65);
+    }
+}
+.promocion {
+    .bloquepromo {
+        height: 100%;
+        width: 100%;
+        .promoinfo {
+            max-height: 50%;
+            padding: 4rem 1rem 2rem 1rem;
+            margin-top: 5.5rem;
+            @include m.telefonom { 
+                margin-top: 5.5rem;
+            }
+        }
+    }
+}
+
+.promoinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .promoprecio {
+        color: v.$blanco;
+        text-align: center;
+        p {
+            margin-top: 2rem;
+            text-decoration: line-through;
+            font-size: 1.2rem; 
+        }
+        h3 {
+            color: v.$azul1;
+        }
+    }
+    .fechavencimiento {
+        color: v.$blanco;
+        margin-top: 1.5rem;
+        font-style: italic;
+    }
+}
+
+
+.decripciontituloimagen {
+    position: relative;
+    max-height: 50%;
+    .tituloservicio {
+        position: absolute;
+        background: rgba(v.$azuloscuro, 0.9);
+        top: 0;
+        left: 0;
+        padding: 0 1.2rem;
+        opacity: .7;
+        color: v.$blanco;
+        font-size: 1.5rem;
+        border-bottom-right-radius: 1.7rem;
+        font-weight: 600;
+    }
+}
+.bloquepromocion {
+    .sessiondescuento {
+        position: absolute;
+        top:30%;
+        left: 14.7%;
+        z-index: 100;
+        background: rgba(v.$negro, 0.7);
+        padding: 2rem 1rem;
+        border-radius: .4rem;
+        width: 70%;
+        height: 32%;
+        @include m.telefono { 
+            height: 27%;
+            top: 38%;
+        }
+        @include m.telefonom { 
+            top: 40%;
+        }
+        @include m.telefonol { 
+            top: 43%
+        }
+        @include m.telefonoxl { 
+            top: 46%;
+        }
+        @include m.tablet { 
+            top: 35%
+        }
+        @include m.tabletm { 
+            top: 40%
+        }
+        @include m.xl_tablet { 
+            top: 44%
+        }
+        @include m.desktop { 
+            top: 40%
+        }
+    }
+}
+.sessiondescuento {
+    
+    .bloquedescuento {
+        position: relative;
+        color: v.$blanco;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        a {
+            color: v.$negro;
+        }
+        .iconodescuento {
+            position: absolute;
+            width: 8rem;
+            top: -76px;
+            left: -33px;
+        }
+        .descuentoservicio {
+            max-width: 90%;
+            position: absolute;
+            bottom: -110px;
+            // left: 0%;
+            margin: auto;
+            z-index: 101;
+            @include m.telefono { 
+                bottom: -102px;
+            }
+            @include m.telefonomini { 
+                bottom: -142px;
+            }
+            @include m.telefonom { 
+                bottom: -149px;
+            }
+            @include m.telefonol { 
+                bottom: -167px;
+            }
+            @include m.tablet { 
+                bottom: -139px;
+            }
+            @include m.desktop { 
+                bottom: -144px;
+            }
+            p {
+                font-size: 5rem;
+                text-align: center;
+                font-weight: 700;
+                @include m.telefonomini { 
+                    font-size: 5rem;
+                }
+                @include m.telefonom { 
+                    font-size: 6rem;
+                }
+            }
+            span {
+                display: block;
+                font-size: 2rem;
+                color: transparent;
+                -webkit-text-stroke: 1px v.$blanco;
+                @include m.telefonom { 
+                    font-size: 3rem;
+                }
+            }
+        }
+        .llamadoaccion {
+            position: absolute;
+            right: 9%;
+            top: 113px;
+            background: rgba(v.$blanco, .7);
+            padding: 0 2rem;
+            width: 81%;
+            margin: 0 auto;
+            text-align: center;
+            border-radius: .4rem;
+            transition: 300ms;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 1.6rem;
+            animation-name: mianimacion;
+            animation-duration: 4s;
+            animation-delay: 2s;
+            animation-iteration-count: infinite;
+            @keyframes mianimacion {
+                0% {background: rgba(v.$blanco, .7)}
+                25% {background: rgba(v.$azul1, .7)}
+                50% {background: rgba(v.$blanco, .7)}
+                75% {background: rgba(v.$azul1, .7)}
+                100% {background: rgba(v.$blanco, .7)}
+            }
+            @include m.telefonomini { 
+                top: 113px;
+            }
+            @include m.telefono { 
+                top: 112px;
+            }
+            @include m.telefonom { 
+                top: 110px;
+            }
+            @include m.telefonol { 
+                top: 112px;
+            }
+            @include m.telefonoxl { 
+                top: 120px;
+            }
+            @include m.tablet { 
+                top: 82px;
+                font-size: 1.45rem;
+            }
+            @include m.desktop { 
+                top: 97px;
+            }
         }
     }
 }

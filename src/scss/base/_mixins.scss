@@ -6,8 +6,33 @@
         @content;
     }
 }
+@mixin telefonomini {
+    @media (min-width: v.$telefonomini) {
+        @content;
+    }
+}
+@mixin telefonom {
+    @media (min-width: v.$telefonom) {
+        @content;
+    }
+}
+@mixin telefonol {
+    @media (min-width: v.$telefonol) {
+        @content;
+    }
+}
+@mixin telefonoxl {
+    @media (min-width: v.$telefonoxl) {
+        @content;
+    }
+}
 @mixin tablet {
     @media (min-width: v.$tablet) {
+        @content;
+    }
+}
+@mixin tabletm {
+    @media (min-width: v.$tabletm) {
         @content;
     }
 }
@@ -122,7 +147,7 @@
 }
 
 @mixin logo{
-    color: v.$grisblack;
+    color: v.$azuloscuro;
     text-align: center;
     margin-bottom: 2rem;
     @include tablet{

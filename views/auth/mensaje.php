@@ -1,4 +1,4 @@
-<div class="lineaencabezado">
+<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
     <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 

@@ -1,10 +1,15 @@
 // Fuentes
 $fuente-principal: "Poppins",sans-serif;//'Outfit', sans-serif;
 $fuente-secundaria: 'Ubuntu', sans-serif;
-
+$fuente-adicional: 'Concert One', cursive;
 // Tamaño de Media Queries
+$telefonomini: 425px;
 $telefono: 480px;
+$telefonom: 525px;
+$telefonol: 570px;
+$telefonoxl: 633px;
 $tablet: 768px;
+$tabletm: 880px;
 $xl_tablet: 992px;
 $desktop: 1024px;
 $xl_desktop: 1200px;
@@ -22,8 +27,7 @@ $azul1: #0da6f3;
 $azul2: #3d72fc;
 $azul3: #3564db;
 $azulclaro: #eff2f7;
-$azuloscuro: #051453;
-$sidebar1: #0c213a; 
+$azuloscuro: #051453; 
 $sidebar2: #064CDB;
 $sidebar3: #30419b; //utilizado en el sidebar
 $sidebar4: #244f96;
@@ -44,4 +48,4 @@ $grisblack: #1E293B;
 $delgada: 300;
 $regular: 400;
 $bold: 700;
-$black: 900
+$black: 900;

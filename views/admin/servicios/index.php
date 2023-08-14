@@ -1,5 +1,3 @@
-
-
 <div class="servicios">
     <div class="servicios__titulos">
         <h2 class="dashboard__heading"><?php echo $titulo; ?> </h2>
@@ -26,9 +24,9 @@
                         </div>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="duracion">Duracion</label>
+                        <label class="formulario__label" for="duracion">Duración</label>
                         <div class="formulario__dato">
-                            <input class="formulario__input" type="number" min="10" max="120" placeholder="Duracion en minutos del servicio" id="duracion" name="duracion" disabled>
+                            <input class="formulario__input" type="number" min="10" max="120" placeholder="Duración en minutos del servicio" id="duracion" name="duracion" disabled>
                             <label for="">min</label>
                         </div>
                         

@@ -2,7 +2,7 @@
     if(document.querySelector('#dash-cliente')){
 
         const telcliente = document.querySelector('#telcliente').textContent;
-        let horasdisponibles = [], horacitas = [];
+        let gettimeservice=0, horasdisponibles = [], horacitas = [];
         const divhoras = document.querySelector('#horas'); //donde se ponen las horas
 
         function calcularhorarios(horaInicio, horaFin) {
@@ -28,7 +28,7 @@
               horasdisponibles = [...horasdisponibles, `${hora}:${minutos}`];
               }
           
-              horarioActual.setTime(horarioActual.getTime() + 30 * 60000); // Agregar 30 minutos al horario actual, 60.000 milisegundos tiene un minuto
+              horarioActual.setTime(horarioActual.getTime() + gettimeservice * 60000); // Agregar 30 minutos al horario actual, 60.000 milisegundos tiene un minuto
             }
         }
 
@@ -37,6 +37,16 @@
         const select_date = document.querySelector('#date');
         let fechadesc, malla, citas;
         let onlyfechadesc, onlymalla, onlycitas;
+
+        (async ()=>{
+            try {
+                const url = "/admin/api/gettimeservice"; //llamado a la API REST
+                const respuesta = await fetch(url); 
+                gettimeservice = await respuesta.json(); //traer el tiempo de duracion del servicio
+            } catch (error) {
+                console.log(error);
+            }
+        })();
 
         (async ()=>{
             try {

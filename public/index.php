@@ -116,6 +116,8 @@ $router->post('/admin/api/setmediospago', [configcontrolador::class, 'setmediosp
 $router->post('/admin/api/habilitarempleado', [configcontrolador::class, 'habilitarempleado']); //api llamada desde configuracion.js para habilitar empleado a ingresar a sistema dashboard
 $router->post('/admin/api/setearpass', [configcontrolador::class, 'setearpass']); //api para setear password
 $router->post('/admin/api/coloresapp', [configcontrolador::class, 'coloresapp']); //api establecer colores app
+$router->post('/admin/api/tiemposervicio', [configcontrolador::class, 'tiemposervicio']); //api establecer tiempo de servicio
+$router->get('/admin/api/gettimeservice', [configcontrolador::class, 'gettimeservice']); //api para traer el tiempo de duracion general del servicio
 
 /////area de clientes/////
 $router->get('/Cliente/app', [controladorcliente::class, 'index']);

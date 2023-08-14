@@ -15,7 +15,8 @@
     &__informacion{
     }
     &__heading{
-        background-color: v.$sidebar3;
+        background-color: v.$azuloscuro;
+        border-radius: .4rem;
         color: v.$blanco;
         padding: 1rem 2rem;
     }
@@ -39,11 +40,32 @@
     }
 
     &__linkpromos{
-        
+        background-color: v.$azul1;
+        padding: 1.5rem;
+        border-radius: .4rem;
+        margin-bottom: 1.2rem;
+        animation-name: animacionpromo;
+        animation-duration: 4s;
+        animation-delay: 2s;
+        animation-iteration-count: infinite;
+        p, span {
+            font-size: 1.2rem; 
+        } 
+        @keyframes animacionpromo {
+            0% {background: rgba(v.$azul1, 1.0)}
+            // 25% {background: rgba(v.$azul1, .9)}
+            50% {background: rgba(v.$azul3, 1.0)}
+            // 75% {background: rgba(v.$azul1, .9)}
+            100% {background: rgba(v.$azul1, 1.0)}
+        }
     }
-    &__linkpromo{
-        background-color: rgb(47, 83, 83);
+    &__linkpromo {
+        margin: 0;
         color: v.$blanco;
+        line-height: 1.4;
+        span {
+            font-weight: 700;
+        }
     }
 
     &__cita{}
@@ -60,13 +82,24 @@
             display: flex;
             gap: 3rem;
         }*/
+        .servicioselected { //clase agregada con js
+            background-color: lighten(v.$secundario, 10%);
+            option{
+                background-color: #fff;
+            }
+            option:checked{ //class añadiad con js
+            background-color: lighten(v.$secundario, 10%);
+            color: #fff;
+            }
+        }
     }
     
     &__horas{
         flex: 1;
         padding: 1rem;
         .headinghoras{
-            background-color: v.$sidebar3;
+            background-color: v.$grisraton;
+            border-radius: .4rem;
             color: v.$blanco;
             padding: 1rem;
             p{

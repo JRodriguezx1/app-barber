@@ -46,7 +46,7 @@
                     <div class="formulario__campo">
                         <label class="formulario__label" for="">Correo Electrónico</label>
                         <div class="formulario__dato">
-                            <input class="formulario__input" type="email" placeholder="Ingresa correo electrónico" id="email" name="email" value="<?php echo $negocio->email ?? '';?>" required>
+                            <input id="negocio" class="formulario__input" type="email" placeholder="Ingresa correo electrónico" id="email" name="email" value="<?php echo $negocio->email ?? '';?>" required>
                             <label data-num="50" class="count-charts" for="">50</label>
                         </div>
                     </div>
@@ -478,6 +478,23 @@
                         <div><input class="formulario__submit" type="submit" value="Aplicar"></div>
                     </form>
                 </div>
+            </div> <!-- fin colores principales -->
+            <div class="tiemposervicio">
+                <h4 class="configuracion__heading">Definir Tiempo De Servicio</h4>
+                <form id="formtimeserv" class="formulario" method="POST">
+                    <div class="formulario__campotimeserv">
+                        <label class="formulario__label" for="selecttime">Seleccionar Tiempo:</label>
+                        <select class="formulario__select" name="selecttime" id="selecttime" required>
+                            <option value="" disabled selected> Seleccionar </option>
+                            <option value="25"> 25 min </option>
+                            <option value="30"> 30 min </option>
+                            <option value="35"> 35 min </option>
+                            <option value="40"> 40 min </option>
+                            <option value="45"> 45 min </option>
+                        </select> 
+                    </div>
+                    <div><input class="formulario__submit" type="submit" value="Aplicar"></div>
+                </form>
             </div>
 
         </div> <!-- fin pagina5 -->

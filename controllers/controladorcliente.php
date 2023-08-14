@@ -8,6 +8,7 @@ use Model\empserv;
 use Model\empleados;
 use Model\usuarios;
 use Model\fidelizacion;
+use Model\negocio;
 use MVC\Router;  //namespace\clase
 use Classes\ws_cloud_api;
  
@@ -48,7 +49,8 @@ class controladorcliente{
         }
         //debuguear($citas);
 
-        $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'alertas'=>$alertas]);
+        $dctospromos = fidelizacion::whereArray(['estado'=>1]);
+        $router->render('dash-cliente/index', ['titulo'=>'cliente registrado', 'classjs'=>$classjs, 'servicios'=>$servicios, 'citas'=>$citas, 'usuario'=>$usuario, 'dctospromos'=>$dctospromos, 'alertas'=>$alertas, 'negocio'=>negocio::get(1)]);
     }
 
     public static function enviarcita(){ //api llamada desde dash_client_assign.js para reservar cita desde el dashboard del cliente

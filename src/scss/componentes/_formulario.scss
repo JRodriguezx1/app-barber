@@ -94,22 +94,24 @@
         @include m.boton(v.$azul, v.$blanco);
         align-self: flex-start;
         width: auto;
-        &--eliminar{
+        border-radius: .4rem;
+        &--eliminar{  //aplicado en adinconfig/index.php para eliminar empleado
             @include m.boton(v.$barprogress, v.$blanco);  
             width: auto;
             align-self: flex-start;
         }
-        &--login{
+        &--login{  //aplicado en login, olvide, registro y dash-cliente
             //@include m.boton(v.$barprogress, v.$blanco);
-            @include m.boton(rgba(v.$azul, .4), v.$blanco);
+            @include m.boton(rgba(v.$azul, .9), v.$blanco);
             width: auto;
-            @include m.tablet{
+            border-radius: .4rem;
+            /*@include m.tablet{
                 @include m.boton(rgba(v.$azul, .4), v.$blanco);
                 width: auto;     
-            } 
+            }*/ 
             align-self: center;    
         }
-        &--servicio{
+        &--servicio{ // btn submit del modal en servicios.js
             @include m.boton(v.$secundario, v.$blanco);  
             width: auto;
             align-self: center;
@@ -131,4 +133,4 @@
             }
         }
     }
-} 
+}

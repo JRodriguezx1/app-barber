@@ -48,6 +48,7 @@ class fidelizacioncontrolador{
             $existe = fidelizacion::inner_join("SELECT *FROM fidelizacion WHERE categoria = '{$_POST['categoria']}' AND product_serv = {$_POST['product_serv']} AND estado IN(1, 2)");
             //validar que la fecha ini no se >= a fecha fin
             if(empty($existe)){
+                date_default_timezone_set('America/Bogota');
                 $fidelizacion = new fidelizacion($_POST);
                 if($_POST['tipo']=='valor'){
                     $fidelizacion->valor = $_POST['dcto1'];
@@ -63,6 +64,7 @@ class fidelizacioncontrolador{
                     //validar la fecha antual con la fecha de inicio del dcto para activar o colocar como pendiente
                     $fechaactual = new DateTime(date('Y-m-d'));
                     $fechainicio = new DateTime($_POST['fecha_ini']);
+                    
                     if($fechainicio>$fechaactual)$fidelizacion->estado = 2;  //pendiente
 
                     $r = $fidelizacion->crear_guardar();
@@ -90,19 +92,27 @@ class fidelizacioncontrolador{
         
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $fidelizacion = fidelizacion::find('id', $_POST['id']);
+            date_default_timezone_set('America/Bogota');
             $fidelizacion->fecha_fin = $_POST['fecha_fin'];
-            if($_POST['tipo']=='valor'){
-                $fidelizacion->valor = $_POST['dcto1'];
-                $fidelizacion->porcentaje = $_POST['dcto2'];
+            $fechaactual = new DateTime(date('Y-m-d'));
+            $fechafin = new DateTime($_POST['fecha_fin']);
+
+            if($fechafin>=$fechaactual){
+                if($_POST['tipo']=='valor'){
+                    $fidelizacion->valor = $_POST['dcto1'];
+                    $fidelizacion->porcentaje = $_POST['dcto2'];
+                }
+                if($_POST['tipo']=='porcentaje'){
+                    $fidelizacion->valor = $_POST['dcto2'];
+                    $fidelizacion->porcentaje = $_POST['dcto1'];
+                }
+                
+                $r = $fidelizacion->Actualizar();
+                if($r){$alertas['exito'][] = "Promocion actualizado exitosamente";
+                }else{ $alertas['error'][] = "Error Intentalo de nuevo";}
+            }else{
+                $alertas['error'][] = "Fecha final debe ser mayor o igual a la fecha actual";
             }
-            if($_POST['tipo']=='porcentaje'){
-                $fidelizacion->valor = $_POST['dcto2'];
-                $fidelizacion->porcentaje = $_POST['dcto1'];
-            }
-            
-            $r = $fidelizacion->Actualizar();
-            if($r){$alertas['exito'][] = "Promocion actualizado exitosamente";
-            }else{ $alertas['error'][] = "Error Intentalo de nuevo";}
         }
         $descuentos = fidelizacion::all();
         foreach($descuentos as $dcto){

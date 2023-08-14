@@ -4,7 +4,7 @@ namespace Model;
 
 class negocio extends ActiveRecord {
     protected static $tabla = 'negocio';
-    protected static $columnasDB = ['id', 'nombre', 'ciudad', 'direccion', 'telefono', 'movil', 'email', 'nit', 'ws', 'facebook', 'instagram', 'tiktok', 'youtube', 'twitter', 'logo', 'colorprincipal', 'colorsecundario'];
+    protected static $columnasDB = ['id', 'nombre', 'ciudad', 'direccion', 'telefono', 'movil', 'email', 'nit', 'ws', 'facebook', 'instagram', 'tiktok', 'youtube', 'twitter', 'logo', 'colorprincipal', 'colorsecundario', 'timeservice'];
     
     public function __construct($args = [])
     {
@@ -25,6 +25,7 @@ class negocio extends ActiveRecord {
         $this->logo = $args['logo'] ?? '';
         $this->colorprincipal = $args['colorprincipal'] ?? '#051453';
         $this->colorsecundario = $args['colorsecundario'] ?? '#FFFFFF';
+        $this->timeservice = $args['timeservice'] ?? 30;
     }
 
     // Validar los servicios
