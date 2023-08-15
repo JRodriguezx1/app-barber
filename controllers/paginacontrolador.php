@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-//use Model\negocio;
+use Model\negocio;
 use Model\fidelizacion;
 use Model\servicios;
 //use DateTime;
@@ -45,7 +45,7 @@ class paginacontrolador{
             $promo->nombreproducto = servicios::uncampo('id', $promo->product_serv, 'nombre');
             $promo->precioproducto = servicios::uncampo('id', $promo->product_serv, 'precio');
         }
-    $router->render('paginas/promos', ['titulo'=>'app salon', 'promociones'=>$promociones/*, 'logo'=>negocio::uncampo('id', 1, 'logo')*/]);
+    $router->render('paginas/promos', ['titulo'=>'app salon', 'promociones'=>$promociones, 'negocio'=>negocio::get(1)]);
     }
 }
 

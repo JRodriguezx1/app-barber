@@ -39,11 +39,13 @@
         <div class="servicios__lista">
             <?php foreach($servicios as $servicio): ?>
                 <?php if($servicio->estado): ?>
-                <div data-id="<?php echo $servicio->id;?>" id="servicio" class="servicios__servicio">
+                <div data-id="<?php echo $servicio->id;?>" data-user="<?php echo $user['admin'];?>" id="servicio" class="servicios__servicio">
                     <h4><?php echo $servicio->nombre; ?></h4>
                     <p>Precio: $<span id="precio"> <?php echo $servicio->precio; ?></span></p>
                     <p>Duracion: <span id="duracion"><?php echo $servicio->duracion; ?></span> min</p>
-                    <a class="servicios__eliminar" href="#"><i class="fa-solid fa-trash-can"></i></a>
+                    <?php if($user['admin']>2): ?>
+                        <a class="servicios__eliminar" href="#"><i class="fa-solid fa-trash-can"></i></a>
+                    <?php endif; ?>
                 </div>
                 <?php endif; ?>
             <?php endforeach; ?>

@@ -69,7 +69,7 @@
             try {
                 const url = "/admin/api/gettimeservice"; //llamado a la API REST
                 const respuesta = await fetch(url); 
-                gettimeservice = await respuesta.json(); //traer el tiempo de duracion del servicio
+                gettimeservice = await respuesta.json(); //traer el tiempo de duracion del servicio ej: 30, 35, 40min etc
             } catch (error) {
                 console.log(error);
             }
@@ -336,8 +336,9 @@
         function calcularhorarios(horaInicio, horaFin) {
             const horarioActual = new Date(`01/01/2000 ${horaInicio}`);
             const horarioFinal = new Date(`01/01/2000 ${horaFin}`);
+            horarioFinal.setTime(horarioFinal.getTime() - Math.floor(gettimeservice)*60000); //evitar que se programe citas mas alla de las horas de salida
           
-            while (horarioActual < horarioFinal) {
+            while (horarioActual <= horarioFinal) {
               const hora = horarioActual.getHours().toString().padStart(2, '0');
               const minutos = horarioActual.getMinutes().toString().padStart(2, '0');
               //console.log(`${hora}:${minutos}`);

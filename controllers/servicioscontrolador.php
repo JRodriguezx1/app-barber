@@ -32,19 +32,26 @@ class servicioscontrolador{
 
 
     public static function editar(Router $router){
+        session_start();
+        isadmin();
+        $alertas = [];
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $servicios = new servicios($_POST);
             $alertas = $servicios->validarservicios();
             if(empty($alertas)){
                 $r = $servicios->actualizar();
                 if($r){
-                    /////modicar el valor de dcto de la tabla fidelizacion/////
-                    $dcto = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['id'], 'estado'=>1]);
-                    $dcto[0]->valor = round(($dcto[0]->porcentaje*($servicios->precio))/100);
-                    $r1 = $dcto[0]->actualizar();
-                    if($r1){
-                        $alertas['exito'][] = "Servicio actualizado";
-                    }else{'Volver actualizar datos de servicio';}
+                    $alertas['exito'][] = "Servicio actualizado";
+                    /////modificar el valor de dcto de la tabla fidelizacion/////
+                    //$dcto = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['id'], 'estado'=>1]);
+                    $dcto = fidelizacion::inner_join("SELECT *FROM fidelizacion WHERE categoria = 'servicios' AND product_serv = {$_POST['id']} AND estado IN(1, 2)");
+                    if($dcto){
+                        $dcto[0]->valor = round(($dcto[0]->porcentaje*($servicios->precio))/100);
+                        $r1 = $dcto[0]->actualizar();
+                        if($r1){
+                            $alertas['exito'][] = "Descuento en la promocion tambien actualizada";
+                        }else{ $alertas['error'][] = 'Volver actualizar datos de servicio, ya no se actualizo en la promocion';}
+                    }
                 }else{
                     $alertas['error'][] = "Hubo un error";
                 }

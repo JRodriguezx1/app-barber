@@ -1,4 +1,4 @@
-<div class="lineaencabezado">
+<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
     <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 <div class="bloquetitulopromo">
@@ -15,12 +15,12 @@
 <div class="promociones auth bloqueauth">
     <?php foreach($promociones as $promocion):  ?>
         <div class="bloquepromocion">
-            <div class="promocion">
+            <div class="promocion" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
                 <div class="bloquepromo">
                     <div class="decripciontituloimagen">
                         <img loading="lazy" src="/build/img/servicio.jpg" alt="Imagen Servicio">
                         
-                        <div class="tituloservicio">
+                        <div class="tituloservicio" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
                             <p><?php echo $promocion->nombreproducto??'';?></p>
                         </div>
                     </div>

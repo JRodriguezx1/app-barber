@@ -11,7 +11,7 @@
            e.preventDefault();
          
            if(e.target.tagName === "I"){ 
-               id = e.target.parentElement.parentElement.dataset.id;   
+               id = e.target.parentElement.parentElement.dataset.id;
             }else{
                 id = e.target.parentElement.dataset.id;
             }
@@ -62,54 +62,63 @@
             
             if(e.target.tagName === "DIV" ||e.target.tagName === "P"|| e.target.tagName === "H4" || e.target.tagName === "SPAN"){
     
-                let nombre, precio, duracion, id;
+                let nombre, precio, duracion, id, user;
                 
-                id = id = e.target.dataset.id;;
-                if(e.target.tagName === "P"|| e.target.tagName === "H4")id = e.target.parentElement.dataset.id;
-                if(e.target.tagName === "SPAN")id = e.target.parentElement.parentElement.dataset.id;
+                id = id = e.target.dataset.id;
+                user = e.target.dataset.user;
+                if(e.target.tagName === "P"|| e.target.tagName === "H4"){
+                    id = e.target.parentElement.dataset.id;
+                    user = e.target.parentElement.dataset.user;
+                }
+                if(e.target.tagName === "SPAN"){
+                    id = e.target.parentElement.parentElement.dataset.id;
+                    user = e.target.parentElement.parentElement.dataset.user;
+                }
 
-                nombre = document.querySelector(`div[data-id="${id}"] h4`).textContent;
-                precio = parseInt(document.querySelector(`div[data-id="${id}"] #precio`).textContent);
-                duracion = parseInt(document.querySelector(`div[data-id="${id}"] #duracion`).textContent);
+                if(parseInt(user)>1){
+                    nombre = document.querySelector(`div[data-id="${id}"] h4`).textContent;
+                    precio = parseInt(document.querySelector(`div[data-id="${id}"] #precio`).textContent);
+                    duracion = parseInt(document.querySelector(`div[data-id="${id}"] #duracion`).textContent);
 
-                Swal.fire({
-                    customClass: {
-                        confirmButton: 'sweetbtnconfirm',
-                        cancelButton: 'sweetbtncancel'
-                    },
-                    title: 'Desea editar el servcio?',
-                    html: `<form class="formulario" action="/admin/servicios/editar" method="POST">
-                                <input type="hidden" name="id" value="${id}" >
-                                <div class="formulario__campo">
-                                    <label class="formulario__label" for="nombre">Nombre:</label>
-                                    <div class="formulario__dato">
-                                        <input class="formulario__input" type="text" placeholder="Nombre del servicio" id="nombre" name="nombre" value="${nombre}" required>
-                                        <label data-num="25" class="count-charts" for="">25</label>
+                    Swal.fire({
+                        customClass: {
+                            confirmButton: 'sweetbtnconfirm',
+                            cancelButton: 'sweetbtncancel'
+                        },
+                        title: 'Desea editar el servcio?',
+                        html: `<form class="formulario" action="/admin/servicios/editar" method="POST">
+                                    <input type="hidden" name="id" value="${id}" >
+                                    <div class="formulario__campo">
+                                        <label class="formulario__label" for="nombre">Nombre:</label>
+                                        <div class="formulario__dato">
+                                            <input class="formulario__input" type="text" placeholder="Nombre del servicio" id="nombre" name="nombre" value="${nombre}" required>
+                                            <label data-num="25" class="count-charts" for="">25</label>
+                                        </div>
                                     </div>
-                                </div>
-                                
-                                <div class="formulario__campo">
-                                    <label class="formulario__label" for="precio">Precio:</label>
-                                    <div class="formulario__dato">
-                                        <input class="formulario__input" type="number" placeholder="Precio del servicio" id="precio" name="precio" value="${precio}" requiered>
-                                        <label for="">$</label>
+                                    
+                                    <div class="formulario__campo">
+                                        <label class="formulario__label" for="precio">Precio:</label>
+                                        <div class="formulario__dato">
+                                            <input class="formulario__input" type="number" placeholder="Precio del servicio" id="precio" name="precio" value="${precio}" requiered>
+                                            <label for="">$</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="formulario__campo">
-                                    <label class="formulario__label" for="duracion">Duracion:</label>
-                                    <div class="formulario__dato">
-                                        <input class="formulario__input" type="number" min="10" max="120" placeholder="Duracion en minutos del servicio" id="duracion" name="duracion" value="${duracion}" disabled>
-                                        <label for="">min</label>
+                                    <div class="formulario__campo">
+                                        <label class="formulario__label" for="duracion">Duracion:</label>
+                                        <div class="formulario__dato">
+                                            <input class="formulario__input" type="number" min="10" max="120" placeholder="Duracion en minutos del servicio" id="duracion" name="duracion" value="${duracion}" disabled>
+                                            <label for="">min</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <input class="formulario__submit--servicio" type="submit" value="Actualizar">
-                           </form>`,
-                    showCancelButton: true,
-                    showConfirmButton: false,
-                    cancelButtonText: 'Cancelar',
-                    
-                });
-                countchars();
+                                    <input class="formulario__submit--servicio" type="submit" value="Actualizar">
+                            </form>`,
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: 'Cancelar',
+                        
+                    });
+                    countchars();
+                }
             } //cierre del if   
         }); //cierre de addeventlistener
     }); //cierre del foreach

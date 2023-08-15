@@ -72,15 +72,17 @@ class controladorcliente{
         $cita->nameprofesional = $profesional;
         $alertas = $cita->validarcitas();
         if(empty($alertas)){
+            $ws = negocio::uncampo('id', 1, 'ws'); //ws del negocio o encargado para recibir los msj de ws
             //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
             $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
             if(empty($citaunica)){
                 $r = $cita->crear_guardar();
+                if($r[0]){
+                    //////////////////enviar msj por whatsapp cloud api////////////
+                    $wstext = new ws_cloud_api($ws, $r[1], $_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
+                    $wstext->send1textws();
+                }else{ $r = [false, 0]; }
             }else{ $r = [false, 0]; }
-
-            //////////////////enviar sms por whatsapp cloud api////////////
-            $wstext = new ws_cloud_api($_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
-            $wstext->send1textws();
         }
         echo json_encode($r);
     }
@@ -97,12 +99,18 @@ class controladorcliente{
     }
 
     public static function cancelarcita(){
+        session_start();
         $id = $_GET['id'];
         if(!is_numeric($id))return;
+        $ws = negocio::uncampo('id', 1, 'ws'); //ws del negocio o encargado para recibir los msj de ws
         $cita = citas::find('id', $id);
         $cita->estado = "Cancelado";
         $r = $cita->actualizar();
-        echo json_encode($cita);
+        if($r){
+            $wstext = new ws_cloud_api($ws, $id, $_SESSION['nombre'], 0, '', $cita->nameservicio, $cita->fecha_fin, $cita->hora_fin);
+            $wstext->send2textws();
+            echo json_encode($cita);
+        }else{echo json_encode(false); }
     }
      
 }

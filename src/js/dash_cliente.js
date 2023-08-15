@@ -93,23 +93,24 @@
         eliminarcitas.forEach(eliminarcita =>{
             eliminarcita.addEventListener('click', (e)=>{
                 const tr = e.target.parentElement.parentElement.parentElement;
-                const fechacita = tr.children[2].textContent;
+                /*const fechacita = tr.children[2].textContent;
                 const horacita = tr.children[3].textContent;
-                const estado = tr.children[6].textContent;
+                const estado = tr.children[6].textContent;*/
 
                 //var fecha1 = new Date(fechacita+"T00:00:00-05:00");
-                let tiempocita = new Date(fechacita+"T"+horacita);
+                /*let tiempocita = new Date(fechacita+"T"+horacita);
                 let hoy = new Date();
+                console.log(tiempocita-hoy);*/
 
-                if(estado === "Pendiente"){
-                    if((tiempocita-hoy)>=3600000)
-                        cancelarcita(e.target.parentElement.dataset.id, tr.children[6]);
-                }  
+                //if(estado === "Pendiente"){
+                    //if((tiempocita-hoy)>=3600000)
+                        cancelarcita(e.target.parentElement.dataset.id, tr);
+                //}  
             });
         });
 
 
-        function cancelarcita(id, estado){ //funcion para cancelar la cita, se ejecuta si la cita esta a mas de una hora de cumplirse
+        function cancelarcita(id, tr){ //funcion para cancelar la cita, se ejecuta si la cita esta a mas de una hora de cumplirse
             Swal.fire({
                 customClass: {
                     confirmButton: 'sweetbtnconfirm',
@@ -127,11 +128,14 @@
                         try {
                             const url = `/admin/api/cancelarcita?id=${id}`;
                             const respuesta = await fetch(url); 
-                            const resultado = await respuesta.json();  
+                            const resultado = await respuesta.json();
+                            console.log(resultado);
                             if(resultado){
-                                estado.textContent = "Cancelado"; 
-                                //borrar el div donde esta los horarios disponibles
+                                //estado.textContent = "Cancelado"; 
+                                tr.remove();
                                 Swal.fire('Cita Cancelada', '', 'success')
+                            }else{
+                                Swal.fire('No se pudo cancelar intentalo nuevamente', '', 'error')
                             }
                         } catch (error) {
                             console.log(error);

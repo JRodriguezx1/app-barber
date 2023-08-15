@@ -8,8 +8,9 @@
         function calcularhorarios(horaInicio, horaFin) {
             const horarioActual = new Date(`01/01/2000 ${horaInicio}`);
             const horarioFinal = new Date(`01/01/2000 ${horaFin}`);
+            horarioFinal.setTime(horarioFinal.getTime() - Math.floor(gettimeservice)*60000);
           
-            while (horarioActual < horarioFinal) {
+            while (horarioActual <= horarioFinal) {
               const hora = horarioActual.getHours().toString().padStart(2, '0');
               const minutos = horarioActual.getMinutes().toString().padStart(2, '0');
               //console.log(`${hora}:${minutos}`);
