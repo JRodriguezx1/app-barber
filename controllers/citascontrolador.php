@@ -326,7 +326,7 @@ class citascontrolador{
             $stridsempserv = implode(', ', $ids_empserv);
         }
         $alertas = []; $ids = ""; $estado=''; $nombre='';
-        
+
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             //$citas = citas::inner_join("SELECT *FROM citas WHERE estado LIKE "."'%{$_POST['estado']}%'"." ORDER BY id DESC;"/* ORDER BY id ASC LIMIT 10 OFFSET {$paginacion->offset()}*/);
             if($_POST['columna'] == 'estado'){

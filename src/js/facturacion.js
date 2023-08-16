@@ -1,11 +1,22 @@
 (function(){
     if(document.querySelector('.facturacion')){
-        let servicios;
+        let servicios, emplserv;
         (async ()=>{
             try {
                 const url = "/admin/api/getservices"; //llamado a la API REST
                 const respuesta = await fetch(url); 
                 servicios = await respuesta.json(); 
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+
+        (async ()=>{
+            try {
+                const url = "/admin/api/getemployee_services"; //llamado a la API REST para trer la relacion de los servicios con sus profesionales
+                const respuesta = await fetch(url); 
+                emplserv = await respuesta.json();
+                console.log(emplserv);
             } catch (error) {
                 console.log(error);
             }
@@ -32,7 +43,6 @@
                 },
                 title: 'Pago De Servicio',
                 html: `<form class="formulario modalform" action="/admin/facturacion" method="POST">
-                            <input type="hidden" name="idcita" value="1">
                             <input type="hidden" name="total" value="" >
                             <input type="hidden" name="dcto" value="0">
                             <input type="hidden" name="valordcto" value="0">
@@ -41,6 +51,13 @@
                                 <label class="formulario__label" for="servicios">Servicios:</label>
                                 <select class="formulario__select" name="idservicio" id="selectservice" required>
                                     <option value="" disabled selected> Seleccionar Servicio</option>
+                                </select> 
+                            </div>
+
+                            <div class="formulario__campo">
+                                <label class="formulario__label" for="empleado">Empleado:</label>
+                                <select class="formulario__select" name="idempleado" id="selectemployee" required>
+                                    <option value="" disabled selected> Seleccionar Empleado </option>
                                 </select> 
                             </div>
 
@@ -130,8 +147,31 @@
                 option.textContent = element.nombre;
                 selectservice.appendChild(option);
             });
-            selectservice.addEventListener('change', e=>cargarvalorservicio(e));
+            selectservice.addEventListener('change', e=>{
+                cargarempleado(e.target.value);
+                cargarvalorservicio(e);
+            });
         }
+
+        function cargarempleado(id){
+            const selectemployee = document.querySelector('#selectemployee');
+            const empleados = emplserv.filter(Element => Element.idservicio === id);
+            borrarhtml(selectemployee);
+            const option = document.createElement('OPTION');
+            option.value = '';
+            option.textContent = ' Seleccionar Empleado ';
+            option.selected = true;
+            option.disabled = true;
+            selectemployee.appendChild(option);
+            empleados.forEach(element => {
+                const option = document.createElement('OPTION');
+                option.value = element.idempleado; //id de la tabla empleados
+                option.textContent = element.nombre;
+                option.dataset.id = element.id;  //id de la tabla empserv
+                selectemployee.appendChild(option); 
+            });
+        }
+
         function cargarvalorservicio(e){
             const valor_servicio = document.querySelector('#valor_servicio');
             const valorservice = servicios.filter(element =>element.id == e.target.value);
@@ -147,12 +187,17 @@
             const recibido = parseInt(document.querySelector('#recibido').value); 
                 if(recibido>=valorservicio){
                    devolucion.value = recibido-valorservicio;
+                   valordcto.value = 0;
                    //devolucion.style.color = "rgb(240, 101, 72)"; 
                 }else{
                     devolucion.value = 0;
                     valordcto.value = valorservicio - recibido; //descuento manual
                 }
                 document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
+        }
+
+        function borrarhtml(elemento){
+            while(elemento.firstElementChild)elemento.removeChild(elemento.firstElementChild);
         }
 
         //////////////// funcion contadores de caracteres /////////////////////

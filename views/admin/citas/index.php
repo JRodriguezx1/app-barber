@@ -80,7 +80,7 @@
                             <!--<td class="" data-precio="<?php //echo $cita->servicio->precio??''; ?>"><?php //echo $cita->servicio->nombre??''; ?></td>
                             <td class=""><?php //echo $cita->empleado->nombre??'';?> <?php //echo $cita->empleado->apellido??''?></td> -->
                             <td class="" data-precio="<?php echo $cita->valorcita??''; ?>"><?php echo $cita->nameservicio??''; ?></td>
-                            <td class=""><?php echo $cita->nameprofesional??'';?></td>
+                            <td class="" data-idempleado="<?php echo $cita->idempleado??'';?>"><?php echo $cita->nameprofesional??'';?></td>
                             <td class=""><?php echo $cita->fecha_fin; ?></td>         
                             <td class=""><?php echo $cita->hora_fin; ?></td>
                             <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; //echo $cita->estado; ?></td>

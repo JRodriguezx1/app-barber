@@ -87,7 +87,7 @@ class factcontrolador{
         $gestionardia = facturacion::idregistros('id_pagosxdia', $id);
         $numservicios = count($gestionardia); //servicios realizados
         foreach($gestionardia as $value){
-            if($value->idcita!=1){
+            if($value->idcita){
                 $value->idempserv = citas::uncampo('id', $value->idcita, 'id_empserv');
                 if($value->idempserv){
                     $value->idservicio = empserv::uncampo('id', $value->idempserv, 'idservicio');

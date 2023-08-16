@@ -71,6 +71,7 @@
                 html: `<form class="formulario modalform" action="/admin/citas/finalizar?pagina=1" method="POST">
                             <input type="hidden" name="id" value="" >
                             <input type="hidden" name="valor_servicio" value="" >
+                            <input type="hidden" name="idempleado" value="" >
                             <input type="hidden" name="valordcto" value="0" >
                             <input type="hidden" name="promodcto" value="0" >
                             <input type="hidden" name="total" value="" >
@@ -180,6 +181,7 @@
 
             document.querySelector('input[name=id]').value = idcita;  //id de la cita
             document.querySelector('input[name=valor_servicio]').value = valueservice;
+            document.querySelector('input[name=idempleado]').value = tr.children[4].dataset.idempleado;
             document.querySelector('.orden').textContent = 'Orden: '+idcita;
             document.querySelector('.nameuser').textContent = nombre;
             document.querySelector('.nameservice').textContent = servicio;
@@ -218,11 +220,9 @@
                 devolucion.value = recibido-inputtotalpagar;
                 //devolucion.style.color = "rgb(240, 101, 72)"; 
                 valordcto.value = 0; //descuento manual
-                console.log(valordcto.value);
             }else{
                 devolucion.value = 0;
                 valordcto.value = inputtotalpagar - recibido; //descuento manual
-                console.log(valordcto.value);
             }
             document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
         }
