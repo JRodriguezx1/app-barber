@@ -23,14 +23,18 @@
 
         deshabilitarfechaanterior();
 
-        function validarofertaselected(){
+        function validarofertaselected(){   //validar oferta
             const urlparams = new URLSearchParams(window.location.search);
             const id = urlparams.get('id'); //id del servicio
+            const valordcto = urlparams.get('valordcto'); //id del servicio
             if(id){
                 servicio.classList.add('servicioselected');
                 for(let i = 1; i<=servicio.options.length; i++){
                     if(servicio.options[i].value == id){
                         servicio.options[i].selected = true;
+                        let serviciotext = servicio.options[i].textContent.split(" - ");
+                        serviciotext = serviciotext[0]+' - '+valordcto;
+                        servicio.options[i].textContent = serviciotext;
                         break;
                     }
                 }
@@ -129,7 +133,6 @@
                             const url = `/admin/api/cancelarcita?id=${id}`;
                             const respuesta = await fetch(url); 
                             const resultado = await respuesta.json();
-                            console.log(resultado);
                             if(resultado){
                                 //estado.textContent = "Cancelado"; 
                                 tr.remove();

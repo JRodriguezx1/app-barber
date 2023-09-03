@@ -43,7 +43,7 @@
                     <div class="descuentoservicio">
                         <p><?php echo $promocion->porcentaje??'';?>% <span>Descuento</span></p>
                     </div>
-                    <a href="/Cliente/app?id=<?php echo $promocion->product_serv; ?>">
+                    <a href="/Cliente/app?id=<?php echo $promocion->product_serv.'&valordcto='.$promocion->precioproducto-$promocion->valor;?>">
                         <div class="llamadoaccion">
                             <p>Aprovecha Ya</p> 
                         </div>

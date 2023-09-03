@@ -10,7 +10,7 @@
     <?php
     require_once __DIR__ .'/../templates/alertas.php';
     ?>
-    <h2 class="auth__heading bloqueauth__iniciarsesion"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
+    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal;?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
     <p class="auth__texto bloqueauth__subtitulo">Recupera tu contraseña</p>
     <form method="POST" action="/olvide" class="formulario bloqueformulario" action="">
         <div class="formulario__campo">

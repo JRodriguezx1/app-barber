@@ -186,7 +186,11 @@ class ActiveRecord {
         $atributos = $this->atributos();  //devuelve arreglo asociativo ['titulo'=>valor_titulo, 'precio'=>valor_precio]
         $sanitizado = [];
         foreach($atributos as $key => $value){
-            $sanitizado[$key] = self::$db->escape_string($value);  //arreglo sanitizado ['titulo'=>valor_titulo, 'precio'=>valor_precio] pero protegido pra inyecciones sql
+            if($value == null){
+                $sanitizado[$key] = $value;
+            }else{
+                $sanitizado[$key] = self::$db->escape_string($value);  //arreglo sanitizado ['titulo'=>valor_titulo, 'precio'=>valor_precio] pero protegido pra inyecciones sql
+            }
         }
         return $sanitizado;  //se retorna arreglo[] ya sanitizado
     }

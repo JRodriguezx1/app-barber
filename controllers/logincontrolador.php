@@ -48,7 +48,7 @@ class logincontrolador{
         } //cierre de $_SERVER['REQUEST_METHOD'] === 'POST'
 
         $alertas = usuarios::getAlertas();
-       $router->render('auth/login', ['alertas'=>$alertas, 'titulo'=>'iniciar sesion', 'negocio'=>negocio::get(1)]);   //  'autenticacion/login' = carpeta/archivo
+       $router->render('auth/login', ['alertas'=>$alertas, 'titulo'=>'iniciar sesión', 'negocio'=>negocio::get(1)]);   //  'autenticacion/login' = carpeta/archivo
     }
 
 

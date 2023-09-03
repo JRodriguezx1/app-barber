@@ -108,7 +108,7 @@
         function deshabilitarfechaanterior(){
             const fechaactual = new Date();  //en fecha actual esta la fecha actual con hora
            
-            fechaactual.setDate(fechaactual.getDate() + 1);
+            fechaactual.setDate(fechaactual.getDate());
             const year = fechaactual.getFullYear();
             const mes = fechaactual.getMonth() + 1;
             const dia = fechaactual.getDate();

@@ -15,7 +15,7 @@
         <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
     
-    <h2 class="auth__heading bloqueauth__iniciarsesion"><?php echo $titulo; ?></h2>
+    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal;?>;"><?php echo $titulo; ?></h2>
     <?php include __DIR__. "/../templates/alertas.php"; ?>
     <p class="auth__texto bloqueauth__subtitulo">Inicia sesión y reserva tu cita</p>
     <form class="formulario bloqueformulario" method="POST" action="/login">
