@@ -37,7 +37,7 @@ class controladorcliente{
         }
 
         //$citas = citas::idregistros('id_usuario', $_SESSION['id']);
-        $citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario = {$_SESSION['id']} AND estado = 'Pendiente' ORDER BY fecha_fin DESC;");
+        $citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario = {$_SESSION['id']} AND estado = 'Pendiente' ORDER BY fecha_fin ASC;");
         foreach($citas as $cita){
            /* if($cita->id_empserv){
                 $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
@@ -59,30 +59,34 @@ class controladorcliente{
         $idusuario = $_SESSION['id'];
         $cita = new citas($_POST);
         $cita->id_usuario = $idusuario;
-        $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
-        $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
-        $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
-        $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
-        $cita->valorcita = $valorcita;
-        if($fidelizacion){
-            $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
-            $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
-        }
-        $cita->nameservicio = $servicio;
-        $cita->nameprofesional = $profesional;
-        $alertas = $cita->validarcitas();
-        if(empty($alertas)){
-            $ws = negocio::uncampo('id', 1, 'ws'); //ws del negocio o encargado para recibir los msj de ws
-            //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
-            $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
-            if(empty($citaunica)){
-                $r = $cita->crear_guardar();
-                if($r[0]){
-                    //////////////////enviar msj por whatsapp cloud api////////////
-                    $wstext = new ws_cloud_api($ws, $r[1], $_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
-                    $wstext->send1textws();
+        $Ncitaspendient = citas::numreg_multicolum(['id_usuario'=>$cita->id_usuario, 'estado'=>'Pendiente']);
+        if($Ncitaspendient > 2){ $r = [false, 0];
+        }else{
+            $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
+            $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
+            $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
+            $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
+            $cita->valorcita = $valorcita;
+            if($fidelizacion){
+                $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
+                $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
+            }
+            $cita->nameservicio = $servicio;
+            $cita->nameprofesional = $profesional;
+            $alertas = $cita->validarcitas();
+            if(empty($alertas)){
+                $ws = negocio::uncampo('id', 1, 'ws'); //ws del negocio o encargado para recibir los msj de ws
+                //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
+                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
+                if(empty($citaunica)){
+                    $r = $cita->crear_guardar();
+                    if($r[0]){
+                        //////////////////enviar msj por whatsapp cloud api////////////
+                        $wstext = new ws_cloud_api($ws, $r[1], $_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
+                        $wstext->send1textws();
+                    }else{ $r = [false, 0]; }
                 }else{ $r = [false, 0]; }
-            }else{ $r = [false, 0]; }
+            }
         }
         echo json_encode($r);
     }

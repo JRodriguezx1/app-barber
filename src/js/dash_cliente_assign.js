@@ -214,15 +214,14 @@
                 
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let r = enviarcita(e.target.dataset.hora);
-                    if(r){
-                        Swal.fire('Cita Programada', '', 'success')
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 1500);
-                    }else{
-                        Swal.fire('No fue posible agendar cita, Intentalo de nuevo', '', 'error')
-                    }
+                    enviarcita(e.target.dataset.hora).then((r) => {
+                        if(r){
+                            Swal.fire('Cita Programada', '', 'success')
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1500);
+                        }else{ Swal.fire('No fue posible agendar cita, Intentalo de nuevo', '', 'error') }
+                    });
                 } 
             })
         }

@@ -89,8 +89,8 @@
                         <tr>
                             <th>Servicio</th>
                             <th>Profesional</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
+                            <th>Fecha Cita</th>
+                            <th>Hora Cita</th>
                             <th>Orden</th>
                             <th>Valor</th>
                             <th>Estado</th>

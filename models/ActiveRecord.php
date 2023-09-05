@@ -287,6 +287,20 @@ class ActiveRecord {
         return array_shift($total);
     }
 
+    //numero total de registros de una tabla q cumplan multiples condiciones de varias columnas
+    public static function numreg_multicolum($colums=[]){
+        $sql = "SELECT COUNT(*) FROM ".static::$tabla." WHERE ";
+        foreach($colums as $key => $value){
+            if(array_key_last($colums) == $key){ 
+                $sql.= "$key = '$value';";
+            }else{
+                $sql.= "$key = '$value' AND ";
+            }
+        } //SELECT COUNT(*) FROM citas WHERE id_usuario = 2 AND estado = 'Pendiente';
+        $resultado = self::$db->query($sql);
+        $total = $resultado->fetch_assoc();
+        return array_shift($total);
+    }
 
     //suma numerica de una columna segun id
     public static function sumcolum($colum, $id, $colsum){

@@ -20,18 +20,18 @@
                     <a href="/">Home</a>
                     <a href="">Soporte</a>
                     <a href="/registro">Registrarse</a>
-                </nav>
+                </nav> 
             </div> 
         </div>
         <div class="headerapp__contenido">
             <div class="headerapp__texto">
                 <div class="headerapp__logoInnovaTech">
                     <a href="#">
-                        <img src="/build/img/innovatech.png" alt="Logo Innovatech Quindío">
+                        <img src="/build/img/logointermix.png" alt="Logo InterMix App de Reservas">
                     </a>
                 </div>
                 <div class="headerapp__bloqueTexto">
-                    <h1>Bienvenidos a <span>InnovaTech</span> El mejor Sistema de Reserva Online</h1>
+                    <h1>Bienvenidos a <span>Intermix</span> App de Reservas para Citas Online</h1>
                     <p>Sistema avanzado para la gestion en linea de barberias, salón de belleza y Spa. Optimiza tus procesos y toma el control de tu negocio.</p>
                     <a href="/login">Iniciar sesión</a>
                 </div>

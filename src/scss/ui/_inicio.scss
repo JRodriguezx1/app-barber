@@ -3,7 +3,7 @@
 
 .headerapp {
     @include m.tablet { 
-        background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portada.jpg);
+        background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portada1.jpg);
         // //linear-gradient(to left, rgba(v.$negro, .1), rgba(v.$negro, 1)), 
         background-repeat: no-repeat;
         background-position: center;
@@ -15,11 +15,11 @@
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-        background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portada.jpg);
+        background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portada1.jpg);
     }
     &__contenedor{
         position: relative;
-        background-color: v.$azuloscuro;
+        background-color: #060021;
         @include m.contenedor;
         height: 100vh;
         display: flex;
@@ -98,7 +98,7 @@
         }
     }
     &__menubars{
-        background-color: #05145373;
+        background-color: rgba(6, 0, 33, 45%);
         color: v.$blanco;
         display: flex;
         justify-content: flex-end;
@@ -107,7 +107,7 @@
         // border-top-right-radius: 0.8rem;
     }
     &__bars{
-        background-color: #05145373;
+        background-color: rgba(6, 0, 33, 0.451);
         padding: .7rem 1rem;
         display: flex;
         align-items: center;
@@ -127,7 +127,7 @@
     &__navmenu{
         height: 0rem;
         text-align: center;
-        background-color: #05145373;
+        background-color: rgba(6, 0, 33, 0.451);
         overflow: hidden;
         position: absolute;
         z-index: 100;
@@ -138,11 +138,14 @@
             margin-bottom: 2rem;
             text-transform: uppercase;
             font-weight: 500;
+            &:hover {
+               color: #ae1c34;  
+            }
         }
         transition: all .6s ease;
-        &.mostrar{
+        &.mostrar{ 
             padding: 1rem;
-            height: 26rem;
+            height: 27rem;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -155,7 +158,7 @@
     &__contenido{
         position: absolute;
         top: 31.8rem;
-        background-color: v.$azuloscuro;
+        background-color: #060021;
         @include m.tablet{
             display: grid;
             grid-template-columns: 8fr 8fr;
@@ -213,7 +216,7 @@
             //font-family: cursive;
             span {
                 display: block;
-                color: v.$rojo;
+                color: #ae1c34;
                 font-size: 4.3rem;
                 text-transform: uppercase;
                 font-weight: 700;
@@ -224,11 +227,12 @@
             margin: 0 1.5rem 2.5rem 1.5rem;
             font-size: 1.1rem;
             text-align: center;
+            width: 80%;
             span{
                 color: v.$rojo;
             }
             @include m.desktop { 
-                max-width: 80%;
+                max-width: 70%;
             }
             @include m.xxl_desktop { 
                 max-width: 70%;
@@ -237,7 +241,7 @@
 
         a { 
             color: v.$blanco;
-            background-color: v.$rojo;
+            background-color: #ae1c34;
             padding: 1.8rem 4rem;
             border-radius: .8rem;
             display: flex;
@@ -245,7 +249,7 @@
             align-items: center;
             justify-content: center;
             width: 90%;
-            border: 1px solid v.$barprogress;
+            border: 1px solid #ae1c34;
             @include m.telefono { 
                 font-size: 1.8rem;
                 max-width: 45%;
@@ -254,8 +258,8 @@
 
             &:hover{
                 background-color: transparent;
-                border: 1px solid v.$barprogress;
-                color: v.$barprogress;
+                border: 1px solid #ae1c34;
+                color: v.$blanco;
             }
         }
     }     
