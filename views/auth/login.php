@@ -1,4 +1,4 @@
-<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
+<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">
     <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 
@@ -15,7 +15,7 @@
         <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
     
-    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal;?>;"><?php echo $titulo; ?></h2>
+    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal??'';?>;"><?php echo $titulo; ?></h2>
     <?php include __DIR__. "/../templates/alertas.php"; ?>
     <p class="auth__texto bloqueauth__subtitulo">Inicia sesión y reserva tu cita</p>
     <form class="formulario bloqueformulario" method="POST" action="/login">
@@ -27,7 +27,7 @@
             <label class="formulario__label" for="">Contraseña</label>
             <input class="formulario__input" type="password" placeholder="Ingresa tu contraseña" id="password" name="password">
         </div>
-        <input class="formulario__submit--login bloqueformulario__submit--login" type="submit" value="Iniciar Sesión" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
+        <input class="formulario__submit--login bloqueformulario__submit--login" type="submit" value="Iniciar Sesión" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">
     </form>
 
     <div class="acciones">

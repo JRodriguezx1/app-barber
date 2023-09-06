@@ -21,7 +21,11 @@ use Controllers\controladorcliente;
 // me importa la clase router
 use MVC\Router;  
 
+
+
 $router = new Router();
+
+
 
 // Login
 $router->get('/login', [logincontrolador::class, 'login']);

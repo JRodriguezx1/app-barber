@@ -35,15 +35,15 @@ class adminconfigcontrolador{
         if($negocio){ //actualizar
             if($_SERVER['REQUEST_METHOD'] === 'POST' ){
                 $negocio->compara_objetobd_post($_POST);
+                
                 $alertas = $negocio->validarnegocio();
                 if(!$alertas){
                     if($_FILES['logo']['name']){
                         $url_temp = $_FILES["logo"]["tmp_name"];
-                        $nombreimg = explode(".", $_FILES['logo']['name']);
-                        $nombreimg[0] = "logoapp";
-                        unlink($_SERVER['DOCUMENT_ROOT']."/build/img/".$negocio->logo);
-                        move_uploaded_file($url_temp, $_SERVER['DOCUMENT_ROOT']."/build/img/".$nombreimg[0].".".$nombreimg[1]);
-                        $negocio->logo = "logoapp.".$nombreimg[1];
+                        $existe_archivo = file_exists($_SERVER['DOCUMENT_ROOT']."/build/img/".$negocio->logo);
+                        if($existe_archivo)unlink($_SERVER['DOCUMENT_ROOT']."/build/img/".$negocio->logo);
+                        $negocio->logo = uniqid().$_FILES['logo']['name'];
+                        move_uploaded_file($url_temp, $_SERVER['DOCUMENT_ROOT']."/build/img/".$negocio->logo);
                     }
                     $r = $negocio->actualizar();
                     if($r)$alertas['exito'][] = "Datos de negocio actualizado";
@@ -52,23 +52,23 @@ class adminconfigcontrolador{
         }else{  //crear
             if($_SERVER['REQUEST_METHOD'] === 'POST' ){
                 $negocio = new negocio($_POST);
-                $negocio->logo = $_FILES['logo']['name']; //solo se utiliza para validar el campo
+                $negocio->logo = $_FILES['logo']['name']; //solo se utiliza para validar los datos del negocio
                 $alertas = $negocio->validarnegocio();
                 if(!$alertas){
                     if($_FILES['logo']['name']){ //valida si se seleccion img en el form
-                        $nombreimg = explode(".", $_FILES['logo']['name']);
-                        $nombreimg[0] = "logoapp";
-                        $existe_archivo1 = file_exists($_SERVER['DOCUMENT_ROOT']."/build/img/logoapp.webp");
-                        $existe_archivo2 = file_exists($_SERVER['DOCUMENT_ROOT']."/build/img/logoapp.png");
-                        $existe_archivo3 = file_exists($_SERVER['DOCUMENT_ROOT']."/build/img/logoapp.jpg");
-                        if($existe_archivo1)unlink($_SERVER['DOCUMENT_ROOT']."/build/img/logoapp.webp");
-                        if($existe_archivo2)unlink($_SERVER['DOCUMENT_ROOT']."/build/img/logoapp.png");
-                        if($existe_archivo3)unlink($_SERVER['DOCUMENT_ROOT']."/build/img/logoapp.jpg");
+                        $nombreimg = explode(".", $_FILES['logo']['name']);  // = "barberyeison.jpg"
+                        $negocio->logo = uniqid().$_FILES['logo']['name'];
+                        $existe_archivo1 = file_exists($_SERVER['DOCUMENT_ROOT']."/build/img/$nombreimg[0].webp");
+                        $existe_archivo2 = file_exists($_SERVER['DOCUMENT_ROOT']."/build/img/$nombreimg[0].png");
+                        $existe_archivo3 = file_exists($_SERVER['DOCUMENT_ROOT']."/build/img/$nombreimg[0].jpg");
+                        if($existe_archivo1)unlink($_SERVER['DOCUMENT_ROOT']."/build/img/$nombreimg[0].webp");
+                        if($existe_archivo2)unlink($_SERVER['DOCUMENT_ROOT']."/build/img/$nombreimg[0].png");
+                        if($existe_archivo3)unlink($_SERVER['DOCUMENT_ROOT']."/build/img/$nombreimg[0].jpg");
                         
                         $url_temp = $_FILES["logo"]["tmp_name"];
-                        move_uploaded_file($url_temp, $_SERVER['DOCUMENT_ROOT']."/build/img/".$nombreimg[0].".".$nombreimg[1]);
+                        move_uploaded_file($url_temp, $_SERVER['DOCUMENT_ROOT']."/build/img/".$negocio->logo);
                     }  
-                    $negocio->logo = "logoapp.".$nombreimg[1];
+                    
                     $r = $negocio->crear_guardar();
                     if($r)$alertas['exito'][] = "Datos de negocio actualizado";
                     //if($r)header('Location: /admin/dashboard/entrada');

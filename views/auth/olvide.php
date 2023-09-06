@@ -1,5 +1,5 @@
 
-<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
+<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">
     <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 
@@ -10,7 +10,7 @@
     <?php
     require_once __DIR__ .'/../templates/alertas.php';
     ?>
-    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal;?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
+    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal??'';?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
     <p class="auth__texto bloqueauth__subtitulo">Recupera tu contraseña</p>
     <form method="POST" action="/olvide" class="formulario bloqueformulario" action="">
         <div class="formulario__campo">
@@ -18,7 +18,7 @@
             <input class="formulario__input" type="email" placeholder="Tu Email" id="email" name="email">
         </div>
         
-        <input class="formulario__submit bloqueformulario__submit--login" type="submit" value="Enviar Instrucciones" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
+        <input class="formulario__submit bloqueformulario__submit--login" type="submit" value="Enviar Instrucciones" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">
     </form>
 
     <div class="acciones">

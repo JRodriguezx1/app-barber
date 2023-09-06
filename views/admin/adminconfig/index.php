@@ -99,6 +99,7 @@
                     <div class="formulario__campo">
                         <label class="formulario__label" for="logo">Logo</label>
                         <input class="formulario__input--file" type="file" id="logo" name="logo">
+                        <label><?php echo $negocio->logo??'';?></label>
                     </div>
                     <input class="formulario__submit" type="submit" value="Actualizar">
                 </fieldset>

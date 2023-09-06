@@ -9,6 +9,7 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
 require 'funciones.php';  //archivo de funciones debuguear y sanitizar html
+require 'configDB.php';
 require 'database.php';    //archivo de conexion de bd mysql con variables de entorno
 
 // Conectarnos a la base de datos

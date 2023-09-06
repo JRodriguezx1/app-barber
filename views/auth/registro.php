@@ -2,7 +2,7 @@
     
 </div> -->
 
-<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
+<div class="lineaencabezado" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">
     <h1><?php echo $negocio[0]->nombre??'';?></h1>
 </div>
 
@@ -19,7 +19,7 @@
         <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
 
-    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal;?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
+    <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal??'';?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
     <p class="auth__texto bloqueauth__subtitulo">Registrate en appbarber</p>
  
     <?php require_once __DIR__ .'/../templates/alertas.php'; ?>
@@ -50,7 +50,7 @@
             <label class="formulario__label" for="password2">Repetir Contraseña</label>
             <input class="formulario__input" type="password" placeholder="Confirmar contraseña" id="password2" name="password2" requiered>
         </div>
-        <input class="formulario__submit--login bloqueformulario__submit--login" type="submit" value="Crear Cuenta" style="background-color: <?php echo $negocio[0]->colorprincipal;?>;">
+        <input class="formulario__submit--login bloqueformulario__submit--login" type="submit" value="Crear Cuenta" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">
     </form>
 
     <div class="acciones">

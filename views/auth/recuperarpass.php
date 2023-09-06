@@ -4,7 +4,7 @@
     ?>
     
 <main class="auth">
-    <h2 class="auth__heading" style="color: <?php echo $negocio[0]->colorprincipal;?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
+    <h2 class="auth__heading" style="color: <?php echo $negocio[0]->colorprincipal??'';?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
     <p class="auth__texto">Coloca tu nuevo password</p>
     
     <?php if($error){ ?>
