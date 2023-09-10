@@ -194,7 +194,7 @@ class logincontrolador{
         }
 
         $alertas = usuarios::getAlertas();
-        $router->render('auth/confirmar_cuenta', ['alertas'=>$alertas, 'titulo'=>'confirma cuenta', 'negocio'=>negocio::get(1)]);
+        $router->render('auth/confirmar_cuenta', ['alertas'=>$alertas, 'titulo'=>'confirmacion de cuenta', 'negocio'=>negocio::get(1)]);
     }
 
      

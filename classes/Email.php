@@ -20,6 +20,9 @@ class Email {
     }
 
     public function enviarConfirmacion() { //cunado se registra por primera vez
+        $host = $_SERVER['HTTP_HOST'];  //app_barber.test, cliente1.app_barber.test, cliente2.app_barber.test
+        $cliente = explode('.', $host);
+
          // create a new object
          $mail = new PHPMailer();
          $mail->isSMTP();
@@ -41,7 +44,7 @@ class Email {
 
          $contenido = '<html>';
          $contenido .= "<p><strong>Hola " . $this->nombre .  "</strong> Has Registrado Correctamente tu cuenta en {$negocio[0]->nombre}; pero es necesario confirmarla</p>";
-         $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";       
+         $contenido .= "<p>Presiona aquí: <a href='http://".$cliente[0].".app_barber.test/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";       
          if($this->password)$contenido .= "<p>Tu password de ingreso es: ".$this->password."</p>";
          $contenido .= "<p>Si tu no creaste esta cuenta; puedes ignorar el mensaje</p>";
          $contenido .= '</html>';
@@ -76,7 +79,7 @@ class Email {
 
         $contenido = '<html>';
         $contenido .= "<p><strong>Hola " . $this->nombre .  "</strong> Has solicitado reestablecer tu password, sigue el siguiente enlace para hacerlo.</p>";
-        $contenido .= "<p>Presiona aquí: <a href='" . $_ENV['HOST'] . "/recuperar?token=" . $this->token . "'>Reestablecer Password</a>";        
+        $contenido .= "<p>Presiona aquí: <a href='http://".$cliente[0].".app_barber.test/recuperar?token=" . $this->token . "'>Reestablecer Password</a>";        
         $contenido .= "<p>Si tu no solicitaste este cambio, puedes ignorar el mensaje</p>";
         $contenido .= '</html>';
         $mail->Body = $contenido;
