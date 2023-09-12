@@ -4,12 +4,10 @@
 </div>
 
 <main class="auth bloqueauth">
-    <a class="bloqueauth__logocliente" href="/">
+    <a class="bloqueauth__logocliente bloqueauth__logosinslider" href="/">
         <img loading="lazy" src="/build/img/<?php echo $negocio[0]->logo??'';?>" alt="Logo Cliente">
     </a>
-    <?php
-    require_once __DIR__ .'/../templates/alertas.php';
-    ?>
+    <?php require_once __DIR__ .'/../templates/alertas.php'; ?>
     <h2 class="auth__heading bloqueauth__iniciarsesion" style="color: <?php echo $negocio[0]->colorprincipal??'';?>;"><?php echo $titulo; ?></h2>  <!-- en archivo tipografia hay selector que selecciona todos los componentes con class = heading-->
     <p class="auth__texto bloqueauth__subtitulo">Recupera tu contraseña</p>
     <form method="POST" action="/olvide" class="formulario bloqueformulario" action="">

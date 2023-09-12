@@ -285,7 +285,7 @@ class adminconfigcontrolador{
         if($fechadesc){
             echo json_encode($fechadesc);
         }else{
-            echo json_encode(null);
+            echo json_encode([]);
         }
     }
 

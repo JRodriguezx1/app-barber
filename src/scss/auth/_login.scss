@@ -102,8 +102,13 @@
     &__logocliente {
         align-items: center;
         max-width: 17rem;
-        margin: 1.3rem auto;
+        margin: 3rem auto 1.3rem auto;
     }
+    
+    &__logosinslider {
+        margin: 6rem auto 1.3rem auto;
+    }
+    
     &__iniciarsesion {
         color: v.$azuloscuro;
         text-align: center;
@@ -169,3 +174,4 @@
         }
     }
 }
+

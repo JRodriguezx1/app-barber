@@ -13,7 +13,7 @@ $configDB = [
 $selectDB = $configDB[$cliente[0]]??'';
 
 if($selectDB == null){ ?>
-    <meta http-equiv="refresh" content="0; url=https://www.google.com">
+    <meta http-equiv="refresh" content="0; url=https://innovatech-production.up.railway.app/">
 <?php
     exit;
 }

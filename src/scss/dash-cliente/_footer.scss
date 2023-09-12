@@ -7,7 +7,7 @@
         padding: 1rem;
     }
     &__logo{
-        @include m.texto-fluido(2rem, 3rem);
+        @include m.texto-fluido(1.6rem, 2.4rem);
         color: v.$grisoscuro;
         margin-bottom: 2rem;
         text-align: center;

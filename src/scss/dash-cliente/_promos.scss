@@ -62,9 +62,19 @@
         .promoinfo {
             max-height: 50%;
             padding: 4rem 1rem 2rem 1rem;
-            margin-top: 5.5rem;
+            margin-top: -0.5rem;
+            height: 13rem;
             @include m.telefonom { 
-                margin-top: 5.5rem;
+                margin-top: 8.5rem;
+            }
+            @include m.tablet { 
+                margin-top: 2.5rem;
+            }
+            @include m.desktop { 
+                margin-top: 8.5rem;
+            }
+            @include m.xl_desktop { 
+                margin-top: 2.5rem;
             }
         }
     }
@@ -89,7 +99,7 @@
     }
     .fechavencimiento {
         color: v.$blanco;
-        margin-top: 1.5rem;
+        // margin-top: 1.5rem;
         font-style: italic;
     }
 }
@@ -114,7 +124,7 @@
 .bloquepromocion {
     .sessiondescuento {
         position: absolute;
-        top:30%;
+        top:28%;
         left: 14.7%;
         z-index: 100;
         background: rgba(v.$negro, 0.7);
@@ -160,6 +170,7 @@
         align-items: center;
         a {
             color: v.$negro;
+            cursor: pointer;
         }
         .iconodescuento {
             position: absolute;
@@ -168,46 +179,50 @@
             left: -33px;
         }
         .descuentoservicio {
-            max-width: 90%;
+            width: 90%;
             position: absolute;
-            bottom: -110px;
-            // left: 0%;
-            margin: auto;
-            z-index: 101;
+            top: 34px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            // z-index: 101;
             @include m.telefono { 
                 bottom: -102px;
             }
             @include m.telefonomini { 
-                bottom: -142px;
+                bottom: -227px;
             }
             @include m.telefonom { 
-                bottom: -149px;
+                bottom: -183px;
             }
             @include m.telefonol { 
-                bottom: -167px;
+                bottom: -185px;
+            }
+            @include m.telefonoxl { 
+                bottom: -180px;
             }
             @include m.tablet { 
-                bottom: -139px;
+                bottom: -227px;
             }
             @include m.desktop { 
-                bottom: -144px;
+                bottom: -207px;
             }
             p {
-                font-size: 5rem;
+                font-size: 4.5rem;
                 text-align: center;
                 font-weight: 700;
+                color: white;
                 @include m.telefonomini { 
                     font-size: 5rem;
                 }
                 @include m.telefonom { 
-                    font-size: 6rem;
+                    font-size: 4.5rem;
                 }
             }
             span {
                 display: block;
                 font-size: 2rem;
-                color: transparent;
-                -webkit-text-stroke: 1px v.$blanco;
+                color: white;
+                -webkit-text-stroke: 0px v.$blanco;
                 @include m.telefonom { 
                     font-size: 3rem;
                 }
@@ -215,22 +230,23 @@
         }
         .llamadoaccion {
             position: absolute;
-            right: 9%;
-            top: 113px;
             background: rgba(v.$blanco, .7);
             padding: 0 2rem;
             width: 81%;
-            margin: 0 auto;
             text-align: center;
             border-radius: .4rem;
             transition: 300ms;
             text-transform: uppercase;
             font-weight: 700;
-            font-size: 1.6rem;
+            // font-size: 1.6rem;
             animation-name: mianimacion;
             animation-duration: 4s;
             animation-delay: 2s;
             animation-iteration-count: infinite;
+            cursor: pointer;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -129px;
             @keyframes mianimacion {
                 0% {background: rgba(v.$blanco, .7)}
                 25% {background: rgba(v.$azul1, .7)}
@@ -239,26 +255,29 @@
                 100% {background: rgba(v.$blanco, .7)}
             }
             @include m.telefonomini { 
-                top: 113px;
+                bottom: -131px;
             }
             @include m.telefono { 
-                top: 112px;
+                bottom: -118px;
             }
             @include m.telefonom { 
-                top: 110px;
+                bottom: -149px;
             }
             @include m.telefonol { 
-                top: 112px;
+                bottom: -158px;
             }
             @include m.telefonoxl { 
-                top: 120px;
+                bottom: -165px;
             }
             @include m.tablet { 
-                top: 82px;
+                bottom: -122px;
                 font-size: 1.45rem;
             }
             @include m.desktop { 
-                top: 97px;
+                bottom: -125px;
+            }
+            @include m.xl_desktop { 
+                bottom: -127px;
             }
         }
     }

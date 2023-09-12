@@ -11,6 +11,7 @@ use Model\pagosxdia;
 use Model\citas;
 use Model\empserv;
 use Model\servicios;
+use Model\empleados;
 //use Dompdf\Dompdf;
 //use Twilio\Rest\Client;
 
@@ -30,8 +31,10 @@ class dashboardcontrolador{
         ...
         */
         //$client = new Twilio\Rest\Client($sid, $token);
+        $totalempleados = empleados::numregistros();
+        $totalclientes = usuarios::numreg_multicolum(['confirmado'=>1, 'admin'=>0]);
         
-        $router->render('admin/dashboard/index', ['titulo'=>'Dashboard - Innovatech', 'day'=>$day, 'user'=>$_SESSION]);
+        $router->render('admin/dashboard/index', ['titulo'=>'Dashboard - Innovatech', 'day'=>$day, 'totalclientes'=>$totalclientes, 'totalempleados'=>$totalempleados, 'user'=>$_SESSION]);
     }
 
     public static function perfil(Router $router) {

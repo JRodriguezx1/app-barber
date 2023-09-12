@@ -24,7 +24,7 @@
                         <span><?php echo $usuario->nombre.' '.$usuario->apellido; ?></span>
                     </div>
                     <div class="cliente__dato">
-                        <p>Cedula: </p>
+                        <p>Cédula: </p>
                         <span><?php echo $usuario->cedula??''; ?></span>
                     </div>
                     <div class="cliente__dato">
@@ -80,7 +80,7 @@
             </div> <!-- fin cita -->
         </div> <!-- fin pagina1 -->
         <div class="paginas pagina2 pagina2historialcitas">
-            <div class="cliente__heading" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;"><h4>Consulta Y Cancelacion De Citas</h4></div>
+            <div class="cliente__heading" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;"><h4>Consulta y Cancelación de Citas</h4></div>
             <div class="cliente__nombrecliente"><p><?php echo $usuario->nombre.' '.$usuario->apellido; ?></p></div>
             <!-- poner mensaje de que las citas se pueden cancelar 2 horas antes o un dia antes -->
             <div class="cliente__tablahistorial">
@@ -89,8 +89,8 @@
                         <tr>
                             <th>Servicio</th>
                             <th>Profesional</th>
-                            <th>Fecha Cita</th>
-                            <th>Hora Cita</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
                             <th>Orden</th>
                             <th>Valor</th>
                             <th>Estado</th>
@@ -135,7 +135,7 @@
                         <input class="formulario__input" type="text" placeholder="Tu Apellido" id="apellido" name="apellido" value="<?php echo $usuario->apellido??'';?>" requiered>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="cedula">Cedula</label>
+                        <label class="formulario__label" for="cedula">Cédula</label>
                         <input class="formulario__input" type="number" placeholder="Tu Cedula" id="cedula" name="cedula" value="<?php echo $usuario->cedula??'';?>" >
                     </div>
                     <div class="formulario__campo">
@@ -151,12 +151,12 @@
                         <input class="formulario__input" type="text" placeholder="Ciudad de residencia" id="ciudad" name="ciudad" value="<?php echo $usuario->ciudad??'';?>" requiered>
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="direccion">Direccion</label>
+                        <label class="formulario__label" for="direccion">Dirección</label>
                         <input class="formulario__input" type="text" placeholder="Direccion en donde vivdes" id="direccion" name="direccion" value="<?php echo $usuario->direccion??'';?>" >
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="password">* Password</label>
-                        <input class="formulario__input" type="password" placeholder="Ingresa Tu Password" id="password" name="validarpassword" requiered>
+                        <label class="formulario__label" for="password">* Contraseña</label>
+                        <input class="formulario__input" type="password" placeholder="Ingresa tu Contraseña" id="password" name="validarpassword" requiered>
                     </div>
                 </div>
                 <input class="formulario__submit--login" type="submit" value="Actualizar" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">

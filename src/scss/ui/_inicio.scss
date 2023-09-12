@@ -28,6 +28,12 @@
         @include m.tablet { 
             background-color: transparent;
         }
+        // @include m.desktop { 
+        //     height: 74%;
+        // }
+        @media screen and (max-width: 1024px) and (orientation: landscape) {
+            height: 64rem;
+        }
     }
     &__barra{
         background-image:linear-gradient(to left, rgba(v.$negro, .3), rgba(v.$negro, .03)), url(/build/img/portadamoviltransp.png);
@@ -46,14 +52,15 @@
             margin-top: 2rem;
             margin-right: 2rem;
         }
+        @media screen and (max-width: 740px) and (orientation: landscape) {
+            height: 83%;
+        }
     }
     &__logo{
         //background-color: aquamarine;
         //width: 25%;
         flex: 0 0 25%;
-        img{
-            width: 7rem;
-        }
+        
     }
     &__nav{
         //width: 75%;
@@ -191,7 +198,7 @@
     &__logoInnovaTech {
        
         img {
-            width: 11rem;
+            width: 13rem;
             margin: 1.5rem 0;
 
             @include m.telefono { 
@@ -242,7 +249,7 @@
         a { 
             color: v.$blanco;
             background-color: #ae1c34;
-            padding: 1.8rem 4rem;
+            padding: 1.8rem 0;
             border-radius: .8rem;
             display: flex;
             margin: 0 1rem 1rem 1rem;
@@ -276,5 +283,19 @@
         svg {
             font-size: 2.8rem;
         }
+    }
+}
+
+.app {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+}
+  
+@media screen and (max-width: 980px) and (orientation: landscape) {
+    .app {
+        display: block;
+        height: 65rem;
+        width: 100%;
     }
 }

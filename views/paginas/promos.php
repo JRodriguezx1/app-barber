@@ -36,21 +36,24 @@
                 </div>
             </div>
             <div class="sessiondescuento">
-                <div class="bloquedescuento">
-                    <div class="iconodescuento">
-                        <img loading="lazy" src="/build/img/iconodescuento.svg" alt="Icono Descuento Servicio">
-                    </div>
-                    <div class="descuentoservicio">
-                        <p><?php echo $promocion->porcentaje??'';?>% <span>Descuento</span></p>
-                    </div>
-                    <a href="/Cliente/app?id=<?php echo $promocion->product_serv.'&valordcto='.$promocion->precioproducto-$promocion->valor;?>">
-                        <div class="llamadoaccion">
-                            <p>Aprovecha Ya</p> 
+                <a href="/Cliente/app?id=<?php echo $promocion->product_serv.'&valordcto='.$promocion->precioproducto-$promocion->valor;?>">
+                    <div class="bloquedescuento">
+                        <div class="iconodescuento">
+                            <img loading="lazy" src="/build/img/iconodescuento.svg" alt="Icono Descuento Servicio">
                         </div>
-                    </a>
-                </div>
+                        <div class="descuentoservicio">
+                            <p><?php echo $promocion->porcentaje??'';?>% <span>Descuento</span></p>
+                        </div>
+                        <a class="llamadoaccion" href="/Cliente/app?id=<?php echo $promocion->product_serv.'&valordcto='.$promocion->precioproducto-$promocion->valor;?>">
+                            <div class="llamadoaccion1">
+                                <p>Aprovecha Ya</p> 
+                            </div>
+                        </a>
+                    </div>
+                </a>
             </div>
             
         </div>
     <?php endforeach; ?>
 </div>
+

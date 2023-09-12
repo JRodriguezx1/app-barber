@@ -46,7 +46,7 @@
                             <td class=""><?php echo $cliente->apellido; ?></td> 
                             <td class=""><?php echo $cliente->movil; ?></td> 
                             <td class=""><?php echo $cliente->email; ?></td>        
-                            <td class="accionestd"> <div data-id="<?php echo $cliente->id;?>" class="acciones-iconos"> <i id="editar" class="finalizado fa-solid fa-pen-clip"></i><a href="/admin/clientes/detalle?id=<?php echo $cliente->id;?>"><i class="programar fa-solid fa-tablet-screen-button"></i></a><i id="hab_desh" class="<?php echo $cliente->habilitar==1?'cancelado fa-solid fa-x':'habilitar fa-solid fa-check' ?>"></i></div></td>    
+                            <td class="accionestd"> <div data-id="<?php echo $cliente->id;?>" class="acciones-iconos"> <i title="Eitar datos del clinete" id="editar" class="finalizado fa-solid fa-pen-clip"></i><a href="/admin/clientes/detalle?id=<?php echo $cliente->id;?>"><i class="programar fa-solid fa-tablet-screen-button"></i></a><i title="Habilitar/deshabilidar cliente" id="hab_desh" class="<?php echo $cliente->habilitar==1?'cancelado fa-solid fa-x':'habilitar fa-solid fa-check' ?>"></i></div></td>    
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

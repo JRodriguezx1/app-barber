@@ -22,7 +22,7 @@
             <div class="bloques__bloque">
                 <p class="bloques__heading">Clientes</p>
                 <div class="bloques__contenido">
-                    <p class="angule"><i class="fa-solid fa-angle-up"></i>38</p>
+                    <p class="angule"><i class="fa-solid fa-angle-up"></i><?php echo $totalclientes; ?></p>
                     <i class="iusers fa-solid fa-users"></i>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="bloques__bloque">
                 <p class="bloques__heading">Empleados</p>
                 <div class="bloques__contenido">
-                    <p class="employee"><i class="fa-solid fa-plus"></i>3</p>
+                    <p class="employee"><i class="fa-solid fa-plus"></i><?php echo $totalempleados; ?></p>
                     <i class="icard fa-solid fa-address-card"></i>
                 </div>
             </div>

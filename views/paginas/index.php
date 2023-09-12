@@ -1,4 +1,4 @@
-<header class="headerapp">
+<header id="bloqueohorizontal" class="headerapp app">
     <div class="headerapp__contenedor">
         <div class="headerapp__barra">
             <div class="headerapp__logo">
