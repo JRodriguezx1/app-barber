@@ -36,8 +36,8 @@ class dashboardcontrolador{
         /*
         $snsClient = new SnsClient([
             'credentials' => [
-                'key' => 'AKIAV6HVKRBCK2OXI7OJ',
-                'secret' => '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'
+                'key' => '',
+                'secret' => ''
             ],
             'region' => 'us-east-1',
             'version' => 'latest' 
