@@ -11,6 +11,7 @@ use Controllers\dashboardcontrolador;
 use Controllers\paginacontrolador;
 use Controllers\servicioscontrolador;
 use Controllers\factcontrolador;
+use Controllers\reportescontrolador;
 use Controllers\citascontrolador;
 use Controllers\clientescontrolador;
 use Controllers\fidelizacioncontrolador;
@@ -69,11 +70,14 @@ $router->get('/admin/facturacion/buscarxfecha', [factcontrolador::class, 'buscar
 $router->get('/admin/facturacion/gestionar', [factcontrolador::class, 'gestionar']);
 $router->post('/admin/facturacion/gestionar', [factcontrolador::class, 'gestionar']);
 
+$router->get('/admin/reportes', [reportescontrolador::class, 'index']);
+
 $router->get('/admin/citas', [citascontrolador::class, 'index']);
 $router->post('/admin/citas', [citascontrolador::class, 'index']); //llamado desde citas.js cuando se reprograma cita de algun cliente
 $router->post('/admin/citas/consultaxprofesxfecha', [citascontrolador::class, 'consultaxprofesxfecha']); //llamado desde citas.js
 $router->get('/admin/citas/filtroxfecha', [citascontrolador::class, 'filtroxfecha']); 
 $router->post('/admin/citas/crear', [citascontrolador::class, 'crear']);  //se llama desde citas.js cuando admin crea la cita por el cliente
+$router->post('/admin/citas/crearnoregistrado', [citascontrolador::class, 'crearnoregistrado']);  //se llama desde citas.js cuando admin crea la cita por el cliente no registrado
 $router->post('/admin/citas/finalizar', [citascontrolador::class, 'finalizar']);  //se llama desde finalizcita.js cuando admin termina o finaliza la cita
 $router->post('/admin/citas/consultaxestadoxname', [citascontrolador::class, 'consultaxestadoxname']);
 

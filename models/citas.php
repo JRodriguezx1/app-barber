@@ -4,7 +4,7 @@ namespace Model;
 
 class citas extends ActiveRecord {
     protected static $tabla = 'citas';
-    protected static $columnasDB = ['id', 'id_usuario', 'id_empserv', 'fecha_inicio', 'fecha_fin', 'hora', 'hora_fin', 'estado', 'duracion', 'valorcita', 'dcto', 'dctovalor', 'nameservicio', 'nameprofesional'];
+    protected static $columnasDB = ['id', 'id_usuario', 'id_empserv', 'fecha_inicio', 'fecha_fin', 'hora', 'hora_fin', 'estado', 'duracion', 'valorcita', 'dcto', 'dctovalor', 'nameservicio', 'nameprofesional', 'nombrecliente'];
     
     public function __construct($args = [])
     {
@@ -22,6 +22,7 @@ class citas extends ActiveRecord {
         $this->dctovalor = $args['dctovalor'] ?? '0';
         $this->nameservicio = $args['nameservicio'] ?? '';
         $this->nameprofesional = $args['nameprofesional'] ?? '';
+        $this->nombrecliente = $args['nombrecliente']??'';
     }
 
     // Validar los servicios

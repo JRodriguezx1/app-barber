@@ -4,6 +4,7 @@
         <div class="citas__acciones">
             <div class="citas__crear">
                 <a id="crearcita" class="btnsmall" href=""> + Crear</a>
+                <a id="crearcitanoreg" class="btnsmallred" href=""> + Crear</a>
             </div>
             <div class="citas__filtros">
                 <?php if($user['admin']>1): ?>
@@ -59,7 +60,7 @@
                     <tr>
                         <th>id</th>
                         <th>Nombre</th>
-                        <th>Cedula</th>
+                        
                         <th>Servicio</th>
                         <th>Profesional</th>
                         <th>Fecha</th>
@@ -75,8 +76,9 @@
                                         if($cita->estado=='Finalizada') echo 'tr-resaltar'
                                     ?>">
                             <td class=""><?php echo $cita->id; ?></td> 
-                            <td class=""><?php echo $cita->usuario->nombre.' '.$cita->usuario->apellido; ?></td>         
-                            <td class=""><?php echo $cita->usuario->cedula; ?></td>
+                            <!--<td class=""><?php //echo $cita->usuario->nombre.' '.$cita->usuario->apellido; ?></td>  -->
+                            <td class=""><?php echo $cita->nombrecliente??'';?></td>     
+                            
                             <!--<td class="" data-precio="<?php //echo $cita->servicio->precio??''; ?>"><?php //echo $cita->servicio->nombre??''; ?></td>
                             <td class=""><?php //echo $cita->empleado->nombre??'';?> <?php //echo $cita->empleado->apellido??''?></td> -->
                             <td class="" data-precio="<?php echo $cita->valorcita??''; ?>"><?php echo $cita->nameservicio??''; ?></td>

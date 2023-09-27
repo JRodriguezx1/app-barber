@@ -73,6 +73,7 @@ class controladorcliente{
             }
             $cita->nameservicio = $servicio;
             $cita->nameprofesional = $profesional;
+            $cita->nombrecliente = usuarios::uncampo('id', $cita->id_usuario, 'nombre').' '.usuarios::uncampo('id', $cita->id_usuario, 'apellido');
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
                 $ws = negocio::uncampo('id', 1, 'ws'); //ws del negocio o encargado para recibir los msj de ws

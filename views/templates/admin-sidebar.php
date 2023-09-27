@@ -11,8 +11,13 @@
         </a>
 
         <a href="/admin/facturacion" class="dashboard__enlace <?php echo validar_string_url('/facturacion')?'dashboard__enlace--actual':''; ?>" >
-        <i class="fa-solid fa-credit-card"></i>
+            <i class="fa-solid fa-credit-card"></i>
             <span class="dashboard__menu-texto">facturacion</span>
+        </a>
+
+        <a href="/admin/reportes" class="dashboard__enlace <?php echo validar_string_url('/reportes')?'dashboard__enlace--actual':''; ?>" >
+            <i class="fa-solid fa-coins"></i>
+            <span class="dashboard__menu-texto">reportes</span>
         </a>
 
         <a href="/admin/citas" class="dashboard__enlace <?php echo validar_string_url('/citas')?'dashboard__enlace--actual':''; ?>" >

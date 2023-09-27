@@ -6,6 +6,7 @@
         const selectfiltro = document.querySelector('#selectprofesional');
         const selectfecha = document.querySelector('#fecha'); //filtro de solo fechas
         const crearcita = document.querySelector('#crearcita');
+        const crearcitanoreg = document.querySelector('#crearcitanoreg');
         const programar = document.querySelectorAll('.programar');
     
         if(filtros){
@@ -160,6 +161,20 @@
                 }
             });
         });
+
+        //////////////////////crear citas para no registrados//////////////////////
+        crearcitanoreg.addEventListener('click', (e)=>{ ////crear cita
+            e.preventDefault();
+            const usuario = `<div class="formulario__campo">
+                                <label class="formulario__label" for="nombrecliente">Nombre del cliente: </label>
+                                <input class="formulario__input" id="nombrecliente" name="nombrecliente" type="text" required>
+                            </div>
+                            <input type="hidden" name="id_usuario" value="2" >
+                            `;
+            formulariocliente('Cita Para Cliente No Registrado', 'Crear', '/admin/citas/crear?pagina=1', usuario);
+            cargaservicios();
+            eventofecha();
+        });
         
 
         function formulariocliente(titulo, submit, action, usuario){
@@ -208,10 +223,12 @@
         function cargarusuarios(){
             const inputusuario = document.querySelector('#usuario');
             usuarios.forEach(element => {
-                const option = document.createElement('OPTION');
-                option.value = element.id;
-                option.textContent = element.nombre+' '+element.apellido;
-                inputusuario.appendChild(option);
+                if(element.id!=2){  //no muestra el registro de Usuario No Registrado
+                    const option = document.createElement('OPTION');
+                    option.value = element.id;
+                    option.textContent = element.nombre+' '+element.apellido;
+                    inputusuario.appendChild(option);
+                }
             }); 
         }
 

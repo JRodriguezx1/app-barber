@@ -5,6 +5,10 @@
     @include m.btn(v.$grisblack, v.$blanco);
     width: auto;
 }
+.btnsmallred{
+    @include m.btn(v.$barprogress, v.$blanco);
+    width: auto;
+}
 .btnmini{
     @include m.btn1(v.$barprogress, v.$blanco);
     width: auto;

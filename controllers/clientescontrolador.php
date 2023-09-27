@@ -147,7 +147,7 @@ class clientescontrolador{
 
     public static function allclientes(){  //api llamado desde citas.js
         //$clientes = usuarios::all();
-        $clientes = usuarios::whereArray(['admin'=>0]);
+        $clientes = usuarios::whereArray(['admin'=>0, 'habilitar'=>1]);
         foreach($clientes as $cliente){
             $cliente->dctogeneral = fidelizacion::find('id', $cliente->idfidelizacion);
         }

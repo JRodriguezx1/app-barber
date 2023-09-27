@@ -70,7 +70,7 @@ class servicioscontrolador{
     }
 
     public static function getservices(){  //api Rest llamada en facturacion.js para elegir el servicio que se pagara
-        $servicios = servicios::all();
+        $servicios = servicios::whereArray(['estado'=>1]);
         echo json_encode($servicios);
     }
      

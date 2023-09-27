@@ -4,6 +4,7 @@
 namespace Controllers;
 //require __DIR__ . '/../classes/dompdf/autoload.inc.php';
 //require __DIR__ . '/../classes/twilio-php-main/src/Twilio/autoload.php';
+//require __DIR__ . '/../classes/aws/aws-autoloader.php';
 use MVC\Router;
 use Model\usuarios;
 use Model\facturacion;
@@ -14,6 +15,7 @@ use Model\servicios;
 use Model\empleados;
 //use Dompdf\Dompdf;
 //use Twilio\Rest\Client;
+//use Aws\Sns\SnsClient;
 
 
 class dashboardcontrolador{
@@ -31,6 +33,29 @@ class dashboardcontrolador{
         ...
         */
         //$client = new Twilio\Rest\Client($sid, $token);
+        /*
+        $snsClient = new SnsClient([
+            'credentials' => [
+                'key' => 'AKIAV6HVKRBCK2OXI7OJ',
+                'secret' => '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'
+            ],
+            'region' => 'us-east-1',
+            'version' => 'latest' 
+        ]);
+
+        $args = array(
+            'MessageAttributes'=>['AWS.SNS.SMS.SMSType'=>['DataType'=>'String', 'StringValue'=>'Transactional']
+            ],
+            'Message'=>'hola lupe lulu',
+            'PhoneNumber'=>'+573042029683'
+        );
+
+        $result = $snsClient->publish($args);
+        */
+
+        
+
+
         $totalempleados = empleados::numregistros();
         $totalclientes = usuarios::numreg_multicolum(['confirmado'=>1, 'admin'=>0]);
         

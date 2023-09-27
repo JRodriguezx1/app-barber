@@ -180,7 +180,7 @@ class citascontrolador{
         if($_SESSION['admin']==1){
             $empleadoid = usuarios::uncampo('id', $_SESSION['id'], 'empleadoid'); //id del empleado
             $ids_empserv = empserv::multicampos('idempleado', $empleadoid, 'id'); //[24, 25, ..]ids del empleado en relacion con los servicios
-            $stridsempserv = implode(', ', $ids_empserv);
+            $stridsempserv = implode(', ', $ids_empserv);  //para filtrar todas las citas y servicios de un empleado
         }
         $alertas = [];
 
@@ -200,6 +200,11 @@ class citascontrolador{
             }
             $cita->nameservicio = $servicio;
             $cita->nameprofesional = $profesional;
+            if($cita->id_usuario == 2){
+                $cita->nombrecliente = $_POST['nombrecliente'];
+            }else{ 
+                $cita->nombrecliente = usuarios::uncampo('id', $cita->id_usuario, 'nombre').' '.usuarios::uncampo('id', $cita->id_usuario, 'apellido');
+            }
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
                 //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
@@ -242,6 +247,75 @@ class citascontrolador{
         $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
+/*
+    public static function crearnoregistrado(Router $router){
+        session_start();
+        if($_SESSION['admin']==1){
+            $empleadoid = usuarios::uncampo('id', $_SESSION['id'], 'empleadoid'); //id del empleado
+            $ids_empserv = empserv::multicampos('idempleado', $empleadoid, 'id'); //[24, 25, ..]ids del empleado en relacion con los servicios
+            $stridsempserv = implode(', ', $ids_empserv);  //para filtrar todas las citas y servicios de un empleado
+        }
+        $alertas = [];
+
+        $profesionales = empleados::all();
+        date_default_timezone_set('America/Bogota');
+        if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+            $cita = new citas($_POST); //validar el campo hora
+
+            $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
+            $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
+            $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
+            $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
+            $cita->valorcita = $valorcita;
+            if($fidelizacion){
+                $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
+                $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
+            }
+            $cita->nameservicio = $servicio;
+            $cita->nameprofesional = $profesional;
+            $cita->nombrecliente = $_POST['nombrecliente'];
+            $alertas = $cita->validarcitas();
+            if(empty($alertas)){
+                //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
+                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
+                if(empty($citaunica)){
+                    $r = $cita->crear_guardar();
+                    if($r[0])$alertas['exito'][] = "Cita Creada";
+                }else{ $alertas['error'][] = "Error actualize la pagina"; }
+            }
+        }
+
+        $pagina_actual = $_GET['pagina'];
+        $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
+        if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');
+       
+        $registros_por_pagina = 10;
+        if( $_SESSION['admin']>1){
+            $registros_total = citas::numregistros(); //para usuario admin
+        }else{ $registros_total = citas::numreg_multiwhere('id_empserv', $ids_empserv); }
+        
+        $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total, '/admin/citas');
+        if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
+        
+        if($_SESSION['admin']>1){
+            $citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
+        }else{
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};");
+        }
+
+        foreach($citas as $cita){
+            $cita->usuario = usuarios::find('id', $cita->id_usuario);
+            $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
+            if($cita->id_empserv){
+                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+                $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                $cita->servicio = servicios::find('id', $cita->idservicio);
+                $cita->empleado = empleados::find('id', $cita->idempleado);
+            }
+        }
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'user'=>$_SESSION, 'alertas'=>$alertas]);
+    }
+*/
 
     public static function finalizar(Router $router){ //llamado desde finalizcita.js
         session_start();
