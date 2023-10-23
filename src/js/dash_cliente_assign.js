@@ -245,7 +245,7 @@
                 const url = "/admin/api/enviarcita";  //llama api en controladorcliente.php
                 const respuesta = await fetch(url, {method: 'POST', body: datos}); 
                 const resultado = await respuesta.json();  
-                if(resultado[0]){
+                if(resultado){
                     return true;
                 }
                 else{

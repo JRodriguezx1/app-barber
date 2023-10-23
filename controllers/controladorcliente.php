@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+require __DIR__ . '/../classes/twilio-php-main/src/Twilio/autoload.php';
+
 use Model\servicios;
 use Model\citas;
 use Model\empserv;
@@ -10,7 +12,8 @@ use Model\usuarios;
 use Model\fidelizacion;
 use Model\negocio;
 use MVC\Router;  //namespace\clase
-use Classes\ws_cloud_api;
+//use Classes\ws_cloud_api;
+use Twilio\Rest\Client;
  
 class controladorcliente{
 
@@ -60,7 +63,7 @@ class controladorcliente{
         $cita = new citas($_POST);
         $cita->id_usuario = $idusuario;
         $Ncitaspendient = citas::numreg_multicolum(['id_usuario'=>$cita->id_usuario, 'estado'=>'Pendiente']);
-        if($Ncitaspendient > 2){ $r = [false, 0];
+        if($Ncitaspendient > 2){ $r = false;
         }else{
             $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
             $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
@@ -83,13 +86,28 @@ class controladorcliente{
                     $r = $cita->crear_guardar();
                     if($r[0]){
                         //////////////////enviar msj por whatsapp cloud api////////////
-                        $wstext = new ws_cloud_api($ws, $r[1], $_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
-                        $wstext->send1textws();
-                    }else{ $r = [false, 0]; }
-                }else{ $r = [false, 0]; }
+                        //$wstext = new ws_cloud_api($ws, $r[1], $_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
+                        //$wstext->send1textws();
+
+                        ////////////// enviar sms con twilio////////////
+                        $sid = 'AC81feeb3abcf6563f2a8f9b32904f8ae0';
+                        $token = '591ed3e8000d266c4aa9d2dbd0584336';
+                        $twilio = new Client($sid, $token);
+
+                        $message = $twilio->messages->create("+573022016786", // to
+                            array(
+                            "from" => "+16183684812",
+                            "body" => "Cita Nº:".$r[1]." reservada por: ".$_SESSION['nombre'].", Telefono cliente: ".$_POST['telcliente'].", Profesional: ".$profesional.", Servicio: ".$servicio.", Fecha de la cita: ".$_POST['fecha_fin']." Hora de la cita: ".$_POST['hora_fin']
+                            )
+                        );
+                        //print($message->sid);
+                        
+
+                    }else{ $r = false; }
+                }else{ $r = false; }
             }
         }
-        echo json_encode($r);
+        echo json_encode($r[0]);
     }
 
     public static function getcitas(){  //api llamado desde dash_cliente_assign.js
@@ -112,8 +130,21 @@ class controladorcliente{
         $cita->estado = "Cancelado";
         $r = $cita->actualizar();
         if($r){
-            $wstext = new ws_cloud_api($ws, $id, $_SESSION['nombre'], 0, '', $cita->nameservicio, $cita->fecha_fin, $cita->hora_fin);
-            $wstext->send2textws();
+            //$wstext = new ws_cloud_api($ws, $id, $_SESSION['nombre'], 0, '', $cita->nameservicio, $cita->fecha_fin, $cita->hora_fin);
+            //$wstext->send2textws();
+
+            //enviar sms por twilio
+            $sid = 'AC81feeb3abcf6563f2a8f9b32904f8ae0';
+            $token = '591ed3e8000d266c4aa9d2dbd0584336';
+            $twilio = new Client($sid, $token);
+
+            $message = $twilio->messages->create("+573022016786", // to
+                array(
+                    "from" => "+16183684812",
+                    "body" => "Cita Nº:".$id." Cancelada por: ".$_SESSION['nombre'].", Servicio: ".$cita->nameservicio.", Fecha de la cita: ".$cita->fecha_fin." Hora de la cita: ".$cita->hora_fin
+                    )
+            );
+
             echo json_encode($cita);
         }else{echo json_encode(false); }
     }

@@ -1,0 +1,73 @@
+
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.reportes{
+    &__contenedor{
+        background-color: v.$blanco;
+        padding: 2rem;
+        .textheading{
+            color: v.$grisblack;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+    }
+    &__basicos{
+        margin-top: 1rem;
+        @include m.grid(2, 2rem);
+        @include m.telefono{
+            display: flex;
+            gap: 2rem;
+        }
+        
+    }
+    &__btn{
+        background-color: v.$griswhite;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-top-left-radius: 1rem;
+        border-bottom-right-radius: 2rem;
+        i{
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        width: 12rem;
+        height: 10rem;
+        text-align: center;
+        p{
+            margin: 0;
+            color: v.$gris
+        }
+        &:nth-of-type(n){
+            border: 2px solid v.$azul;
+            i{
+                color: v.$azul;
+            }
+        }
+        &:nth-of-type(2n){
+            border: 2px solid rgba(243, 24, 152, 0.8);
+            i{
+                color: v.$rosa;
+            }
+        }
+        &:nth-of-type(3n){
+            border: 2px solid v.$barprogress;
+            i{
+                color: v.$barprogress;
+            }
+        }
+        &:nth-of-type(4n){
+            border: 2px solid v.$secundario;
+            i{
+                color: v.$secundario;
+            }
+        }
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

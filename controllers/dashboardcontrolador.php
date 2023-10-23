@@ -3,7 +3,7 @@
 
 namespace Controllers;
 //require __DIR__ . '/../classes/dompdf/autoload.inc.php';
-//require __DIR__ . '/../classes/twilio-php-main/src/Twilio/autoload.php';
+require __DIR__ . '/../classes/twilio-php-main/src/Twilio/autoload.php';
 //require __DIR__ . '/../classes/aws/aws-autoloader.php';
 use MVC\Router;
 use Model\usuarios;
@@ -14,7 +14,7 @@ use Model\empserv;
 use Model\servicios;
 use Model\empleados;
 //use Dompdf\Dompdf;
-//use Twilio\Rest\Client;
+use Twilio\Rest\Client;
 //use Aws\Sns\SnsClient;
 
 
@@ -32,8 +32,23 @@ class dashboardcontrolador{
         ...
         ...
         */
-        //$client = new Twilio\Rest\Client($sid, $token);
-        /*
+
+        //// enviar sms con twilio
+        /*$sid = 'AC81feeb3abcf6563f2a8f9b32904f8ae0';
+        $token = '591ed3e8000d266c4aa9d2dbd0584336';
+        $twilio = new Client($sid, $token);
+
+        $message = $twilio->messages->create("+573042029683", // to
+            array(
+            "from" => "+16183684812",
+            "body" => "hola lupelulu desde twilio"
+            )
+        );
+
+        print($message->sid);*/
+
+        
+        /* //enviar sms con aws
         $snsClient = new SnsClient([
             'credentials' => [
                 'key' => '',

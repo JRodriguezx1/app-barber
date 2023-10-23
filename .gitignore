@@ -1,5 +1,6 @@
 node_modules/
 dompdf/
+twilio-php-main/
 vendor/
 aws/
 .env
