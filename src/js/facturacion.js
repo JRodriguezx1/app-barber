@@ -176,6 +176,7 @@
             const valor_servicio = document.querySelector('#valor_servicio');
             const valorservice = servicios.filter(element =>element.id == e.target.value);
             valor_servicio.value = valorservice[0].precio;
+            if(!valorservice[0].precio)document.querySelector('#valor_servicio').readOnly = false;
             document.querySelector('#recibido').value = '';
             document.querySelector('#devolucion').value = '';
         }

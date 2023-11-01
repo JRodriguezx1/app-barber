@@ -1,11 +1,11 @@
 (function(){ //para ver el detalle del pago de cada cita y su anulacion
     if(document.querySelector('#dashboardcitas')){  
-        const detallefactura = document.querySelectorAll('.factura');
+        const detallefactura = document.querySelectorAll('.detallepagocita');
 
         detallefactura.forEach(Element=>{
             Element.addEventListener('click', (e)=>{
                 const tr = e.target.parentElement.parentElement.parentElement;
-                const estado = tr.children[7].textContent;
+                const estado = tr.children[6].textContent;
                 const idcita = tr.children[0].textContent;
                 if(estado === "Finalizada"){ 
                     (async ()=>{
@@ -44,11 +44,11 @@
                             </div>
                             <div class="recibo__dato">
                                 <p class="recibo__titulo">profesional:</p>
-                                <p class="recibo__texto">${tr.children[4].textContent}</p>
+                                <p class="recibo__texto">${tr.children[3].textContent}</p>
                             </div>
                             <div class="recibo__dato">
                                 <p class="recibo__titulo">servicio:</p>
-                                <p class="recibo__texto">${tr.children[3].textContent}</p>
+                                <p class="recibo__texto">${tr.children[2].textContent}</p>
                             </div>
                         </div>
                         <div class="recibo__datos">
@@ -125,7 +125,7 @@
         }
 
         function actualizarfilacita(tr){
-            tr.children[7].textContent = "Pendiente";
+            tr.children[6].textContent = "Pendiente";
             tr.classList.remove('tr-resaltar');
         }
     }

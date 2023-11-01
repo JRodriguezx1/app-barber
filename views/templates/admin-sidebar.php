@@ -32,7 +32,7 @@
 
         <a href="/admin/fidelizacion" class="dashboard__enlace <?php echo validar_string_url('/fidelizacion')?'dashboard__enlace--actual':''; ?>" >
             <i class="fa-solid fa-gift"></i>
-            <span class="dashboard__menu-texto">fidelizacion</span>
+            <span class="dashboard__menu-texto">descuentos</span>
         </a>
         <?php if($user['admin']>2): ?>
         <a href="/admin/adminconfig" class="dashboard__enlace <?php echo validar_string_url('/adminconfig')?'dashboard__enlace--actual':''; ?>" >

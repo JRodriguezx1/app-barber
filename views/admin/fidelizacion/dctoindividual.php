@@ -16,9 +16,9 @@
                         </select> 
                     </div>
                     <div class="formulario__campo">
-                        <label class="formulario__label" for="product_serv">Elegir Producto: </label>
+                        <label class="formulario__label" for="product_serv">Elegir Producto o servicio: </label>
                         <select class="formulario__select" name="product_serv" id="product_serv" required>
-                            <option value="" disabled selected> Seleccionar Producto</option>
+                            <option value="" disabled selected> Seleccione Producto/servicio</option>
                         </select> 
                         <label class="valorservicio" id="valorservicio"> $ </label>
                     </div>

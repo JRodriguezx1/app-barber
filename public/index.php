@@ -29,6 +29,8 @@ $router = new Router();
 
 
 // Login
+$router->get('/loginauth', [logincontrolador::class, 'loginauth']);
+$router->post('/loginauth', [logincontrolador::class, 'loginauth']);
 $router->get('/login', [logincontrolador::class, 'login']);
 $router->post('/login', [logincontrolador::class, 'login']);
 $router->post('/logout', [logincontrolador::class, 'logout']);

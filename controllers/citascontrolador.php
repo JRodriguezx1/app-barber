@@ -36,7 +36,9 @@ class citascontrolador{
             $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
             $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
             $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
-            $citas->valorcita = $valorcita;
+            
+            $citas->valorcita = $_POST['valorpersonalizado'];
+            if($citas->valorcita === '')$citas->valorcita = $valorcita;
             $citas->dcto = 0;
             $citas->dctovalor = 0;
             if($fidelizacion){
@@ -193,18 +195,22 @@ class citascontrolador{
             $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
             $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
             $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
-            $cita->valorcita = $valorcita;
+            
+            $cita->valorcita = $_POST['valorpersonalizado'];  //valida si es valor del servicio fijo o personalizado
+            if($cita->valorcita==='')$cita->valorcita = $valorcita;
+
             if($fidelizacion){
                 $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
                 $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
             }
             $cita->nameservicio = $servicio;
             $cita->nameprofesional = $profesional;
-            if($cita->id_usuario == 2){
+            if($cita->id_usuario == 2){  //para cliente no registrado
                 $cita->nombrecliente = $_POST['nombrecliente'];
             }else{ 
                 $cita->nombrecliente = usuarios::uncampo('id', $cita->id_usuario, 'nombre').' '.usuarios::uncampo('id', $cita->id_usuario, 'apellido');
             }
+            
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
                 //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
@@ -338,8 +344,11 @@ class citascontrolador{
         $profesionales = empleados::all();
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $cita = citas::find('id', $_POST['id']);  // $_POST['id'] viene de finalizcita.js
+            if(!$cita->valorcita)$cita->valorcita =$_POST['inputcostoservice'];
+            
             $cita->estado = 'Finalizada';
             $cita->fecha_fin = date('Y-m-d');  //si la cita fue programada para un dia determinado y se realiza antes, la fecha de la cita se corre para el dia en que se paga o realiza
+            
             $r2 = $cita->actualizar();
             if($r2){
                 $facturacion = new facturacion($_POST);

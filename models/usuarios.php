@@ -30,12 +30,32 @@ class usuarios extends ActiveRecord {
     }
 
     // Validar el Login de Usuarios
-    public function validarLogin() {
+    public function validarLoginauth() {  //validacion para admin y soporte
         if(!$this->email) {
-            self::$alertas['error'][] = 'El Email del Usuario es Obligatorio';  //['error] = ['string1', 'string2'...]
-        }  //como el arreglo alertas es heredada de la clase padre activerecord self hace referencia a este arreglo de la clase padre
+            self::$alertas['error'][] = 'El Email del Usuario es Obligatorio';  
+        }  
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             self::$alertas['error'][] = 'Email no válido';
+        }
+        if(!$this->password) {
+            self::$alertas['error'][] = 'El Password no puede ir vacio';
+        }
+        return self::$alertas;
+
+    }
+
+    public function validarLogin() {  //validacion para usuarios
+        /*if(!$this->email) {
+            self::$alertas['error'][] = 'El Email del Usuario es Obligatorio';  
+        }  
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            self::$alertas['error'][] = 'Email no válido';
+        }*/
+        if(!$this->movil || !is_numeric($this->movil) ) {
+            self::$alertas['error'][] = 'El Movil no es correcto';
+        }
+        if(strlen($this->movil)<10 || strlen($this->movil)>10){
+            self::$alertas['error'][] = 'El Movil debe tener 10 digitos';
         }
         if(!$this->password) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
@@ -64,8 +84,11 @@ class usuarios extends ActiveRecord {
         if(!$this->password) {
             self::$alertas['error'][] = 'El Password no puede ir vacio';
         }
-        if(strlen($this->password) < 6) {
-            self::$alertas['error'][] = 'El password no es mayor a 6 caracteres';
+        if(strlen($this->password) != 4) {
+            self::$alertas['error'][] = 'El password debe ser igual a 4 digitos';
+        }
+        if(!is_numeric($this->password)) {
+            self::$alertas['error'][] = 'El Password debe ser numerico';
         }
         if($this->password !== $this->password2) {
             self::$alertas['error'][] = 'Los password son diferentes';

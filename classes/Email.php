@@ -36,16 +36,16 @@ class Email {
          $negocio = negocio::get(1);
          $mail->setFrom($negocio[0]->email);
          $mail->addAddress($this->email, $this->nombre);
-         $mail->Subject = 'Confirma tu Cuenta';
+         $mail->Subject = 'Cuenta Registrada';
 
          // Set HTML
          $mail->isHTML(TRUE);
          $mail->CharSet = 'UTF-8';
 
          $contenido = '<html>';
-         $contenido .= "<p><strong>Hola " . $this->nombre .  "</strong> Has Registrado Correctamente tu cuenta en {$negocio[0]->nombre}; pero es necesario confirmarla</p>";
-         $contenido .= "<p>Presiona aquí: <a href='http://".$cliente[0].".app_barber.test/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";       
-         if($this->password)$contenido .= "<p>Tu password de ingreso es: ".$this->password."</p>";
+         $contenido .= "<p> <strong>Hola " . $this->nombre .  "</strong> Te Has Registrado Correctamente en {$negocio[0]->nombre}.</p>";
+         //$contenido .= "<p>Presiona aquí: <a href='http://".$cliente[0].".app_barber.test/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a>";       
+         if($this->password)$contenido .= "<p>Ingresa con tu numero de celular, y tu password de ingreso es: ".$this->password."</p>";
          $contenido .= "<p>Si tu no creaste esta cuenta; puedes ignorar el mensaje</p>";
          $contenido .= '</html>';
          $mail->Body = $contenido;

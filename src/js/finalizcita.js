@@ -10,8 +10,8 @@
             eliminarcita.addEventListener('click', (e)=>{
                 const tr = e.target.parentElement.parentElement.parentElement;
                 const id = tr.children[0].textContent;
-                const estado = tr.children[7].textContent;
-                if(estado === "Pendiente" || estado === "Out")cancelarcita(id, tr.children[7]); //se pasa el id de la cita y su estado  
+                const estado = tr.children[6].textContent;
+                if(estado === "Pendiente" || estado === "Out")cancelarcita(id, tr.children[6]); //se pasa el id de la cita y su estado  
             });
         });
 
@@ -52,7 +52,7 @@
         finalizarcitas.forEach(fincita => {
             fincita.addEventListener('click', e=>{
                 const tr = e.target.parentElement.parentElement.parentElement;
-                const estado = tr.children[7].textContent;
+                const estado = tr.children[6].textContent;
                 if(estado === "Pendiente"){   
                     formulariopagar();
                     obtenermediospago();
@@ -92,8 +92,8 @@
                             </div>
 
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="totalpagar">Total A Pagar: </label>
-                                <input class="formulario__input" type="number" id="totalpagar" name="totalpagar" value="" readonly required>
+                                <label class="formulario__label" for="inputcostoservice">Valor del servicio: </label>
+                                <input class="formulario__input" type="number" id="inputcostoservice" name="inputcostoservice" value="" readonly required>
                             </div>
 
                             <div class="formulario__campo">
@@ -176,19 +176,20 @@
             const tr = e.target.parentElement.parentElement.parentElement;
             const idcita = tr.children[0].textContent;
             const nombre = tr.children[1].textContent;
-            const servicio = tr.children[3].textContent;
-            valueservice = tr.children[3].dataset.precio;
+            const servicio = tr.children[2].textContent;
+            valueservice = tr.children[2].dataset.precio;
+            if(!valueservice) document.querySelector('#inputcostoservice').readOnly = false; //deshabilita el input del valor del servicio si es personalizado el servicio
 
             document.querySelector('input[name=id]').value = idcita;  //id de la cita
             document.querySelector('input[name=valor_servicio]').value = valueservice;
-            document.querySelector('input[name=idempleado]').value = tr.children[4].dataset.idempleado;
+            document.querySelector('input[name=idempleado]').value = tr.children[3].dataset.idempleado;
             document.querySelector('.orden').textContent = 'Orden: '+idcita;
             document.querySelector('.nameuser').textContent = nombre;
             document.querySelector('.nameservice').textContent = servicio;
             document.querySelector('.precio').textContent = 'Precio: $'+valueservice;
 
             const selectdcto = document.querySelector('#valorpromodcto');
-            if(parseInt(promodcto)){
+            if(parseInt(promodcto)||parseInt(valorpromodcto)){  //si hay un % de dcto se muestra en el select al finalizar cita
                 const option = document.createElement('option');
                 option.textContent = promodcto+'%'+' - '+'$'+valorpromodcto;
                 option.value = valorpromodcto; //dcto en valor
@@ -196,33 +197,35 @@
                 selectdcto.appendChild(option);
             }
             selectdcto.addEventListener('change', aplicarpromo);
-            const totalpagar = document.querySelector('#totalpagar');
-            totalpagar.value = valueservice;
-            totalpagar.addEventListener('input', calculo);
+            const inputcostoservice = document.querySelector('#inputcostoservice');
+            inputcostoservice.value = valueservice;
+            inputcostoservice.addEventListener('input', calculo);
         }
 
         function aplicarpromo(e){
-            document.querySelector('#totalpagar').value = valueservice; //se reinicia el valor original del servicio
+            document.querySelector('#inputcostoservice').value = valueservice; //se reinicia el valor original del servicio
             const valorpromodcto = parseInt(e.target.value);
-            const totalpagar = parseInt(document.querySelector('#totalpagar').value);
-            document.querySelector('#totalpagar').value = totalpagar - valorpromodcto;
+            const inputcostoservice = parseInt(document.querySelector('#inputcostoservice').value);
+            document.querySelector('#inputcostoservice').value = inputcostoservice - valorpromodcto;
             const promodcto = e.target.options[this.options.selectedIndex].dataset.dcto;
             document.querySelector('input[name=promodcto]').value = promodcto;  //input hidden para enviar dcto en porcentaje a bd
             calculo();
         }
 
-        function calculo(){
+        function calculo(){ //esta funcio se ejecuta en 3 eventos, cuando se selecciona un dcto, cuando se escribe en el campo recibido o cuando se escribe en el input del valor del servicio id="inputcostoservice" 
             const valordcto = document.querySelector('input[name=valordcto]'); //para dcto manual
-            const inputtotalpagar = parseInt(document.querySelector('#totalpagar').value);
+            const inputcostoservice = parseInt(document.querySelector('#inputcostoservice').value);
+            valueservice = inputcostoservice;  //si inicialmente no hay valor del servicio definido, etonces cuando se defina se reescribe eta variable
             const devolucion = document.querySelector('#devolucion');
-            const recibido = parseInt(document.querySelector('#recibido').value); 
-            if(recibido>=inputtotalpagar){
-                devolucion.value = recibido-inputtotalpagar;
+            const recibido = parseInt(document.querySelector('#recibido').value);
+            document.querySelector('input[name=valor_servicio]').value = inputcostoservice;
+            if(recibido>=inputcostoservice){
+                devolucion.value = recibido-inputcostoservice;
                 //devolucion.style.color = "rgb(240, 101, 72)"; 
                 valordcto.value = 0; //descuento manual
             }else{
                 devolucion.value = 0;
-                valordcto.value = inputtotalpagar - recibido; //descuento manual
+                valordcto.value = inputcostoservice - recibido; //descuento manual
             }
             document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
         }

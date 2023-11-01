@@ -12,14 +12,14 @@
                         <label class="formulario__label" for="nombre">Nombre</label>
                         <div class="formulario__dato">
                             <input class="formulario__input" type="text" placeholder="Nombre del servicio" id="nombre" name="nombre" value="<?php echo $usuario->nombre??''; ?>" required>
-                            <label data-num="25" class="count-charts" for="">25</label>
+                            <label data-num="52" class="count-charts" for="">52</label>
                         </div>
                     </div>
                     
                     <div class="formulario__campo">
                         <label class="formulario__label" for="precio">Precio</label>
                         <div class="formulario__dato">
-                            <input class="formulario__input" type="number" min="0" max="999999" placeholder="Precio del servicio" id="precio" name="precio" required>
+                            <input class="formulario__input" type="number" min="0" max="999999" placeholder="Precio del servicio" id="precio" name="precio">
                             <label for="">$</label>
                         </div>
                     </div>

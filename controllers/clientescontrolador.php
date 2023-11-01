@@ -37,19 +37,23 @@ class clientescontrolador{
     }
 
     public static function crear(Router $router){
+        session_start();
+        isadmin();
         $usuario = new usuarios; //instancia el objeto vacio
         $alertas = [];  
-        $clientes = usuarios::whereArray(['confirmado'=>1, 'admin'=>0]);
 
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             
             $usuario->compara_objetobd_post($_POST); //objeto instaciado toma los valores del $_POST
-            $alertas = $usuario->validar_nueva_cuenta(); 
+            $alertas = $usuario->validar_nueva_cuenta();
+            $alertas = $usuario->validarEmail();
             
             if(empty($alertas)){ 
                 
                 $usuarioexiste = $usuario->validar_registro();//retorna 1 si existe usuario(email), 0 si no existe
-                if($usuarioexiste){ //si usuario ya existe
+                $usuariotelexiste = $usuario->find('movil', $_POST['movil']);
+
+                if($usuarioexiste||$usuariotelexiste){ //si usuario ya existe
                     $usuario::setAlerta('error', 'El usuario ya esta registrado');
                     $alertas = $usuario::getAlertas();
                 }else{
@@ -58,7 +62,8 @@ class clientescontrolador{
                     //eliminar pass2
                     unset($usuario->password2);
                     //generar token
-                    $usuario->creartoken();
+                    //$usuario->creartoken();
+                    $usuario->confirmado = '1';
 
                     //enviar el email
                     $email = new Email($usuario->email, $usuario->nombre, $usuario->token, $_POST['password']);
@@ -67,16 +72,19 @@ class clientescontrolador{
                 //guardar cliente recien creado en bd  
                     $resultado = $usuario->crear_guardar();  
                     if($resultado){
-                        $alertas['exito'][] = 'Cliente debe confirma su cuenta en su email';
+                        $alertas['exito'][] = 'Cliente Registrado correctamente';
                     }     
                 }
             }
-        } 
+        }
+        $clientes = usuarios::whereArray(['confirmado'=>1, 'admin'=>0]);
         $router->render('admin/clientes/index', ['titulo'=>'clientes', 'clientes'=>$clientes, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
     public static function actualizar(Router $router){
+        session_start();
+        isadmin();
         $alertas = [];  
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $cliente = usuarios::find('id', $_POST['id']);

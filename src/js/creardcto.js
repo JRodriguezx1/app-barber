@@ -26,16 +26,18 @@
             borrarhtml(product_serv);
             const option = document.createElement('OPTION');
             option.value = '';
-            option.textContent = 'Seleccionar Producto';
+            option.textContent = 'Seleccione Producto/servicio';
             product_serv.appendChild(option);
             tipodcto.disabled = true;
             dcto1.disabled = true;
             if(e.target.value == "servicios"){
                 servicios.forEach(servicio => {
-                    const option = document.createElement('OPTION');
-                    option.value = servicio.id;
-                    option.textContent = servicio.nombre;
-                    product_serv.appendChild(option);
+                    if(servicio.precio){  //solo aplicar dcto a servicios que tengan un valor fijo mas no personalizado
+                        const option = document.createElement('OPTION');
+                        option.value = servicio.id;
+                        option.textContent = servicio.nombre;
+                        product_serv.appendChild(option);
+                    }
                 });
             }
             if(e.target.value == "productos"){

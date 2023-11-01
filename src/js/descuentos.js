@@ -1,5 +1,5 @@
 (function(){
-    if(document.querySelector('.fidelizacion')){
+    if(document.querySelector('.descuentos')){
 
         const editar = document.querySelectorAll('.programar');
         const eliminar = document.querySelectorAll('.cancelado');

@@ -44,17 +44,18 @@
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="password">Contraseña</label>
-            <input class="formulario__input" type="password" placeholder="Contraseña (Mínimo 6 caracteres)" id="password" name="password" requiered>
+            <input class="formulario__input" type="password" placeholder="Contraseña de 4 digitos" id="password" name="password" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');" requiered>
         </div>
         <div class="formulario__campo">
             <label class="formulario__label" for="password2">Repetir Contraseña</label>
-            <input class="formulario__input" type="password" placeholder="Confirmar contraseña" id="password2" name="password2" requiered>
+            <input class="formulario__input" type="password" placeholder="Confirmar contraseña" id="password2" name="password2" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');" requiered>
         </div>
         <input class="formulario__submit--login bloqueformulario__submit--login" type="submit" value="Crear Cuenta" style="background-color: <?php echo $negocio[0]->colorprincipal??'';?>;">
     </form>
 
     <div class="acciones">
         <a href="/login" class="acciones__enlace">¿Ya tienes cuenta? <br> Iniciar Sesion</a>
-        <a href="/olvide" class="acciones__enlace">Olvidaste tu password</a>
+        <!--<a href="/olvide" class="acciones__enlace">Olvidaste tu password</a> -->
+        <a href="/" class="acciones__enlace">Home</a>
     </div>
 </main>

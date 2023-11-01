@@ -492,7 +492,10 @@
                             <option value="35"> 35 min </option>
                             <option value="40"> 40 min </option>
                             <option value="45"> 45 min </option>
-                        </select> 
+                            <option value="60"> 60 min </option>
+                            <option value="90"> 90 min </option>
+                            <option value="120"> 120 min </option>
+                        </select>
                     </div>
                     <div><input class="formulario__submit" type="submit" value="Aplicar"></div>
                 </form>

@@ -230,6 +230,7 @@
             const datos = new FormData();
             const id_empserv = professionals.options[professionals.options.selectedIndex]; //id de la relacion empleado_servicio
             const id_servicio = document.querySelector('#servicio').options[document.querySelector('#servicio').options.selectedIndex].value;
+            const descripcion = document.querySelector('#descripcion').value;
             const hoy = new Date();
 
             datos.append('telcliente', telcliente);
@@ -241,6 +242,7 @@
             datos.append('hora_fin', horacita);
             datos.append('idservicio', id_servicio);
             datos.append('nameprofesional', id_empserv.value);
+            datos.append('descripcion', descripcion);
             try {
                 const url = "/admin/api/enviarcita";  //llama api en controladorcliente.php
                 const respuesta = await fetch(url, {method: 'POST', body: datos}); 

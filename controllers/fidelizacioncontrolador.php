@@ -33,7 +33,7 @@ class fidelizacioncontrolador{
             $dcto->nombreservicio = servicios::uncampo('id', $dcto->product_serv, 'nombre');
             $dcto->precioservicio = servicios::uncampo('id', $dcto->product_serv, 'precio');
         }
-        $router->render('admin/fidelizacion/index', ['titulo'=>'fidelizacion', 'descuentos'=>$descuentos, 'alertas'=>$alertas, 'user'=>$_SESSION]);
+        $router->render('admin/fidelizacion/index', ['titulo'=>'Descuentos', 'descuentos'=>$descuentos, 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 
@@ -81,7 +81,7 @@ class fidelizacioncontrolador{
                 $alertas['error'][] = "Ya existe oferta vigente o pendiente para el mismo producto";
             }
         }
-        $router->render('admin/fidelizacion/dctoindividual', ['titulo'=>'fidelizacion', 'alertas'=>$alertas, 'user'=>$_SESSION]);
+        $router->render('admin/fidelizacion/dctoindividual', ['titulo'=>'Descuentos', 'alertas'=>$alertas, 'user'=>$_SESSION]);
     }
 
 

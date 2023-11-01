@@ -4,6 +4,8 @@
 .paginacion{
     text-align: center;
     margin-top: 1rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
     &__enlace{
         &--actual{
             font-weight: 700;

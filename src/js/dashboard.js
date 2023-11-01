@@ -9,3 +9,11 @@ function scrolnav() {
         } 
     });
 }
+/*
+function cerrarDialogoExterno(event, dialogo) {
+    console.log(event.target);
+    if (event.target === dialogo) {
+      dialogo.close();
+      document.removeEventListener("click", cerrarDialogoExterno);
+    }
+  }*/

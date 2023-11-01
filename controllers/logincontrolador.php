@@ -9,13 +9,13 @@ use MVC\Router;  //namespace\clase
  
 class logincontrolador{
 
-    public static function login(Router $router){
+    public static function loginauth(Router $router){
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             //$_POST = ['email'=>'correo@correo.com', 'password'=>123456]
             $auth = new usuarios($_POST);  //$auth es objeto de la clase usuarios de los datos que el usuario escribio
-            $alertas = $auth->validarLogin();  //valida que los campos esten escritos
+            $alertas = $auth->validarLoginauth();  //valida que los campos esten escritos
             if(empty($alertas)){
 
                 //$usuario = $auth->validar_registro();  //valida si email existe? retorna 1 o 0 
@@ -44,13 +44,53 @@ class logincontrolador{
                 }else{
                     $alertas = usuarios::setAlerta('error', 'usuario no encontrado o no existe');
                 }
+            } 
+        }
+        $alertas = usuarios::getAlertas();
+       $router->render('auth/loginauth', ['alertas'=>$alertas, 'titulo'=>'iniciar sesión', 'negocio'=>negocio::get(1)]);   //  'autenticacion/login' = carpeta/archivo
+    }
+
+    public static function login(Router $router){
+        $alertas = [];
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST' ){
+            //$_POST = ['email'=>'correo@correo.com', 'password'=>123456]
+            $auth = new usuarios($_POST);  //$auth es objeto de la clase usuarios de los datos que el usuario escribio
+            $alertas = $auth->validarLogin();  //valida que los campos esten escritos
+            if(empty($alertas)){
+
+                //$usuario = $auth->validar_registro();  //valida si email existe? retorna 1 o 0 
+                $usuario = $auth->find('movil', $auth->movil); //busca en la columna 'movil' el telefono: $auth->movil y retorna el registro de la bd en un objeto
+                if($usuario&&$usuario->habilitar){ //existe usuario o confirmado     //$usuario es objeto de la clase usuarios pero con los datos de la bd
+                    //$usuario->password = $auth->password
+                    $pass = $usuario->comprobar_password($auth->password);  //comprueba password y verifica si esta confirmado
+                    $confirmado = $usuario->confirmado;
+                    if($pass&&$confirmado){         //$auth->password = es lo que se escribe en el form
+                        //autenticar usuario         
+                        session_start();
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre." ".$usuario->apellido;
+                        $_SESSION['email'] = $usuario->email;
+                        $_SESSION['login'] = true;
+                        $_SESSION['admin'] = $usuario->admin ?? null;  //si no es admin la llave $_SESSION['admin'] = null
+
+                        //redireccion al dashboard del superior-admin-empleado o cliente
+                        if($usuario->admin>=1){
+                            header('Location: /admin/dashboard');
+                        }else{
+                            header('Location: /Cliente/app');
+                        }
+
+                    }else{ $alertas = usuarios::setAlerta('error', 'Password incorrecto o cliente no confirmado, verfica tu email');  }
+                }else{
+                    $alertas = usuarios::setAlerta('error', 'usuario no encontrado o no existe o deshailitado');
+                }
             } //cierre del empty de alertas
         } //cierre de $_SERVER['REQUEST_METHOD'] === 'POST'
 
         $alertas = usuarios::getAlertas();
        $router->render('auth/login', ['alertas'=>$alertas, 'titulo'=>'iniciar sesión', 'negocio'=>negocio::get(1)]);   //  'autenticacion/login' = carpeta/archivo
     }
-
 
 
     public static function logout(){
@@ -61,7 +101,7 @@ class logincontrolador{
 
 
 
-    public static function olvide(Router $router){
+    /*public static function olvide(Router $router){
         $alertas = [];
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -87,11 +127,11 @@ class logincontrolador{
 
         $alertas = usuarios::getAlertas();
         $router->render('auth/olvide', ['alertas'=>$alertas, 'titulo'=>'recuperar', 'negocio'=>negocio::get(1)]);
-    }
+    }*/
 
 
 
-    public static function recuperarpass(Router $router){
+    /*public static function recuperarpass(Router $router){
 
         $alertas = [];
         $error = true;
@@ -124,7 +164,7 @@ class logincontrolador{
         }
         $alertas = usuarios::getAlertas();
         $router->render('auth/recuperarpass', ['alertas'=>$alertas, 'error'=>$error, 'titulo'=>'recuperar', 'negocio'=>negocio::get(1)]);
-    }
+    }*/
 
 
 
@@ -141,7 +181,9 @@ class logincontrolador{
             if(empty($alertas)){ //si el arreglo alertas esta vacio es pq paso las validacion del formulario crear cuenta
                 
                 $usuarioexiste = $usuario->validar_registro();//retorn 1 si existe usuario(email), 0 si no existe
-                if($usuarioexiste){ //si usuario ya existe
+                $usuariotelexiste = $usuario->find('movil', $_POST['movil']);
+                
+                if($usuarioexiste||$usuariotelexiste){ //si usuario ya existe por correo o por telefono
                     $usuario::setAlerta('error', 'El usuario ya esta registrado');
                     $alertas = $usuario::getAlertas();
                 }else{
@@ -150,10 +192,11 @@ class logincontrolador{
                     //eliminar pass2
                     unset($usuario->password2);
                     //generar token
-                    $usuario->creartoken();
+                    //$usuario->creartoken();
+                    $usuario->confirmado = '1';
 
                     //enviar el email
-                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token);
+                    $email = new Email($usuario->email, $usuario->nombre, $usuario->token, $_POST['password']);
                     $email->enviarConfirmacion();
 
                 //guardar cliente recien creado en bd  
@@ -176,7 +219,7 @@ class logincontrolador{
     } 
 
 
-
+    /*
     public static function confirmar_cuenta(Router $router){ //este metodo se llama cuando el usuario confirma la url enviada al correo electroico
         $alertas = [];
         $token  = s($_GET['token']);  //con el metodo get se lee los datos de url superior
@@ -195,7 +238,7 @@ class logincontrolador{
 
         $alertas = usuarios::getAlertas();
         $router->render('auth/confirmar_cuenta', ['alertas'=>$alertas, 'titulo'=>'confirmacion de cuenta', 'negocio'=>negocio::get(1)]);
-    }
+    }*/
 
      
 } //cierre de la clase

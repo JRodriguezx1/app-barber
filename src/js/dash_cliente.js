@@ -6,6 +6,7 @@
         const selectdate = document.querySelector('#date');
         //const programar = document.querySelectorAll('.programar');
         const eliminarcitas = document.querySelectorAll('#cancelado');
+        const dialogo = document.getElementById("miDialogo");
         selectdate.disabled = true;
         let emplserv;
                 
@@ -45,8 +46,24 @@
         servicio.addEventListener('change', (e)=>{
             selectdate.disabled = true;
             servicio.classList.remove('servicioselected');
+            mostarmodaldiag(e.target.options[e.target.options.selectedIndex].textContent);
             crearselectprofesionals(e.target.value);
         });
+
+        function mostarmodaldiag(serviciovalor){  // funciones para mostrar y cerrar modal dialog
+            const temp = serviciovalor.includes('$'); 
+            if(!temp){
+                dialogo.showModal();
+                document.addEventListener("click", cerrarDialogoExterno);
+            }
+        }
+        function cerrarDialogoExterno(event) {
+            console.log(event.target);
+            if (event.target === dialogo ||event.target.id === "cerrardialog") {
+              dialogo.close();
+              document.removeEventListener("click", cerrarDialogoExterno);
+            }
+        }
 
         function crearselectprofesionals(idservice){
             const empleados = emplserv.filter(Element => Element.idservicio === idservice);

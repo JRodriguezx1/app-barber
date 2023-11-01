@@ -4,7 +4,7 @@
         <div class="citas__acciones">
             <div class="citas__crear">
                 <a id="crearcita" class="btnsmall" href=""> + Crear</a>
-                <a id="crearcitanoreg" class="btnsmallred" href=""> + Crear</a>
+                <a id="crearcitanoreg" class="btnsmallred" href=""> No registrao</a>
             </div>
             <div class="citas__filtros">
                 <?php if($user['admin']>1): ?>
@@ -75,7 +75,7 @@
                         <tr class="<?php if($cita->id_empserv==null&&$cita->estado=='Pendiente') echo 'reprogramar';
                                         if($cita->estado=='Finalizada') echo 'tr-resaltar'
                                     ?>">
-                            <td class=""><?php echo $cita->id; ?></td> 
+                            <td class="" data-descripcion="<?php echo $cita->descripcion??''; ?>" > <?php echo $cita->id; ?> </td> 
                             <!--<td class=""><?php //echo $cita->usuario->nombre.' '.$cita->usuario->apellido; ?></td>  -->
                             <td class=""><?php echo $cita->nombrecliente??'';?></td>     
                             
@@ -86,7 +86,7 @@
                             <td class=""><?php echo $cita->fecha_fin; ?></td>         
                             <td class=""><?php echo $cita->hora_fin; ?></td>
                             <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; //echo $cita->estado; ?></td>
-                            <td class="accionestd"> <div class="acciones-iconos" data-promodcto="<?php echo $cita->dcto??'';?>" data-promodctovalor="<?php echo $cita->dctovalor??'';?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i><i class="factura fa-regular fa-note-sticky"></i></div></td>
+                            <td class="accionestd"> <div class="acciones-iconos" data-promodcto="<?php echo $cita->dcto??'';?>" data-promodctovalor="<?php echo $cita->dctovalor??'';?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i><i class="detallepagocita fa-regular fa-note-sticky"></i></div></td>
                         </tr>  
                     <?php endforeach; ?>
                 </tbody>

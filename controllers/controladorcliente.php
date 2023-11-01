@@ -63,7 +63,7 @@ class controladorcliente{
         $cita = new citas($_POST);
         $cita->id_usuario = $idusuario;
         $Ncitaspendient = citas::numreg_multicolum(['id_usuario'=>$cita->id_usuario, 'estado'=>'Pendiente']);
-        if($Ncitaspendient > 2){ $r = false;
+        if($Ncitaspendient > 2){ $r[0] = false;
         }else{
             $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
             $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
@@ -90,7 +90,7 @@ class controladorcliente{
                         //$wstext->send1textws();
 
                         ////////////// enviar sms con twilio////////////
-                        $sid = 'AC81feeb3abcf6563f2a8f9b32904f8ae0';
+                        /*$sid = 'AC81feeb3abcf6563f2a8f9b32904f8ae0';
                         $token = '591ed3e8000d266c4aa9d2dbd0584336';
                         $twilio = new Client($sid, $token);
 
@@ -99,12 +99,12 @@ class controladorcliente{
                             "from" => "+16183684812",
                             "body" => "Cita Nº:".$r[1]." reservada por: ".$_SESSION['nombre'].", Telefono cliente: ".$_POST['telcliente'].", Profesional: ".$profesional.", Servicio: ".$servicio.", Fecha de la cita: ".$_POST['fecha_fin']." Hora de la cita: ".$_POST['hora_fin']
                             )
-                        );
+                        );*/
                         //print($message->sid);
                         
 
-                    }else{ $r = false; }
-                }else{ $r = false; }
+                    }else{ $r[0] = false; }
+                }else{ $r[0] = false; }
             }
         }
         echo json_encode($r[0]);

@@ -1,12 +1,12 @@
-<div class="fidelizacion">
+<div class="descuentos">
     <h4 class="dashboard__heading2"><i class="fa-solid fa-pen-to-square"></i><?php echo $titulo; ?> </h4>
 
-    <div class="fidelizacion__contenedor">
+    <div class="descuentos__contenedor">
         <?php require_once __DIR__ .'/../../templates/alertas.php'; ?>
-        <div class="fidelizacion__creardescuento">
+        <div class="descuentos__creardescuento">
             <a class="btnsmall" href="<?php echo $user['admin']>2?'/admin/fidelizacion/creardctoxproduct':''?>"><i class="fa-solid fa-plus"></i> Crear Descuento</a>
         </div>
-        <div class="fidelizacion__tabla">
+        <div class="descuentos__tabla">
             <table class="tabla">
                 <thead>
                     <tr>

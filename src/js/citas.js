@@ -145,7 +145,11 @@
                                     <option value="" disabled selected> -Selecionar- </option>
                                 </select>
                             </div>`;
-            formulariocliente('Crear Cita', 'Crear', '/admin/citas/crear?pagina=1', usuario);
+            const campovalor = `<div class="formulario__campo campovalor" style="display: none;">
+                                    <label class="formulario__label" for="valorpersonalizado">Valor personalizado: </label>
+                                    <input class="formulario__input" type="number" id="valorpersonalizado" name="valorpersonalizado">
+                                </div>`;
+            formulariocliente('Crear Cita', 'Crear', '/admin/citas/crear?pagina=1', usuario, campovalor);
             cargarusuarios();
             cargaservicios();
             eventofecha();
@@ -155,8 +159,12 @@
                 const valstatus = e.target.parentElement.parentElement.previousElementSibling.textContent;
                 const usuario = `<span class="namecliente"></span><span id="horacita"></span>
                                 <input type="hidden" id="id" name="id" value="" >`;
+                const campovalor = `<div class="formulario__campo campovalor">
+                                        <label class="formulario__label" for="valorpersonalizado">Valor personalizado: </label>
+                                        <input class="formulario__input" type="number" id="valorpersonalizado" name="valorpersonalizado">
+                                    </div>`;
                 if(valstatus === "Pendiente" || valstatus === "Out")
-                {   formulariocliente('Reprogramar Cita A:', 'Enviar', '/admin/citas?pagina=1', usuario);
+                {   formulariocliente('Reprogramar Cita A:', 'Enviar', '/admin/citas?pagina=1', usuario, campovalor); //llama a citascontrolador.php
                     cargarcita(e.target);
                 }
             });
@@ -171,13 +179,17 @@
                             </div>
                             <input type="hidden" name="id_usuario" value="2" >
                             `;
-            formulariocliente('Cita Para Cliente No Registrado', 'Crear', '/admin/citas/crear?pagina=1', usuario);
+            const campovalor = `<div class="formulario__campo campovalor" style="display: none;">
+                                    <label class="formulario__label" for="valorpersonalizado">Valor personalizado: </label>
+                                    <input class="formulario__input" type="number" id="valorpersonalizado" name="valorpersonalizado">
+                                </div>`;
+            formulariocliente('Cita Para Cliente No Registrado', 'Crear', '/admin/citas/crear?pagina=1', usuario, campovalor);
             cargaservicios();
             eventofecha();
         });
         
 
-        function formulariocliente(titulo, submit, action, usuario){
+        function formulariocliente(titulo, submit, action, usuario, campovalor){
             Swal.fire({
                 customClass: {
                     confirmButton: 'sweetbtnconfirm',
@@ -196,6 +208,11 @@
                                         <option value="" disabled selected> -Selecionar- </option>
                                     </select>
                                 </div>
+                                <div class="formulario__campo">
+                                    <label class="formulario__label" for="descripcion">Descripcion: </label>
+                                    <textarea class="formulario__textarea" id="descripcion" name="descripcion" rows="4"></textarea>
+                                </div>
+                                ${campovalor}
                                 <div class="formulario__campo">
                                     <label class="formulario__label" for="professionals">Seleccione Profesional: </label>
                                     <select class="formulario__select" name="nameprofesional" id="professionals" required>
@@ -244,6 +261,7 @@
         }
 
         function cargarprofesionales(id){
+            mostrarcampovalor(id); // me muestra el campo valor del servicio solo si es un servicio personalizado sin valor fijo
             const professionals = document.querySelector('#professionals');
             const empleados = emplserv.filter(Element => Element.idservicio === id);
             borrarhtml(professionals);
@@ -270,6 +288,21 @@
             });
         }
 
+        function mostrarcampovalor(id){
+            const divcampovalor = document.querySelector('.campovalor');
+            servicios.forEach(element => {
+                if(element.id === id){
+                    if(element.precio === null){
+                        divcampovalor.style = 'display: flex';
+                        document.querySelector('#valorpersonalizado').required = true;
+                    }else{
+                        divcampovalor.style = 'display: none';
+                        document.querySelector('#valorpersonalizado').required = false;
+                    }
+                }
+            });
+        }
+
         function eventofecha(){
             const select_date = document.querySelector('#date');
             select_date.addEventListener('input', (evento)=> {
@@ -284,6 +317,7 @@
 
         
         function validarfechaydia(fecha, dia){
+            
             //al seleccionar fecha ya se ha seleccionado el profesional, y el profesional me contiene su id y el id de la tabla empserv
             const professionals = document.querySelector('#professionals');
             const idempleado = professionals.options[professionals.options.selectedIndex].value;
@@ -302,6 +336,8 @@
                     'error'
                   )
             }else{
+                /*console.log(dia);
+                console.log(onlymalla);*/
                 const r2 = onlymalla.filter(element => element.id_dia == (dia===0?7:dia));
                 if(r2.length){ //es pq el dia si esta en la malla
                     gethoras(r2[0]); //se envia solo el dia seleccionado (obj)
@@ -411,12 +447,12 @@
         function cargarcita(element){
             cargaservicios();
             const tr = element.parentElement.parentElement.parentElement;
-            const idcita = tr.children[0].textContent;
+            const idcita = tr.children[0].textContent;  const descripcion = tr.children[0].dataset.descripcion;
             const nombre = tr.children[1].textContent;
-            const nameservice = tr.children[3].textContent;
-            const namepro = tr.children[4].textContent;
-            const fechacita = tr.children[5].textContent;
-            const horacita = tr.children[6].textContent;
+            const nameservice = tr.children[2].textContent;
+            const namepro = tr.children[3].textContent;
+            const fechacita = tr.children[4].textContent;
+            const horacita = tr.children[5].textContent;
             const namecliente = document.querySelector('.namecliente');
             const selectservice = document.querySelector('#servicios'); //del formulario de arriba
             const professionals = document.querySelector('#professionals'); //del formulario de arriba
@@ -431,8 +467,12 @@
                 if(selectservice.options[i].textContent === nameservice)
                     selectservice.options[i].selected = true;
 
+            document.querySelector('#descripcion').value = descripcion;
+            
             const id = selectservice.options[selectservice.options.selectedIndex].value;
             cargarprofesionales(id);
+            //console.log(document.querySelector('#valorpersonalizado').value);
+            document.querySelector('#valorpersonalizado').value = tr.children[2].dataset.precio;
 
             for(let i = 0; i<professionals.options.length; i++){
                 if(professionals.options[i].textContent === namepro){

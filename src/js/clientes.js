@@ -24,14 +24,14 @@
             objform.password = `<div class="formulario__campo">
                                     <label class="formulario__label" for="password">Password</label>
                                     <div class="formulario__dato">
-                                        <input class="formulario__input" type="password" placeholder="Password del cliente" id="password" name="password" required>
+                                        <input class="formulario__input" type="password" placeholder="Password del cliente" id="password" name="password" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                                         <label data-num="12" class="count-charts" for="">12</label>
                                     </div>
                                 </div>
                                 <div class="formulario__campo">
                                     <label class="formulario__label" for="password2">Repetir Password</label>
                                     <div class="formulario__dato">
-                                        <input class="formulario__input" type="password" placeholder="Repetir Password" id="password2" name="password2" required>
+                                        <input class="formulario__input" type="password" placeholder="Repetir Password" id="password2" name="password2" maxlength="4" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                                         <label data-num="12" class="count-charts" for="">12</label>
                                     </div>
                                 </div>`;

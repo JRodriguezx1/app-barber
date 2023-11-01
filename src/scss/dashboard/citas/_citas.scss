@@ -154,16 +154,18 @@
     }
     &__dato{
         display: flex;
-        align-items: center;
+        
     }
     &__titulo{
         margin: 0 0 0 0;
         font-size: 1.4rem;
         color: v.$grisoscuro;
         font-weight: 600;
+        white-space: nowrap;
     }
     &__texto{
         margin: 0 0 0 .5rem;
         font-size: 1.4rem;
+        text-align: left;
     }
 }

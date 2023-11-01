@@ -18,7 +18,7 @@
                 cierretotal = resultado1.map(total => total.totaldia);
 
                 citascancelado = resultado2.filter(Element=>Element.estado==='Cancelado');
-                totalcitas = resultado2.length - citascancelado.length;
+                totalcitas = resultado2.length - citascancelado.length; //solo citas finalizadas o pendientes
                 
                 citasrealizadas = resultado2.filter(Element=>Element.estado==='Finalizada');
 

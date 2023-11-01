@@ -49,11 +49,21 @@
                                 <option value="" disabled selected> -Selecionar- </option>
                                 <?php foreach($servicios as $service): ?>
                                     <?php if($service->estado): ?>
-                                    <option value="<?php echo $service->id;?>"><?php echo $service->nombre;?> - $<?php echo $service->precio;?></option>
+                                    <option value="<?php echo $service->id;?>"><?php echo $service->nombre;?> <?php echo $service->precio?' - $'.$service->precio:''; ?></option>
                                     <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                        <dialog class="midialog" id="miDialogo">
+                            <div class="formulario__campo">
+                                <label class="formulario__label" for="descripcion">Como desea tu servicio personalizado:</label>
+                                <div class="formulario__dato">
+                                    <textarea id="descripcion" name="descripcion" cols="60" rows="4"></textarea>
+                                    <label data-num="256" class="count-charts">256</label>
+                                </div>
+                                <div><span id="cerrardialog" class="btnsmall">Continuar</span></div>
+                            </div>
+                        </dialog>
                         <div class="formulario__campo">
                             <label class="formulario__label" for="profesional">Seleccione Profesional: </label>
                             <select class="formulario__select" name="profesional" id="profesional" required>

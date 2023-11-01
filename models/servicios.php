@@ -24,8 +24,8 @@ class servicios extends ActiveRecord {
         if(!$this->nombre || strlen($this->nombre)<4) {
             self::$alertas['error'][] = 'El nombre del servicio es obligatorio o muy corto';  //['error] = ['string1', 'string2'...]
         }  //como el arreglo alertas es heredada de la clase padre activerecord self hace referencia a este arreglo de la clase padre
-        if(!is_numeric($this->precio)) {
-            self::$alertas['error'][] = 'El precio no es válido';
+        if($this->precio){
+            if(!is_numeric($this->precio))self::$alertas['error'][] = 'El precio no es válido';
         }
         if(!$this->duracion){
             $this->duracion = 0;
