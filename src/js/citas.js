@@ -196,7 +196,7 @@
                     cancelButton: 'sweetbtncancel'
                 },
                 title: titulo,
-                html: `<form class="formulario modalform" action="${action}" method="POST">
+                html: `<form id="formcreareditarcita" class="formulario modalform" action="${action}" method="POST">
                             <input type="hidden" id="id_empserv" name="id_empserv" value="" >
                             <input type="hidden" id="hora_fin" name="hora_fin" value="" >
 
@@ -330,11 +330,7 @@
             console.log(citas);
             const r1 = onlyfechadesc.some(element => element.fecha === fecha);
             if(r1){
-                Swal.fire(
-                    'Este dia no esta disponible!',
-                    'You clicked the button!',
-                    'error'
-                  )
+                    mensajedivhoras("Este dia no esta disponible!");
             }else{
                 /*console.log(dia);
                 console.log(onlymalla);*/
@@ -343,11 +339,7 @@
                     gethoras(r2[0]); //se envia solo el dia seleccionado (obj)
                 }
                 else{ //dia no esta en la malla
-                    Swal.fire(
-                        'Este dia no esta disponible!',
-                        'You clicked the button!',
-                        'error'
-                    )
+                    mensajedivhoras("Este dia no esta disponible!");
                 }
             }
         }
@@ -383,6 +375,7 @@
            console.log(horasdisponibles);
            //podemos validar horasdisponibles si esta vacio es pq no hay espacion o agenda llena
            //mostrar alerta y no permitir pedir cita, por ahora se valida en backend
+           document.querySelector('#formcreareditarcita input[type="submit"]').disabled = false;  //habilitar btn submit del form
            imprimirhorashtml();
         }
 
@@ -418,6 +411,7 @@
 
         function imprimirhorashtml(){
             const divhoras = document.querySelector('#horas'); //donde se ponen las horas
+            divhoras.classList.remove('dianodisponible-js');
             horasdisponibles.forEach(hora => {
                 const divhora = document.createElement('DIV');
                 divhora.classList.add("cliente__hora");
@@ -506,6 +500,16 @@
             if(mes<10&&dia<10){ deshabilitarfecha = `${year}-0${mes}-0${dia}`; }
             if(mes>=10&&dia<10){ deshabilitarfecha = `${year}-${mes}-0${dia}`; }
             inputfecha.min = deshabilitarfecha; //al input fecha se le agrega atributo min
+        }
+
+        function mensajedivhoras(mensaje){
+            document.querySelector('#formcreareditarcita input[type="submit"]').disabled = true;
+            const divhoras = document.querySelector('#horas');
+            const msj = document.createElement('label');
+            msj.classList.add('formulario__label');
+            msj.textContent = mensaje;
+            divhoras.classList.add('dianodisponible-js');
+            divhoras.appendChild(msj);
         }
 
     }

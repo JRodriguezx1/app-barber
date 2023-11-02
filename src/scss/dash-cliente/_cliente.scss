@@ -120,6 +120,9 @@
         }
         //border: 1px solid v.$grisclaro;
         padding: 1rem;
+        &.dianodisponible-js{
+            display: block;
+        }
     }
     &__hora{
         //border: 1px solid v.$grisclaro;
