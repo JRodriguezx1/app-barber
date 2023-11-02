@@ -257,6 +257,7 @@ class adminconfigcontrolador{
 
     public static function getmalla(){ //api llamada desde malla.js entrega todos los turnos de todos los empleados
         $malla = malla::all();
+        $datos = [];
         foreach($malla as $element){
             $datos['empleado_'.$element->id_empleado][] = $element;
         }

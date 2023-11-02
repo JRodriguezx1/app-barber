@@ -390,7 +390,7 @@
             </div> <!-- fin mediospago -->
             <!-- <input type="color" name="color" value="" id="color" /> -->
             <div class="creacioncuentas"> <!-- creacion de cuentas y roles admin y empleados -->
-                <h4 class="configuracion__heading">Creacion De Cuentas</h4>
+                <h4 class="configuracion__heading">Gestionar Cuentas</h4>
                 <div class="creacioncuentas__habilitaremp">
                     <p class="creacioncuentas__subheading">Habilitar Empleado</p>
                     <form id="formhabilitarempleado" class="formulario" action="" method="POST">
@@ -470,11 +470,11 @@
                     <form id="formcolores" class="formulario" action="" method="POST">
                         <div class="formulario__campo">
                             <label class="formulario__label" for="principal">Principal</label>
-                            <input type="color" id="principal" name="principal" value="<?php echo $negocio->colorprincipal??''; ?>">
+                            <input type="color" id="principal" name="principal" value="<?php echo $negocio->colorprincipal??'#000000'; ?>">
                         </div>
                         <div class="formulario__campo">
                             <label class="formulario__label" for="secundario">Secundario</label>
-                            <input type="color" id="secundario" name="secundario" value="<?php echo $negocio->colorsecundario??'';?>">
+                            <input type="color" id="secundario" name="secundario" value="<?php echo $negocio->colorsecundario??'#000000';?>">
                         </div>
                         <div><input class="formulario__submit" type="submit" value="Aplicar"></div>
                     </form>

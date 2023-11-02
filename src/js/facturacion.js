@@ -16,7 +16,6 @@
                 const url = "/admin/api/getemployee_services"; //llamado a la API REST para trer la relacion de los servicios con sus profesionales
                 const respuesta = await fetch(url); 
                 emplserv = await respuesta.json();
-                console.log(emplserv);
             } catch (error) {
                 console.log(error);
             }

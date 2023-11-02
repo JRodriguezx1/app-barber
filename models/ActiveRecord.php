@@ -365,6 +365,7 @@ class ActiveRecord {
         $sql = "SELECT ".static::$tabla.".".$campo." FROM ".static::$tabla." WHERE $colum = '${id}';";
         $resultado = self::$db->query($sql);
         $valorcampo = $resultado->fetch_assoc();
+        if(!$valorcampo)$valorcampo=[];
         return array_shift($valorcampo);
     }
 
