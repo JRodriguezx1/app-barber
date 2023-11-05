@@ -16,6 +16,7 @@
         </div>
         <h2 class="dashboard__heading">HISTORIAL DE PAGOS</h2>
         <div class="facturacion__tabla">
+            <?php if($user['admin']>2): ?>
             <table class="tabla">
                 <thead>
                     <tr>
@@ -43,6 +44,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?php endif ?>
         </div>
     </div>
 </div>

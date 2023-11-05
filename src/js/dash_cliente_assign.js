@@ -215,12 +215,16 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     enviarcita(e.target.dataset.hora).then((r) => {
-                        if(r){
+                        if(r===true){
                             Swal.fire('Cita Programada', '', 'success')
                             setTimeout(() => {
                                 window.location.reload();
                             }, 1500);
-                        }else{ Swal.fire('No fue posible agendar cita, Intentalo de nuevo', '', 'error') }
+                        }else if(r==='masde3citas'){
+                            Swal.fire('No es posible agendar cita si ya tienes 3 citas pendientes', '', 'error')
+                        }else if(r==='error'){
+                            Swal.fire('No fue posible agendar cita, Intentalo de nuevo', '', 'error')
+                        }
                     });
                 } 
             })
@@ -247,12 +251,14 @@
                 const url = "/admin/api/enviarcita";  //llama api en controladorcliente.php
                 const respuesta = await fetch(url, {method: 'POST', body: datos}); 
                 const resultado = await respuesta.json();  
-                if(resultado){
-                    return true;
-                }
-                else{
-                    return false;
-                }
+                    if(resultado===true){
+                        return true;
+                    }
+                    else if(resultado==='masde3citas'){
+                        return 'masde3citas';
+                    }else if(resultado==='error'){
+                        return 'error';
+                    }
             } catch (error) {
                 console.log(error);
             }

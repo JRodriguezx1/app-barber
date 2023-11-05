@@ -33,6 +33,7 @@ class factcontrolador{
             $facturacion = new facturacion($_POST);
             $facturacion->id_pagosxdia = $idpagosxdia;
             $facturacion->tipo = 0;  //tipo = 0 es para indicar que es una cita ordinaria o casual
+            if(!$facturacion->valordcto)$facturacion->valordcto = 0;
             $r = $facturacion->crear_guardar(); //me guarda registro en tabla facturacion
             if($r[0]){
                 //validar cuantos servicios van de este dia//
@@ -132,6 +133,7 @@ class factcontrolador{
         if($fechadepago==$fechaactual){
             $cita = citas::find('id', $factura->idcita);
             $cita->estado = "Pendiente";
+            if(!$cita->tipocita)$cita->valorcita = null;
             $a = $cita->actualizar();
             $r = $factura->eliminar_registro();
         }else{

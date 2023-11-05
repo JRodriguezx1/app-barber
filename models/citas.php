@@ -4,7 +4,7 @@ namespace Model;
 
 class citas extends ActiveRecord {
     protected static $tabla = 'citas';
-    protected static $columnasDB = ['id', 'id_usuario', 'id_empserv', 'fecha_inicio', 'fecha_fin', 'hora', 'hora_fin', 'estado', 'duracion', 'valorcita', 'dcto', 'dctovalor', 'nameservicio', 'nameprofesional', 'nombrecliente', 'descripcion'];
+    protected static $columnasDB = ['id', 'id_usuario', 'id_empserv', 'fecha_inicio', 'fecha_fin', 'hora', 'hora_fin', 'estado', 'duracion', 'tipocita', 'valorcita', 'dcto', 'dctovalor', 'nameservicio', 'nameprofesional', 'nombrecliente', 'descripcion'];
     
     public function __construct($args = [])
     {
@@ -17,6 +17,7 @@ class citas extends ActiveRecord {
         $this->hora_fin = $args['hora_fin'] ?? '';
         $this->estado = $args['estado'] ?? 'Pendiente';
         $this->duracion = $args['duracion'] ?? '';
+        $this->tipocita = $args['tipocita'] ?? '';
         $this->valorcita = $args['valorcita'] ?? '';
         $this->dcto = $args['dcto'] ?? '0';
         $this->dctovalor = $args['dctovalor'] ?? '0';

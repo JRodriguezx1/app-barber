@@ -1,6 +1,6 @@
 (function(){
     if(document.querySelector('.facturacion')){
-        let servicios, emplserv;
+        let servicios, emplserv, valorapagar;
         (async ()=>{
             try {
                 const url = "/admin/api/getservices"; //llamado a la API REST
@@ -44,7 +44,7 @@
                 html: `<form class="formulario modalform" action="/admin/facturacion" method="POST">
                             <input type="hidden" name="total" value="" >
                             <input type="hidden" name="dcto" value="0">
-                            <input type="hidden" name="valordcto" value="0">
+                            <input type="hidden" name="valor_servicio" value="0">
 
                             <div class="formulario__campo">
                                 <label class="formulario__label" for="servicios">Servicios:</label>
@@ -61,8 +61,16 @@
                             </div>
 
                             <div class="formulario__campo">
-                                <label class="formulario__label" for="valor_servicio">Total a pagar:</label>
-                                <input class="formulario__input" type="number" id="valor_servicio" name="valor_servicio" value="" readonly required>
+                                <label class="formulario__label" for="valorapagar">Valor a pagar:</label>
+                                <div class="formulario__dato">
+                                    <input class="formulario__input" type="number" id="valorapagar" name="valorapagar" value="" readonly required>
+                                    <button id="btndesc" type="button"> <i class="fa-solid fa-plus"> </i>  Desc </button>
+                                </div>
+                            </div>
+
+                            <div class="formulario__campo campo-descuentomanual" style="display: none">
+                                <label class="formulario__label" for="valordcto">Descuento manual: </label>
+                                <input class="formulario__input" min="0" type="text" id="valordcto" name="valordcto" value="" oninput="this.value = this.value.replace(/[^0-9]/g, '0').padStart(1, '0');">
                             </div>
 
                             <div class="formulario__campo">
@@ -75,7 +83,7 @@
                             <div class="formulario__campo-2r">
                                 <div class="formulario__campo">
                                     <label class="formulario__label" for="recibido">Recibido:</label>
-                                    <input class="formulario__input" type="number" id="recibido" name="recibido" value="" required>
+                                    <input class="formulario__input" type="number" id="recibido" name="recibido" value="0">
                                 </div>
                                 <div class="formulario__campo">
                                     <label class="formulario__label" for="devolucion">Devolucion:</label>
@@ -112,6 +120,11 @@
             });
             document.querySelector('#recibido').addEventListener('input', calculo);
             cargarservicios();
+
+            document.querySelector('#btndesc').addEventListener('click', ()=>{
+                document.querySelector('.campo-descuentomanual').style = "display: block";
+                mostrarcampodesc();
+            });
         }
 
         ///////////////////////////traer los medios de pago /////////////////////////
@@ -149,6 +162,7 @@
             selectservice.addEventListener('change', e=>{
                 cargarempleado(e.target.value);
                 cargarvalorservicio(e);
+                document.querySelector('input[name=valordcto]').value = ''; //para dcto manual
             });
         }
 
@@ -172,28 +186,47 @@
         }
 
         function cargarvalorservicio(e){
-            const valor_servicio = document.querySelector('#valor_servicio');
             const valorservice = servicios.filter(element =>element.id == e.target.value);
-            valor_servicio.value = valorservice[0].precio;
-            if(!valorservice[0].precio)document.querySelector('#valor_servicio').readOnly = false;
-            document.querySelector('#recibido').value = '';
-            document.querySelector('#devolucion').value = '';
+            document.querySelector('#valorapagar').value = valorservice[0].precio;
+            valorapagar = valorservice[0].precio;
+            if(!valorservice[0].precio){ //si el servicio no tiene valor se habilita el campo valor_servicio para escribir
+                document.querySelector('#valorapagar').readOnly = false;
+                valorapagar = NaN;
+                document.querySelector('#valorapagar').addEventListener('input', (e)=>{
+                    document.querySelector('input[name=valor_servicio]').value = e.target.value;  //este se envia a BD
+                    document.querySelector('input[name=valordcto]').value = 0;
+                    valorapagar = e.target.value;
+                    calculo();
+                });
+            }else{
+                document.querySelector('#valorapagar').readOnly = true;
+                document.querySelector('input[name=valor_servicio]').value = valorservice[0].precio;  //este se envia BD
+                calculo();
+            }
+            document.querySelector('#recibido').value = 0;
+            document.querySelector('#devolucion').value = 0;
+        }
+
+        function mostrarcampodesc(){
+            const valordcto = document.querySelector('#valordcto');  //descuento manual
+            valordcto.addEventListener('input', (e)=>{  
+                console.log(valorapagar);
+                console.log(valorapagar - parseInt(e.target.value));
+                document.querySelector('#valorapagar').value = valorapagar - parseInt(e.target.value);
+                calculo();
+            });
         }
 
         function calculo(){
-            const valordcto = document.querySelector('input[name=valordcto]'); //para dcto manual
-            const valorservicio = parseInt(document.querySelector('#valor_servicio').value);
+            const valorservicio = parseInt(document.querySelector('#valorapagar').value);
             const devolucion = document.querySelector('#devolucion');
             const recibido = parseInt(document.querySelector('#recibido').value); 
                 if(recibido>=valorservicio){
                    devolucion.value = recibido-valorservicio;
-                   valordcto.value = 0;
-                   //devolucion.style.color = "rgb(240, 101, 72)"; 
                 }else{
                     devolucion.value = 0;
-                    valordcto.value = valorservicio - recibido; //descuento manual
                 }
-                document.querySelector('input[name=total]').value = recibido - parseInt(devolucion.value);
+                document.querySelector('input[name=total]').value = valorservicio;
         }
 
         function borrarhtml(elemento){

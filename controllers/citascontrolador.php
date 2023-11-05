@@ -197,7 +197,7 @@ class citascontrolador{
             $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
             
             $cita->valorcita = $_POST['valorpersonalizado'];  //valida si es valor del servicio fijo o personalizado
-            if($cita->valorcita==='')$cita->valorcita = $valorcita;
+            if($cita->valorcita==='')$cita->valorcita = $valorcita; //el valor es fijo ya que campo valorpersonalizado no se envia
 
             if($fidelizacion){
                 $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
@@ -344,7 +344,7 @@ class citascontrolador{
         $profesionales = empleados::all();
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){
             $cita = citas::find('id', $_POST['id']);  // $_POST['id'] viene de finalizcita.js
-            if(!$cita->valorcita)$cita->valorcita =$_POST['inputcostoservice'];
+            if(!$cita->valorcita)$cita->valorcita =$_POST['valorapagar'];
             
             $cita->estado = 'Finalizada';
             $cita->fecha_fin = date('Y-m-d');  //si la cita fue programada para un dia determinado y se realiza antes, la fecha de la cita se corre para el dia en que se paga o realiza
@@ -355,6 +355,7 @@ class citascontrolador{
                 $facturacion->idcita = $_POST['id'];
                 $facturacion->id_pagosxdia = $idpagosxdia;
                 $facturacion->tipo = 1;  //tipo = 1 es para indicar que es una cita programada
+                if(!$facturacion->valordcto)$facturacion->valordcto = 0;
                 $r3 = $facturacion->crear_guardar(); //me guarda registro en tabla facturacion
                 if($r3[0]){
                     //validar cuantos servicios van de este dia//

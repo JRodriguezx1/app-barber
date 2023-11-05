@@ -199,6 +199,7 @@
                 html: `<form id="formcreareditarcita" class="formulario modalform" action="${action}" method="POST">
                             <input type="hidden" id="id_empserv" name="id_empserv" value="" >
                             <input type="hidden" id="hora_fin" name="hora_fin" value="" >
+                            <input type="hidden" id="tipocita" name="tipocita" value="0" >
 
                             <div class="">
                                 ${usuario}
@@ -295,9 +296,11 @@
                     if(element.precio === null){
                         divcampovalor.style = 'display: flex';
                         document.querySelector('#valorpersonalizado').required = true;
+                        document.querySelector('#tipocita').value = 0;  // 0 = tipocita es personalizado sin valor fijo
                     }else{
                         divcampovalor.style = 'display: none';
                         document.querySelector('#valorpersonalizado').required = false;
+                        document.querySelector('#tipocita').value = 1; // 1 = tipocita es de valor fijo
                     }
                 }
             });

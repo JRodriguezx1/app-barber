@@ -85,7 +85,7 @@
                             <td class="" data-idempleado="<?php echo $cita->idempleado??'';?>"><?php echo $cita->nameprofesional??'';?></td>
                             <td class=""><?php echo $cita->fecha_fin; ?></td>         
                             <td class=""><?php echo $cita->hora_fin; ?></td>
-                            <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; //echo $cita->estado; ?></td>
+                            <td class="" data-tipocita="<?php echo $cita->tipocita; ?>"><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; ?></td>
                             <td class="accionestd"> <div class="acciones-iconos" data-promodcto="<?php echo $cita->dcto??'';?>" data-promodctovalor="<?php echo $cita->dctovalor??'';?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i><i class="detallepagocita fa-regular fa-note-sticky"></i></div></td>
                         </tr>  
                     <?php endforeach; ?>

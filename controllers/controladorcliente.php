@@ -63,13 +63,17 @@ class controladorcliente{
         $cita = new citas($_POST);
         $cita->id_usuario = $idusuario;
         $Ncitaspendient = citas::numreg_multicolum(['id_usuario'=>$cita->id_usuario, 'estado'=>'Pendiente']);
-        if($Ncitaspendient > 2){ $r[0] = false;
+        
+        if($Ncitaspendient > 2){ 
+            $r[0] = 'masde3citas';
         }else{
             $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
             $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
             $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
             $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
             $cita->valorcita = $valorcita;
+            $cita->tipocita = 1;
+            if(!$cita->valorcita)$cita->tipocita = 0;
             if($fidelizacion){
                 $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
                 $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
@@ -103,8 +107,8 @@ class controladorcliente{
                         //print($message->sid);
                         
 
-                    }else{ $r[0] = false; }
-                }else{ $r[0] = false; }
+                    }else{ $r[0] = 'error'; }
+                }else{ $r[0] = 'error'; }
             }
         }
         echo json_encode($r[0]);
@@ -134,7 +138,7 @@ class controladorcliente{
             //$wstext->send2textws();
 
             //enviar sms por twilio
-            $sid = 'AC81feeb3abcf6563f2a8f9b32904f8ae0';
+            /*$sid = 'AC81feeb3abcf6563f2a8f9b32904f8ae0';
             $token = '591ed3e8000d266c4aa9d2dbd0584336';
             $twilio = new Client($sid, $token);
 
@@ -143,7 +147,7 @@ class controladorcliente{
                     "from" => "+16183684812",
                     "body" => "Cita Nº:".$id." Cancelada por: ".$_SESSION['nombre'].", Servicio: ".$cita->nameservicio.", Fecha de la cita: ".$cita->fecha_fin." Hora de la cita: ".$cita->hora_fin
                     )
-            );
+            );*/
 
             echo json_encode($cita);
         }else{echo json_encode(false); }
