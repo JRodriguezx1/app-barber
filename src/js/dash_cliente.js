@@ -116,17 +116,20 @@
                 const tr = e.target.parentElement.parentElement.parentElement;
                 /*const fechacita = tr.children[2].textContent;
                 const horacita = tr.children[3].textContent;
-                const estado = tr.children[6].textContent;*/
+                const estado = tr.children[6].textContent;
 
                 //var fecha1 = new Date(fechacita+"T00:00:00-05:00");
-                /*let tiempocita = new Date(fechacita+"T"+horacita);
+                let tiempocita = new Date(fechacita+"T"+horacita);
                 let hoy = new Date();
-                console.log(tiempocita-hoy);*/
+                console.log(tiempocita-hoy);
 
-                //if(estado === "Pendiente"){
-                    //if((tiempocita-hoy)>=3600000)
+                if(estado === "Pendiente"){
+                    if((tiempocita-hoy)>=3600000){*/
                         cancelarcita(e.target.parentElement.dataset.id, tr);
-                //}  
+                    /*}else{
+                        
+                    }
+                }*/  
             });
         });
 

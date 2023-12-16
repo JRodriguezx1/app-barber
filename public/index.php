@@ -110,11 +110,15 @@ $router->get('/admin/api/getservices', [servicioscontrolador::class, 'getservice
 $router->post('/admin/api/eliminarservicio', [servicioscontrolador::class, 'eliminar']); //fetch en servicios.js
 $router->get('/admin/api/getAllemployee', [adminconfigcontrolador::class, 'getAllemployee']); //fetch en empleados.js
 $router->get('/admin/api/getmalla', [adminconfigcontrolador::class, 'getmalla']); //fetch en malla.js y en dash_cliente_assign.js
+$router->get('/admin/api/malla', [adminconfigcontrolador::class, 'malla']);
 $router->get('/admin/api/getfechadesc', [adminconfigcontrolador::class, 'getfechadesc']);  //fetch en fechadesc.js y en dash_cliente_assign.js
 $router->get('/admin/api/deletefechadesc', [adminconfigcontrolador::class, 'deletefechadesc']);  //metodo para eliminar fecha llamado desde fechadesc.js
 $router->get('/admin/api/getemployee_services', [citascontrolador::class, 'getemployee_services']); //metodo llamado desde dash_cliente.js
+$router->get('/admin/api/diasdelascitas', [citascontrolador::class, 'diasdelascitas']); 
 $router->post('/admin/api/enviarcita', [controladorcliente::class, 'enviarcita']);  // api llamada desde dash_cliente_assign.js
-$router->get('/admin/api/getcitas', [controladorcliente::class, 'getcitas']);  //llamado desde dash_liente_assign.js
+$router->get('/admin/api/getcitas', [controladorcliente::class, 'getcitas']);  //llamado desde dash_cliente_assign.js
+$router->get('/admin/api/getcitasallpending', [controladorcliente::class, 'getcitasallpending']);
+$router->get('/admin/api/getallcitas', [controladorcliente::class, 'getallcitas']);
 $router->get('/admin/api/cancelarcita', [controladorcliente::class, 'cancelarcita']); //elimina cita desde el dashboard del cliente en dash_cliente.js
 $router->get('/admin/api/allclientes', [clientescontrolador::class, 'allclientes']); // me trae todos los clientes o usuarios desde citas.js
 $router->get('/admin/api/alldays', [dashboardcontrolador::class, 'alldays']); // me trae todos los dias desde graficas.js

@@ -38,14 +38,14 @@
     }
     &__label{
         display: block;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         font-weight: 500;
-        color: rgba(v.$negro, 0.8);
+        color: rgba(v.$negro, 0.85);
     }
     &__input, &__select{
         outline: none;
-        font-size: 1.4rem;
-        padding: .8rem;
+        font-size: 1.2rem;
+        padding: .5rem;
         border: 1px solid darken(v.$grisclaro, 20);
         border-radius: .5rem;
         &--file{

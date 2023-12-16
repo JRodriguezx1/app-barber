@@ -58,7 +58,7 @@
         });
 
 
-        /////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////modal de crear y reprogramar citas///////////////////////////////////////////////
 
         let gettimeservice=0, horasdisponibles = [], horacitas = [];
         //const divhoras = document.querySelector('#horas'); //donde se poenen las horas
@@ -130,7 +130,8 @@
             try {
                 const url = "/admin/api/getcitas"; //llamado a la API REST para trer toda las citas desde la fecha actual hasta posterior
                 const respuesta = await fetch(url); 
-                citas = await respuesta.json(); //se trae las citas de hoy en el backend se trae hora y min ej: 08:00
+                citas = await respuesta.json(); //se trae las citas de hoy en el backend se trae hora y minutos ej: 08:00 por la consulta sql TIME_FORMAT(hora_fin, '%H:%i')
+                console.log(citas);
             } catch (error) {
                 console.log(error);
             }
@@ -214,15 +215,17 @@
                                     <textarea class="formulario__textarea" id="descripcion" name="descripcion" rows="4"></textarea>
                                 </div>
                                 ${campovalor}
+                                
+                                <div class="formulario__campo">
+                                    <label class="formulario__label" for="date">Seleccionar Fecha:</label>
+                                    <input class="formulario__input" id="date" name="fecha_fin" type="date" disabled required>
+                                </div>
+
                                 <div class="formulario__campo">
                                     <label class="formulario__label" for="professionals">Seleccione Profesional: </label>
                                     <select class="formulario__select" name="nameprofesional" id="professionals" required>
                                         <option value="" disabled selected> -Selecionar- </option>
                                     </select>
-                                </div>
-                                <div class="formulario__campo">
-                                    <label class="formulario__label" for="date">Seleccionar Fecha:</label>
-                                    <input class="formulario__input" id="date" name="fecha_fin" type="date" disabled required>
                                 </div>
                             </div>
                             
@@ -232,7 +235,11 @@
                             <input class="clientes-btn" type="submit" value="${submit}">
                        </form>`,
                 showCancelButton: true,
-                showConfirmButton: false,  
+                showConfirmButton: false,
+                didOpen: () => {
+                    $('#servicios').select2();
+                    $('#usuario').select2();
+                }   
             });
             //deshabilitarfechaanterior();
         }
@@ -330,7 +337,7 @@
             onlymalla = malla[`empleado_${idempleado}`]; //obtiene solo la malla de ese empleado
             onlyfechadesc = fechadesc.filter(element => idempleado === element.empleado_id);
             onlycitas = citas.filter(cita => (cita.idempleado === idempleado&&cita.fecha_fin === fecha&&cita.estado === "Pendiente")); //obtengo las citas deacuerdo al profesional y fecha seleccionada y pendiente
-            console.log(citas);
+            console.log(onlycitas);
             const r1 = onlyfechadesc.some(element => element.fecha === fecha);
             if(r1){
                     mensajedivhoras("Este dia no esta disponible!");
@@ -365,8 +372,7 @@
                 element = element.substring(0,2)+':'+element.substring(2,4);
                 return element;
             });
-            //obtengo las horas formato 24 de la bd segun fecha y profesional
-            //horacitas = onlycitas.map(element =>  element.hora_fin.slice(3));
+            //obtengo las horas de las citas en formato 24 de la bd segun fecha y profesional
             horacitas = onlycitas.map(element =>  element.hora_fin);
 
             for(let i = 0; i<horario1.length-1; i++){
@@ -384,9 +390,11 @@
 
         function calcularhorarios(horaInicio, horaFin) {
             const horarioActual = new Date(`01/01/2000 ${horaInicio}`);
-            const horarioFinal = new Date(`01/01/2000 ${horaFin}`);
-            horarioFinal.setTime(horarioFinal.getTime() - Math.floor(gettimeservice)*60000); //evitar que se programe citas mas alla de las horas de salida
-          
+            const horarioFinal = new Date(`01/01/2000 ${horaFin}`);               //1 minuto 60segundos
+            //horarioFinal.setTime(horarioFinal.getTime() - Math.floor(gettimeservice)*60000); //evitar que se programe citas mas alla de las horas de salida
+            
+            horarioFinal.setTime(horarioFinal.getTime() - ((gettimeservice*80)/100)*60000);
+
             while (horarioActual <= horarioFinal) {
               const hora = horarioActual.getHours().toString().padStart(2, '0');
               const minutos = horarioActual.getMinutes().toString().padStart(2, '0');
@@ -403,9 +411,11 @@
                   //aumentar en uno al arreglo de horacitas
                   //valido arribo si es si, vuelvo y repito esto
                   
-                
+                  const timepohora = new Date("2000-01-01T" + `${hora}:${minutos}`);
+                  // Obtener la hora en formato de 12 horas
+                  const hora12 = timepohora.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 
-              horasdisponibles = [...horasdisponibles, `${hora}:${minutos}`];
+              horasdisponibles = [...horasdisponibles, {horaformat12: hora12, horaformat24: `${hora}:${minutos}`}];
               }
           
               horarioActual.setTime(horarioActual.getTime() + gettimeservice * 60000); // Agregar 30 minutos al horario actual, 60.000 milisegundos tiene un minuto
@@ -419,9 +429,9 @@
                 const divhora = document.createElement('DIV');
                 divhora.classList.add("cliente__hora");
                 const parrafohora = document.createElement('P');
-                parrafohora.textContent = hora;
+                parrafohora.textContent = hora.horaformat12;
                 //parrafohora.dataset.hora = hora.replace(':', '');
-                parrafohora.dataset.hora = hora;
+                parrafohora.dataset.hora24 = hora.horaformat24;
                 parrafohora.onclick = seleccionarhora;
                 parrafohora.classList.add("texthora");
                 divhora.appendChild(parrafohora);
@@ -435,7 +445,7 @@
                 deshabilthoraprevia.classList.remove('horaselect');
             e.target.parentElement.classList.add('horaselect'); //class agregada en dash-cliente/_cliente.scss
             //cargar el input type hidden name = hora_fin del formulario para el envio
-            document.querySelector('#hora_fin').value = e.target.textContent;
+            document.querySelector('#hora_fin').value = e.target.dataset.hora24;
         }
 
         //////////////////////////////reprogramar//////////////////////////////////

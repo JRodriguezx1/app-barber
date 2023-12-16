@@ -39,7 +39,7 @@
                                                     ?>">
                         <div class="detalle__registro">
                             <div class="detalle__servicio">
-                                <p class="fecha"><?php echo $cita->fecha_fin; ?></p>
+                                <p class="fecha"><?php echo $cita->start; ?></p>
                                 <p class="servicio"><?php echo $cita->servicio->nombre??''; ?></p>
                                 <p class="profesional"><?php echo $cita->empleado??''; ?></p>
                             </div>

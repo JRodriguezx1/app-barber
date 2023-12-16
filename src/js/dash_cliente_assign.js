@@ -26,7 +26,11 @@
                   //aumentar en uno al arreglo de horacitas
                   //valido arribo si es si, vuelvo y repito esto
 
-              horasdisponibles = [...horasdisponibles, `${hora}:${minutos}`];
+                  const timepohora = new Date("2000-01-01T" + `${hora}:${minutos}`);
+                  // Obtener la hora en formato de 12 horas
+                  const hora12 = timepohora.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+
+              horasdisponibles = [...horasdisponibles, {horaformat12: hora12, horaformat24: `${hora}:${minutos}`}];
               }
           
               horarioActual.setTime(horarioActual.getTime() + gettimeservice * 60000); // Agregar 30 minutos al horario actual, 60.000 milisegundos tiene un minuto
@@ -130,7 +134,7 @@
         function validarfechaydia(fecha, dia){
             //al seleccionar fecha ya se ha seleccionado el profesional, y el profesional me contiene su id y el id de la tabla empserv
             const idempleado = professionals.options[professionals.options.selectedIndex].value;
-            onlycitas = citas.filter(cita => (cita.idempleado === idempleado&&cita.fecha_fin === fecha&&cita.estado === "Pendiente")); //obtengo las citas deacuerdo al profesional y fecha seleccionada y pendiente
+            onlycitas = citas.filter(cita => (cita.idempleado === idempleado&&cita.start === fecha&&cita.estado === "Pendiente")); //obtengo las citas deacuerdo al profesional y fecha seleccionada y pendiente
             
             const r1 = onlyfechadesc.some(element => element.fecha === fecha);
             if(r1){
@@ -191,9 +195,9 @@
                 const divhora = document.createElement('DIV');
                 divhora.classList.add("cliente__hora");
                 const parrafohora = document.createElement('P');
-                parrafohora.textContent = hora;
+                parrafohora.textContent = hora.horaformat12;
                 //parrafohora.dataset.hora = hora.replace(':', '');
-                parrafohora.dataset.hora = hora;
+                parrafohora.dataset.hora24 = hora.horaformat24;
                 parrafohora.onclick = reservarcita;
                 parrafohora.classList.add("texthora");
                 divhora.appendChild(parrafohora);
@@ -214,7 +218,7 @@
                 
             }).then((result) => {
                 if (result.isConfirmed) {
-                    enviarcita(e.target.dataset.hora).then((r) => {
+                    enviarcita(e.target.dataset.hora24).then((r) => {
                         if(r===true){
                             Swal.fire('Cita Programada', '', 'success')
                             setTimeout(() => {
@@ -239,9 +243,9 @@
 
             datos.append('telcliente', telcliente);
             datos.append('id_empserv', id_empserv.dataset.id);
-            //datos.append('fecha_inicio', hoy.toLocaleDateString().replace(/\//g, '-')); //fecha actual
-            datos.append('fecha_inicio', hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate()); //fecha actual de toma de servicio
-            datos.append('fecha_fin', select_date.value);
+            //datos.append('fecha_tomada', hoy.toLocaleDateString().replace(/\//g, '-')); //fecha actual
+            datos.append('fecha_tomada', hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate()); //fecha actual de toma de servicio
+            datos.append('start', select_date.value);
             datos.append('hora', hoy.toLocaleTimeString([], {hour12: false})); //hora actual de toma de servicio
             datos.append('hora_fin', horacita);
             datos.append('idservicio', id_servicio);

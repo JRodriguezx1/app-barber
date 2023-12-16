@@ -16,6 +16,11 @@ body {
 a {
     text-decoration: none;
 }
+ul {
+    padding:0;
+    list-style: none;
+    margin: 0;
+}
 li {
     list-style: none;
 }
@@ -32,4 +37,13 @@ img {
     width: 95%;
     max-width: 60rem;
     margin: 0 auto;
+}
+.text-center{
+    text-align: center;
+}
+.text-right{
+    text-align: right;
+}
+.text-left{
+    text-align: left;
 }

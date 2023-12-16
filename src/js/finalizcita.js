@@ -186,7 +186,7 @@
             const servicio = tr.children[2].textContent;
             valueservice = tr.children[2].dataset.precio;
             const tipocita = tr.children[6].dataset.tipocita;
-            if(!tipocita) document.querySelector('#valorapagar').readOnly = false; //deshabilita el input del valor del servicio si es personalizado el servicio
+            if(!parseInt(tipocita)) document.querySelector('#valorapagar').readOnly = false; //deshabilita el input del valor del servicio si es personalizado el servicio
 
             document.querySelector('input[name=id]').value = idcita;  //id de la cita
             document.querySelector('input[name=valor_servicio]').value = valueservice;

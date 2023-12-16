@@ -31,6 +31,11 @@
         @content;
     }
 }
+@mixin tabletl {
+    @media (min-width: v.$tabletl){
+        @content;
+    }
+}
 @mixin tabletm {
     @media (min-width: v.$tabletm) {
         @content;

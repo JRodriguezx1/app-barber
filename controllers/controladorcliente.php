@@ -40,7 +40,7 @@ class controladorcliente{
         }
 
         //$citas = citas::idregistros('id_usuario', $_SESSION['id']);
-        $citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario = {$_SESSION['id']} AND estado = 'Pendiente' ORDER BY fecha_fin ASC;");
+        $citas = citas::inner_join("SELECT *FROM citas WHERE id_usuario = {$_SESSION['id']} AND estado = 'Pendiente' ORDER BY 'start' ASC;");
         foreach($citas as $cita){
            /* if($cita->id_empserv){
                 $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
@@ -85,12 +85,12 @@ class controladorcliente{
             if(empty($alertas)){
                 $ws = negocio::uncampo('id', 1, 'ws'); //ws del negocio o encargado para recibir los msj de ws
                 //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
-                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
+                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'start'=>$cita->start, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
                 if(empty($citaunica)){
                     $r = $cita->crear_guardar();
                     if($r[0]){
                         //////////////////enviar msj por whatsapp cloud api////////////
-                        //$wstext = new ws_cloud_api($ws, $r[1], $_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['fecha_fin'], $_POST['hora_fin']);
+                        //$wstext = new ws_cloud_api($ws, $r[1], $_SESSION['nombre'], $_POST['telcliente'], $profesional, $servicio, $_POST['start'], $_POST['hora_fin']);
                         //$wstext->send1textws();
 
                         ////////////// enviar sms con twilio////////////
@@ -101,7 +101,7 @@ class controladorcliente{
                         $message = $twilio->messages->create("+573022016786", // to
                             array(
                             "from" => "+16183684812",
-                            "body" => "Cita Nº:".$r[1]." reservada por: ".$_SESSION['nombre'].", Telefono cliente: ".$_POST['telcliente'].", Profesional: ".$profesional.", Servicio: ".$servicio.", Fecha de la cita: ".$_POST['fecha_fin']." Hora de la cita: ".$_POST['hora_fin']
+                            "body" => "Cita Nº:".$r[1]." reservada por: ".$_SESSION['nombre'].", Telefono cliente: ".$_POST['telcliente'].", Profesional: ".$profesional.", Servicio: ".$servicio.", Fecha de la cita: ".$_POST['start']." Hora de la cita: ".$_POST['hora_fin']
                             )
                         );*/
                         //print($message->sid);
@@ -115,14 +115,28 @@ class controladorcliente{
     }
 
     public static function getcitas(){  //api llamado desde dash_cliente_assign.js
-        $alertas = [];
         date_default_timezone_set('America/Bogota');
-        //$citas = citas::inner_join('SELECT * FROM citas WHERE fecha_fin >= CURDATE();');
-        $citas = citas::inner_join("SELECT id, id_usuario, id_empserv, fecha_inicio, fecha_fin, hora, TIME_FORMAT(hora_fin, '%H:%i') as hora_fin, estado, duracion, valorcita, dcto, dctovalor, nameservicio, nameprofesional FROM citas WHERE fecha_fin >= CURDATE();");
+        //$citas = citas::inner_join('SELECT * FROM citas WHERE start >= CURDATE();');
+        $citas = citas::inner_join("SELECT id, id_usuario, id_empserv, fecha_tomada, `start`, hora, TIME_FORMAT(hora_fin, '%H:%i') as hora_fin, estado, duracion, valorcita, dcto, dctovalor, nameservicio, nameprofesional FROM citas WHERE start >= CURDATE();");
         foreach($citas as $cita){
             if($cita->id_empserv)$cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
         }
-        echo json_encode($citas);
+        echo json_encode($citas);  //trae toda las citas desde la fecha actual hasta posterior
+    }
+
+    public static function getcitasallpending(){  //api llamado desde dash_cliente_assign.js
+        $citas = citas::idregistros('estado', 'Pendiente');
+        echo json_encode($citas); //trae todas las citas en estado pendiente
+    }
+
+    public static function getallcitas(){
+        $citas = citas::all();
+        foreach($citas as $cita)
+            if($cita->id_empserv){
+                $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
+                $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
+            }
+        echo json_encode($citas); //trae todas las citas
     }
 
     public static function cancelarcita(){
@@ -134,7 +148,7 @@ class controladorcliente{
         $cita->estado = "Cancelado";
         $r = $cita->actualizar();
         if($r){
-            //$wstext = new ws_cloud_api($ws, $id, $_SESSION['nombre'], 0, '', $cita->nameservicio, $cita->fecha_fin, $cita->hora_fin);
+            //$wstext = new ws_cloud_api($ws, $id, $_SESSION['nombre'], 0, '', $cita->nameservicio, $cita->start, $cita->hora_fin);
             //$wstext->send2textws();
 
             //enviar sms por twilio
@@ -145,7 +159,7 @@ class controladorcliente{
             $message = $twilio->messages->create("+573022016786", // to
                 array(
                     "from" => "+16183684812",
-                    "body" => "Cita Nº:".$id." Cancelada por: ".$_SESSION['nombre'].", Servicio: ".$cita->nameservicio.", Fecha de la cita: ".$cita->fecha_fin." Hora de la cita: ".$cita->hora_fin
+                    "body" => "Cita Nº:".$id." Cancelada por: ".$_SESSION['nombre'].", Servicio: ".$cita->nameservicio.", Fecha de la cita: ".$cita->start." Hora de la cita: ".$cita->hora_fin
                     )
             );*/
 

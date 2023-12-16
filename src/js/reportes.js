@@ -16,6 +16,6 @@
               dialogo.close();
               document.removeEventListener("click", cerrarDialogoExterno);
             }
-          }
+        }
     }
 })();

@@ -116,7 +116,10 @@
                             <input class="clientes-btn" type="submit" value="Pagar">
                        </form>`,
                 showCancelButton: false,
-                showConfirmButton: false,  
+                showConfirmButton: false, 
+                didOpen: () => {
+                    $('#selectservice').select2();
+                } 
             });
             document.querySelector('#recibido').addEventListener('input', calculo);
             cargarservicios();

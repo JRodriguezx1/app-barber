@@ -5,6 +5,14 @@
     @include m.btn(v.$grisblack, v.$blanco);
     width: auto;
 }
+.btnsmallazul{
+    @include m.btn(v.$azul, v.$blanco);
+    width: auto;
+}
+.btnsmallazulturquia{
+    @include m.btn(v.$secundario, v.$blanco);
+    width: auto;
+}
 .btnsmallred{
     @include m.btn(v.$barprogress, v.$blanco);
     width: auto;

@@ -1,10 +1,11 @@
 <div id="dashboardcitas" class="citas">
     <div class="citas__contenedor">
         <?php require_once __DIR__ .'/../../templates/alertas.php'; ?>
+        <!--
         <div class="citas__acciones">
             <div class="citas__crear">
                 <a id="crearcita" class="btnsmall" href=""> + Crear</a>
-                <a id="crearcitanoreg" class="btnsmallred" href=""> No registrao</a>
+                <a id="crearcitanoreg" class="btnsmallred" href=""> No registrado</a>
             </div>
             <div class="citas__filtros">
                 <?php if($user['admin']>1): ?>
@@ -24,12 +25,6 @@
                 </div>
                 <?php endif; ?>
                 <div class="citas__busqueda">
-                    <!--<select class="formulario__select" name="filtro" id="selectprofesional" required>
-                            <option value="" disabled selected>-- Seleccione --</option>
-                            <option value="0" > Cedula </option>
-                            <option value="1" > Nombre </option>
-                            <option value="2" > Estado </option>
-                        </select>-->
                     <form action="/admin/citas/consultaxestadoxname" method="POST">
                         <div class="btn_busqueda">
                             <input class="formulario__input" type="text" name="consulta" placeholder="buscar por estado" required value="<?php echo $estado ?? ''; ?>">
@@ -52,7 +47,7 @@
                     <input class="formulario__input" id="fecha" type="date" name="fecha" value="<?php echo $fecha??'';?>">
                 </div> 
             </div>
-        </div>
+        </div>-->
 
         <div class="citas__tabla">
             <table class="tabla">
@@ -84,7 +79,7 @@
                             <td class="" data-precio="<?php echo $cita->valorcita??''; ?>"><?php echo $cita->nameservicio??''; ?></td>
                             <td class="" data-idempleado="<?php echo $cita->idempleado??'';?>"><?php echo $cita->nameprofesional??'';?></td>
                             <td class=""><?php echo $cita->fecha_fin; ?></td>         
-                            <td class=""><?php echo $cita->hora_fin; ?></td>
+                            <td class=""><?php echo date("h:i A", strtotime($cita->hora_fin)); ?></td>
                             <td class="" data-tipocita="<?php echo $cita->tipocita; ?>"><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; ?></td>
                             <td class="accionestd"> <div class="acciones-iconos" data-promodcto="<?php echo $cita->dcto??'';?>" data-promodctovalor="<?php echo $cita->dctovalor??'';?>"> <i class="finalizado fa-solid fa-check"></i><i class="programar fa-solid fa-tablet-screen-button"></i><i class="cancelado fa-solid fa-x"></i><i class="detallepagocita fa-regular fa-note-sticky"></i></div></td>
                         </tr>  
@@ -92,6 +87,66 @@
                 </tbody>
             </table>
         </div>
-        <?php echo $paginacion; ?>
+        <?php //echo $paginacion; ?>
+
+        <div class="citas__controls">
+            <div class="citas__btnscrearcitas">
+                <a id="crearcita" class="btncrearcita btnsmallazul" href=""> + Crear</a>
+                <a id="crearcitanoreg" class="btncrearcita btnsmallazulturquia" href=""> No registrado</a>
+            </div>
+            <div class="citas__ctrlsfiltros">
+                <div class="campos">
+                    <label for="todas">Todas</label>
+                    <input type="radio" id="todas" name="filtro" value="Todas">
+                </div>
+                <div class="campos">
+                    <label for="finalizadas">Finalizadas</label>
+                    <input type="radio" id="finalizadas" name="filtro" value="Finalizada">
+                </div>
+                <div class="campos">
+                    <label for="pendientes">Pendientes</label>
+                    <input type="radio" id="pendientes" name="filtro" value="Pendiente" checked>
+                </div>
+            </div>
+        </div>
+
+        <div class="citas__contenido">
+            <div class="calendario"><div class="calendar"  id="calendar"></div></div>
+            <div class="citas__contenidoul">
+
+                <?php include __DIR__.'/modaldialog.php'; ?>
+
+                <?php
+                    date_default_timezone_set('America/Bogota');
+                    $fechaactual = new DateTime(date('Y-m-d'));
+                    $mes = new IntlDateFormatter('es_ES', IntlDateFormatter::NONE, IntlDateFormatter::NONE, null, null, 'MMMM');
+                    $diasemana = new IntlDateFormatter('es_ES', IntlDateFormatter::NONE, IntlDateFormatter::NONE, null, null, 'EEEE');
+                 ?>
+                <div class="fechaformateada" data-fecha="<?php echo date('Y-m-d');?>">
+                    <p class="diasemana"><?php echo $diasemana->format($fechaactual); ?></p>
+                    <p class="dia"><?php echo $fechaactual->format('d');?></p>
+                    <p class="mesaño"><?php echo $mes->format($fechaactual).' '.$fechaactual->format('Y');?></p>
+                </div>
+                <ul class="citas__lista">
+                    <?php foreach($citas as $cita):  ?>
+                    <li class="listacita">
+                        <div class="listacita-content">
+                            <div class="col1">
+                                <p class="nombrecliente"><?php echo $cita->nombrecliente??'';?></p>
+                                <p class="fecha"><?php echo $cita->start; ?></p>
+                                <p class="servicio"><?php echo $cita->nameservicio??'';?></p>
+                            </div>
+                            <div class="col2">
+                                <p class="estadocita citapendiente"><?php echo $cita->estado??''; ?></p>
+                                <p class="hora"><?php echo date("h:i A", strtotime($cita->hora_fin)); ?></p>
+                                <i data-id="<?php echo $cita->id;?>" id="reprogramar" class="fa-solid fa-clock"></i>
+                            </div>
+                        </div>
+                    </li>
+                    <?php endforeach; ?> 
+                </ul>
+            </div>
+            
+        </div>
     </div> <!-- fin contenedor -->
 </div>

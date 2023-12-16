@@ -119,8 +119,8 @@
                                     ?>">               
                             <td class=""><?php echo $cita->nameservicio??''; ?></td>
                             <td class=""><?php echo $cita->nameprofesional??''; ?></td> 
-                            <td class=""><?php echo $cita->fecha_fin; ?></td>         
-                            <td class=""><?php echo substr($cita->hora_fin, 0, 5); ?></td>
+                            <td class=""><?php echo $cita->start; ?></td>         
+                            <td class=""><?php echo date("h:i A", strtotime($cita->hora_fin)); ?></td>
                             <td class=""><?php echo $cita->id; ?></td> 
                             <td class="">$<?php echo $cita->valorcita; ?></td>
                             <td class=""><?php echo $cita->id_empserv==null&&$cita->estado=='Pendiente'?'Out':$cita->estado; ?></td>

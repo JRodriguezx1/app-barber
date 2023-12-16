@@ -265,6 +265,11 @@ class adminconfigcontrolador{
     }
 
 
+    public static function malla(){ //api llamada desde malla.js entrega todos los turnos de todos los empleados
+        $malla = malla::all();
+        echo json_encode($malla);
+    }
+
     public static function fechadesc(Router $router){
         session_start();
         $alertas = []; $trabajador = '';

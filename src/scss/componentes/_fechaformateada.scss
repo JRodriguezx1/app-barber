@@ -1,0 +1,24 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.fechaformateada{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: v.$grisraton;
+  .diasemana{
+    margin: 0 1rem 0 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  .dia{
+    margin: 0 1rem 0 0;
+    font-size: 4rem;
+    font-weight: 700;
+  }
+  .mesaño{
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+}

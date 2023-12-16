@@ -110,46 +110,7 @@
             margin-bottom: 1rem;
         }
     }
-    &__campohoras{
-        @include m.grid(2, 2rem);
-        @include m.tablet{
-            @include m.grid(3, 2rem);
-        }
-        @include m.xl_tablet{
-            @include m.grid(4, 2rem);
-        }
-        //border: 1px solid v.$grisclaro;
-        padding: 1rem;
-        &.dianodisponible-js{
-            display: block;
-        }
-    }
-    &__hora{
-        //border: 1px solid v.$grisclaro;
-        border-radius: 1rem;
-        background-color: v.$griswhite;
-        .texthora{
-            color: v.$grisoscuro;
-            text-align: center;
-            font-size: 1.5rem;
-            margin: 0;
-            padding: .8rem 0;
-        }
-        &:hover{
-            background-color: v.$azul;
-            //border: 1px solid v.$azul;
-            cursor: pointer;
-            .texthora{
-                color: v.$blanco;
-            }
-        }
-        &.horaselect{ // class agregada en citas.js
-            background-color: v.$azul;
-            .texthora{
-                color: v.$blanco;
-            }
-        }
-    }
+    
 
     .pagina1{
         display: none;

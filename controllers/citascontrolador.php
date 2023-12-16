@@ -55,36 +55,34 @@ class citascontrolador{
             } 
         }
         
-        $pagina_actual = $_GET['pagina'];
+        /*$pagina_actual = $_GET['pagina'];
         $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
-        if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');
+        if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');*/
        
-        $registros_por_pagina = 10;
+        //$registros_por_pagina = 10;
         if($_SESSION['admin']>1){
             $registros_total = citas::numregistros(); //para usuario admin
         }else{ $registros_total = citas::numreg_multiwhere('id_empserv', $ids_empserv); } //para usuario empleado
         
-        $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total, '/admin/citas');
-        if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
+        //$paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total, '/admin/citas');
+        //if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
         
         if($_SESSION['admin']>1){
-            $citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
+            //$citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
         }else{ //para cuenta empleado
-            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};"); //metodo = ->multipaginar()
+            //$citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};"); //metodo = ->multipaginar()
         }
 
+        $citas = citas::inner_join("SELECT *FROM citas WHERE estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
+
         foreach($citas as $cita){
-            $cita->usuario = usuarios::find('id', $cita->id_usuario);
-            $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
             if($cita->id_empserv){
                 $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
                 $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-                $cita->servicio = servicios::find('id', $cita->idservicio);
-                $cita->empleado = empleados::find('id', $cita->idempleado);
             }
         }
 
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'user'=>$_SESSION, 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, /*'paginacion'=>$paginacion->paginacion(),*/ 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 
@@ -107,14 +105,14 @@ class citascontrolador{
                 }
             }
         
-            /*$citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($ids) AND fecha_fin = '$fecha';");
+            /*$citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($ids) AND start = '$fecha';");
             $registros_por_pagina = 10;
             $registros_total = count($citas);
             $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total);
             if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');*/
 
-            //$citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($ids) AND fecha_fin = '$fecha'/* ORDER BY id ASC LIMIT 10 OFFSET {$paginacion->offset()}*/;");
-            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($ids) AND fecha_fin = '$fecha';");
+            //$citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($ids) AND start = '$fecha'/* ORDER BY id ASC LIMIT 10 OFFSET {$paginacion->offset()}*/;");
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($ids) AND 'start' = '$fecha';");
             foreach($citas as $cita){
                 $cita->usuario = usuarios::find('id', $cita->id_usuario);
                 $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
@@ -150,9 +148,9 @@ class citascontrolador{
 
         $fecha = $_GET['fecha'];
         if($_SESSION['admin']>1){
-            $citas = citas::idregistros('fecha_fin', $fecha);
+            $citas = citas::idregistros('start', $fecha);
         }else{
-            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) AND fecha_fin = '$fecha';");
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) AND 'start' = '$fecha';");
         }
 
         /*$registros_por_pagina = 10;
@@ -160,7 +158,7 @@ class citascontrolador{
         $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total);
         if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');*/
 
-        //$citas = citas::inner_join("SELECT *FROM citas WHERE fecha_fin = '$fecha' ORDER BY id ASC LIMIT 10 OFFSET {$paginacion->offset()};");
+        //$citas = citas::inner_join("SELECT *FROM citas WHERE start = '$fecha' ORDER BY id ASC LIMIT 10 OFFSET {$paginacion->offset()};");
         foreach($citas as $cita){
             $cita->usuario = usuarios::find('id', $cita->id_usuario);
             $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
@@ -174,7 +172,6 @@ class citascontrolador{
 
         
         $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'fecha'=>$fecha, 'user'=>$_SESSION, 'alertas'=>$alertas]);
-        //echo json_encode(123);
     }
 
     public static function crear(Router $router){
@@ -205,6 +202,7 @@ class citascontrolador{
             }
             $cita->nameservicio = $servicio;
             $cita->nameprofesional = $profesional;
+            $cita->id_empserv = empserv::whereArray(['idempleado'=>$_POST['nameprofesional'], 'idservicio'=>$_POST['idservicio']])[0]->id;
             if($cita->id_usuario == 2){  //para cliente no registrado
                 $cita->nombrecliente = $_POST['nombrecliente'];
             }else{ 
@@ -214,7 +212,7 @@ class citascontrolador{
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
                 //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
-                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
+                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'start'=>$cita->start, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
                 if(empty($citaunica)){
                     $r = $cita->crear_guardar();
                     if($r[0])$alertas['exito'][] = "Cita Creada";
@@ -222,35 +220,15 @@ class citascontrolador{
             }
         }
 
-        $pagina_actual = $_GET['pagina'];
-        $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
-        if(!$pagina_actual || $pagina_actual<1)header('Location: /admin/citas?pagina=1');
-       
-        $registros_por_pagina = 10;
-        if( $_SESSION['admin']>1){
-            $registros_total = citas::numregistros(); //para usuario admin
-        }else{ $registros_total = citas::numreg_multiwhere('id_empserv', $ids_empserv); }
-        
-        $paginacion = new paginacion($pagina_actual, $registros_por_pagina, $registros_total, '/admin/citas');
-        if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
-        
-        if($_SESSION['admin']>1){
-            $citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
-        }else{
-            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};");
-        }
+        $citas = citas::inner_join("SELECT *FROM citas WHERE estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
 
         foreach($citas as $cita){
-            $cita->usuario = usuarios::find('id', $cita->id_usuario);
-            $cita->usuario->dctogeneral = fidelizacion::find('id', $cita->usuario->idfidelizacion);
             if($cita->id_empserv){
                 $cita->idservicio = empserv::uncampo('id', $cita->id_empserv, 'idservicio');
                 $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
-                $cita->servicio = servicios::find('id', $cita->idservicio);
-                $cita->empleado = empleados::find('id', $cita->idempleado);
             }
         }
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>$paginacion->paginacion(), 'user'=>$_SESSION, 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, /*'paginacion'=>$paginacion->paginacion(),*/ 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
 
 /*
@@ -283,7 +261,7 @@ class citascontrolador{
             $alertas = $cita->validarcitas();
             if(empty($alertas)){
                 //validar que no se repita el mismo servicio con el mismo empleado con la misma fecha y hora
-                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'fecha_fin'=>$cita->fecha_fin, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
+                $citaunica = citas::whereArray(['id_empserv'=>$cita->id_empserv, 'start'=>$cita->start, 'hora_fin'=>$cita->hora_fin, 'estado'=>'Pendiente']);
                 if(empty($citaunica)){
                     $r = $cita->crear_guardar();
                     if($r[0])$alertas['exito'][] = "Cita Creada";
@@ -347,7 +325,7 @@ class citascontrolador{
             if(!$cita->valorcita)$cita->valorcita =$_POST['valorapagar'];
             
             $cita->estado = 'Finalizada';
-            $cita->fecha_fin = date('Y-m-d');  //si la cita fue programada para un dia determinado y se realiza antes, la fecha de la cita se corre para el dia en que se paga o realiza
+            $cita->start = date('Y-m-d');  //si la cita fue programada para un dia determinado y se realiza antes, la fecha de la cita se corre para el dia en que se paga o realiza
             
             $r2 = $cita->actualizar();
             if($r2){
@@ -460,6 +438,11 @@ class citascontrolador{
         }else{
             echo json_encode(NULL);
         }
+    }
+
+    public static function diasdelascitas(){
+        $dias = citas::inner_join("SELECT DISTINCT `start` FROM citas ORDER BY `start`;"); //solo me trae las fechas donde hay citas sin repetir fecha
+        echo json_encode($dias);
     }
 
 

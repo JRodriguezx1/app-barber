@@ -141,7 +141,8 @@
             });
         });
     }
-     
+    
+    console.log('hola desde servicio js');
     if(document.querySelector('.alerta')){  //se aplica de manera global
         setTimeout(() => {
             document.querySelector('.alerta').remove();

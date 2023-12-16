@@ -1,0 +1,22 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.calendario{
+    //max-width: 60rem;
+    //margin: 0 auto;
+    .fc-bg-event{
+      background-color: v.$secundario;  //color a los dias donde hay evenos o citas
+      opacity: .23;
+    }
+    @include m.tabletl{
+      width: 50%;
+      .calendar{
+        min-height: 50rem;
+        height: auto;
+      }
+    }
+
+    /*@include m.xl_tablet{
+        min-width: 50%;
+    }*/
+}

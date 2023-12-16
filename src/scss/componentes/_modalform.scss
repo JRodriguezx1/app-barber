@@ -16,16 +16,6 @@
         font-size: 1.4rem;
         font-weight: 600;
     }
-    #horacita{  //id en citas.js
-        display: inline-block;
-        color: v.$blanco;
-        text-align: center;
-        font-size: 1.4rem;
-        margin: 0;
-        background-color: v.$azul;
-        padding: .6rem .5rem;
-        border-radius: 1rem;
-    }
     .cliente__campohoras{
         padding: 0 0 1rem 0;
     }
@@ -60,3 +50,7 @@
         margin: 0 auto;
     }
 }
+
+.select2-dropdown {
+    z-index: 1061;
+  }

@@ -2,8 +2,6 @@
 @use 'base/mixins' as m;
 
 .citas{
-    background-color: v.$blanco;
-    padding: 1rem;
     &__contenedor{
         @include m.contenedor100;
     }
@@ -141,8 +139,179 @@
         }
     }
 
+    /////////////////////tabla citas///////////////////////
+
     &__tabla{
         overflow-x: scroll;
+        display: none;
+    }
+
+    //////////////////nuevas citas/////////////////////////
+    &__controls{
+        padding: 1rem;
+        background-color: v.$blanco;
+        margin-bottom: 1rem;
+        @include m.tablet{
+            display: flex;
+            justify-items: center;
+            justify-content: space-around;
+        }
+    }
+    &__btnscrearcitas{
+        text-align: center;
+        margin-bottom: 1rem;
+        @include m.tablet{
+            margin: 0;
+        }
+    }
+    &__ctrlsfiltros{
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            gap: 2rem;
+            @include m.tablet{
+                gap: 3rem;
+            }
+        .campos{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: .5rem;
+            @include m.tablet{
+                gap: .8rem;
+            }
+            label{
+                font-size: 1.2rem;
+            }
+            input[type="radio"]{
+            //    accent-color: v.$indigo;
+                width: 1.3rem;
+                height: 1.3rem;
+            }
+        }
+    }
+    &__contenido{
+        padding: 1rem;
+        background-color: v.$blanco;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        @include m.tabletl{
+            flex-direction: row;
+            //gap: 1rem;
+        }
+        
+    }
+
+    &__contenidoul{
+        flex: 1;
+    }
+    &__lista{  //ul
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        @include m.xl_desktop{
+            @include m.grid(2, 1rem);
+        }
+        .listacita{  //li
+            flex-grow: 1;
+            min-width: 27rem;
+            flex: 1;
+        }
+        .listacita-content{
+            border: 1px solid v.$grisclaro;
+            border-radius: 2rem;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            .col1{
+                color: v.$grisoscuro;
+                .servicio{
+                    background-color: v.$grisclaro;
+                    padding: .5rem 1rem;
+                    border-radius: 2rem;
+                    font-size: 1.2rem;
+                    font-weight: 500;
+                }
+            }
+            .col2{
+                text-align: center;
+                .estadocita{
+                    color: v.$blanco;
+                    padding: .5rem 1rem;
+                    border-radius: 2rem;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+                .citapendiente{
+                    background-color: v.$azul;
+                }
+                .citafinalizada{
+                    background-color: v.$azuloscuro;
+                }
+                .hora{
+                    color: v.$grisraton;
+                }
+                #reprogramar{
+                    font-size: 2rem;
+                    color: v.$secundario;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+            p{
+                margin: 0 0 .5rem;
+            }
+            
+        }
+
+    }
+    ////////////////////estilo a las horas de las citas de los modales///////////////////////
+    &__campohoras{
+        @include m.grid(2, 2rem);
+        @include m.tablet{
+            @include m.grid(3, 2rem);
+        }
+        @include m.xl_tablet{
+            @include m.grid(4, 2rem);
+        }
+        //border: 1px solid v.$grisclaro;
+        padding: 1rem;
+        &.dianodisponible-js{
+            display: block;
+        }
+    }
+    &__hora{
+        //border: 1px solid v.$grisclaro;
+        border-radius: 1rem;
+        background-color: v.$griswhite;
+        .texthora{
+            color: v.$grisoscuro;
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 0;
+            padding: .8rem 0;
+        }
+        &:hover{
+            background-color: v.$azul;
+            //border: 1px solid v.$azul;
+            cursor: pointer;
+            .texthora{
+                color: v.$blanco;
+            }
+        }
+        &.horaselect{ // class agregada en citas.js
+            background-color: v.$azul;
+            .texthora{
+                color: v.$blanco;
+            }
+        }
+        &.horaselected{
+            background-color: v.$iconos;
+            p{color: v.$blanco;}
+        }
     }
 }
 
@@ -168,4 +337,5 @@
         font-size: 1.4rem;
         text-align: left;
     }
+
 }
