@@ -88,7 +88,8 @@
             </table>
         </div>
         <?php //echo $paginacion; ?>
-
+        <input type="hidden" id="loginuser" value="<?php echo $idempleado; ?>">
+        <input type="hidden" id="roluser" value="<?php echo $user['admin']; ?>">
         <div class="citas__controls">
             <div class="citas__btnscrearcitas">
                 <a id="crearcita" class="btncrearcita btnsmallazul" href=""> + Crear</a>
@@ -137,7 +138,7 @@
                                 <p class="servicio"><?php echo $cita->nameservicio??'';?></p>
                             </div>
                             <div class="col2">
-                                <p class="estadocita citapendiente"><?php echo $cita->estado??''; ?></p>
+                                <p data-id="<?php echo $cita->id;?>" class="estadocita citapendiente"><?php echo $cita->estado??''; ?></p>
                                 <p class="hora"><?php echo date("h:i A", strtotime($cita->hora_fin)); ?></p>
                                 <i data-id="<?php echo $cita->id;?>" id="reprogramar" class="fa-solid fa-clock"></i>
                             </div>

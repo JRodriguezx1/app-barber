@@ -1,9 +1,9 @@
 <dialog class="midialog" id="miDialogo">
     <h4 class="dashboard__heading2">Crear cita</h4>
     <form id="formcrearcitas" class="formulario" action="/admin/citas/crear" method="POST">
-        <input type="hidden" id="id_empserv" name="id_empserv" value="" >
         <input type="hidden" id="hora_fin" name="hora_fin" value="" >
         <input type="hidden" id="tipocita" name="tipocita" value="0" >
+        <input type="hidden" id="id" name="id" value="" >
 
         <div class="">
             <div id="cliente1" class="formulario__campo">

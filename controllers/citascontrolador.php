@@ -29,28 +29,28 @@ class citascontrolador{
 
         if($_SERVER['REQUEST_METHOD'] === 'POST' ){ //cuando se actualiza/reprograma cita
             $id = $_POST['id'];
-            $citas = citas::find('id', $id);
-            $citas->compara_objetobd_post($_POST);  //validar el campo hora
+            $cita = citas::find('id', $id);
+            $cita->compara_objetobd_post($_POST);  //validar el campo hora
             
             $valorcita = servicios::uncampo('id', $_POST['idservicio'], 'precio');
             $servicio = servicios::uncampo('id', $_POST['idservicio'], 'nombre');
             $profesional = empleados::uncampo('id', $_POST['nameprofesional'], 'nombre').' '.empleados::uncampo('id', $_POST['nameprofesional'], 'apellido');
             $fidelizacion = fidelizacion::whereArray(['categoria'=>'servicios', 'product_serv'=>$_POST['idservicio'], 'estado'=>1]);
             
-            $citas->valorcita = $_POST['valorpersonalizado'];
-            if($citas->valorcita === '')$citas->valorcita = $valorcita;
-            $citas->dcto = 0;
-            $citas->dctovalor = 0;
+            $cita->valorcita = $_POST['valorpersonalizado'];
+            if($cita->valorcita === '')$cita->valorcita = $valorcita;
+            $cita->dcto = 0;
+            $cita->dctovalor = 0;
             if($fidelizacion){
-                $citas->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
-                $citas->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
+                $cita->dcto = $fidelizacion[0]->porcentaje;  //porcentaje del dcto
+                $cita->dctovalor = $fidelizacion[0]->valor;   //valor del dcto
             }
-            $citas->nameservicio = $servicio;
-            $citas->nameprofesional = $profesional;
-
-            $alertas = $citas->validarcitas();
+            $cita->nameservicio = $servicio;
+            $cita->nameprofesional = $profesional;
+            $cita->id_empserv = empserv::whereArray(['idempleado'=>$_POST['nameprofesional'], 'idservicio'=>$_POST['idservicio']])[0]->id;
+            $alertas = $cita->validarcitas();
             if(empty($alertas)){
-                $r = $citas->actualizar();
+                $r = $cita->actualizar();
                 if($r)$alertas['exito'][] = 'Cita Actualizada';
             } 
         }
@@ -68,12 +68,12 @@ class citascontrolador{
         //if($pagina_actual>$paginacion->total_paginas()&&$paginacion->total_paginas()!=0)header('Location: /admin/citas?pagina=1');
         
         if($_SESSION['admin']>1){
-            //$citas = citas::paginar($registros_por_pagina, $paginacion->offset()); //metodo paginar es de activerecord
+            $citas = citas::inner_join("SELECT *FROM citas WHERE estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
         }else{ //para cuenta empleado
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) AND estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
             //$citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) ORDER BY id DESC LIMIT $registros_por_pagina OFFSET {$paginacion->offset()};"); //metodo = ->multipaginar()
         }
 
-        $citas = citas::inner_join("SELECT *FROM citas WHERE estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
 
         foreach($citas as $cita){
             if($cita->id_empserv){
@@ -82,7 +82,7 @@ class citascontrolador{
             }
         }
 
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, /*'paginacion'=>$paginacion->paginacion(),*/ 'user'=>$_SESSION, 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, /*'paginacion'=>$paginacion->paginacion(),*/ 'user'=>$_SESSION, 'idempleado'=>$empleadoid??0, 'alertas'=>$alertas]);
     }
 
 
@@ -169,7 +169,6 @@ class citascontrolador{
                 $cita->empleado = empleados::find('id', $cita->idempleado);
             }
         }
-
         
         $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, 'paginacion'=>'', 'fecha'=>$fecha, 'user'=>$_SESSION, 'alertas'=>$alertas]);
     }
@@ -220,7 +219,11 @@ class citascontrolador{
             }
         }
 
-        $citas = citas::inner_join("SELECT *FROM citas WHERE estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
+        if($_SESSION['admin']>1){
+            $citas = citas::inner_join("SELECT *FROM citas WHERE estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
+        }else{ //para cuenta empleado
+            $citas = citas::inner_join("SELECT *FROM citas WHERE id_empserv IN($stridsempserv) AND estado = 'Pendiente' AND `start` = CURDATE() ORDER BY id ASC;");
+        }
 
         foreach($citas as $cita){
             if($cita->id_empserv){
@@ -228,7 +231,7 @@ class citascontrolador{
                 $cita->idempleado = empserv::uncampo('id', $cita->id_empserv, 'idempleado');
             }
         }
-        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, /*'paginacion'=>$paginacion->paginacion(),*/ 'user'=>$_SESSION, 'alertas'=>$alertas]);
+        $router->render('admin/citas/index', ['titulo'=>'Citas', 'citas'=>$citas, 'profesionales'=>$profesionales, /*'paginacion'=>$paginacion->paginacion(),*/ 'user'=>$_SESSION, 'idempleado'=>$empleadoid??0, 'alertas'=>$alertas]);
     }
 
 /*

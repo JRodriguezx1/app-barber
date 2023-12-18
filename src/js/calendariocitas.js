@@ -2,6 +2,10 @@
 
 (function(){
   if(document.querySelector('.calendario')){
+    const loginuser = document.querySelector('#loginuser').value; //obtiene el id del empleado, admin, o superior.
+    const roluser = document.querySelector('#roluser').value; //obtener el rol de usuario logueado 1 = empleado, >1 = admin, superior, soporte tec
+    document.querySelector('#loginuser').remove();
+    document.querySelector('#roluser').remove();
 
     const btnscrearcita = document.querySelectorAll('.btncrearcita');
     let totalcitas, citaspending, filtradas = [], usuarios, servicios, malla=[], emplserv, fechadesc, onlymalla;
@@ -29,6 +33,7 @@
         const url = "/admin/api/getallcitas"; //llamado a la API REST para traer todas las citas
         const respuesta = await fetch(url); 
         totalcitas = await respuesta.json(); 
+        if(roluser == 1)totalcitas = totalcitas.filter(cita => cita.idempleado == loginuser); //me trae las citas solo del empleado logueado
         console.log(totalcitas);
         citaspending = totalcitas.filter(cita => cita.estado == "Pendiente");
         rendercalendar();
@@ -57,7 +62,7 @@
     inputradio.addEventListener('input', (e)=>{filtrarcitas(e.target.value);});
   });
 
-  function filtrarcitas(filtro){ //filtro puede tomar un string 'Todas', 'Finalizada', 'Pendiente'..
+  function filtrarcitas(filtro){ //filtro es un string que puede tomar 'Todas', 'Finalizada', 'Pendiente'..
     filtradas = filtro=='Todas'?totalcitas:totalcitas.filter(elemento => elemento.estado == filtro);
     mostrarcitas(document.querySelector('.fechaformateada').dataset.fecha);
   }
@@ -97,6 +102,8 @@
       const estadocita = document.createElement('P');
       estadocita.classList.add('estadocita', cita.estado=='Pendiente'?'citapendiente':'citafinalizada');
       estadocita.textContent = cita.estado;
+      estadocita.dataset.id = cita.id;
+      estadocita.onclick = cambiarestado;
       const hora = document.createElement('P');
       hora.classList.add('hora');
       const citahora12 = new Date("2000-01-01T" + cita.hora_fin).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
@@ -128,15 +135,15 @@
     if(e.target.id==="crearcita"){
       document.querySelector('#cliente1').classList.remove('ocultar');
       document.querySelector('#cliente2').classList.add('ocultar');
-      document.querySelector('#nombrecliente').removeAttribute("required");
-      document.querySelector('#usuario').required = true;
+      document.querySelector('#nombrecliente').setAttribute('disabled', true);
+      document.querySelector('#usuario').removeAttribute("disabled");  //cuando se abre el modal de reporogramar se deshabilita el select, aqui vuelve y se habilita
       document.querySelector('#nousuario').setAttribute('disabled', true);
       limpiarformdialog();
     }else{
       document.querySelector('#cliente1').classList.add('ocultar');
       document.querySelector('#cliente2').classList.remove('ocultar');
-      document.querySelector('#usuario').removeAttribute("required");
-      document.querySelector('#nombrecliente').required = true;
+      document.querySelector('#usuario').setAttribute('disabled', true);
+      document.querySelector('#nombrecliente').removeAttribute('disabled');
       document.querySelector('#nombrecliente').readOnly = false; 
       document.querySelector('#nousuario').removeAttribute('disabled');
       limpiarformdialog();
@@ -246,12 +253,12 @@
   }
   document.querySelector('#professionals').addEventListener('change', (e)=>{
     Idpxtemp = e.target.value;  //en esta variables guadamos al empleado elegido
-    borrarhtml(document.querySelector('#horas')); //borra en donde se ponen las horas
     gethoras(onlymalla.find(x=>x.id_empleado===e.target.value));
   });
 
 
   function gethoras(objmalla){
+    borrarhtml(document.querySelector('#horas'));
     const fecha = select_date.value;
     let horario = [objmalla.inicioturno, objmalla.inidescanso, objmalla.findescanso, objmalla.finturno];
     horario = horario.map(hora =>hora = hora.substring(0,2)+':'+hora.substring(2,4));
@@ -315,33 +322,38 @@
     const reProgramar = document.querySelectorAll('#reprogramar');
     reProgramar.forEach(btn => btn.addEventListener('click', (e)=>{
       const c = citaspending.find(cita=>cita.id===e.target.dataset.id); //solo citas pendiente
-      if(c){  //si se programa una cita no pendiente no muestra el modal
+      if(c){  //si se programa una cita NO pendiente no muestra el modal
         dialogo.showModal();
         document.addEventListener("click", cerrarDialogoExterno);
-        document.querySelector('#cliente1').classList.add('ocultar'); //oculta el eliv donde esta el select de los usuarios
+        document.querySelector('#cliente1').classList.add('ocultar'); //oculta el el div donde esta el select de los usuarios
         document.querySelector('#cliente2').classList.remove('ocultar'); //muestra el div donde esta el input de los usuarios no registrados
+        document.querySelector('#usuario').setAttribute('disabled', true); //deshabilita el select de usuarios
+        document.querySelector('#nousuario').removeAttribute('disabled');
         cargardatoscliente(c);
       }
     }));
   }
   function cargardatoscliente(c){
+    document.querySelector('#formcrearcitas').action = "/admin/citas";
     const professionals = document.querySelector('#professionals');
+    document.querySelector('#id').value = c.id;
+    document.querySelector('#nousuario').value = c.id_usuario;
     document.querySelector('#nombrecliente').value = c.nombrecliente;
     document.querySelector('#nombrecliente').readOnly = true; 
-    document.querySelector('#valorpersonalizado').value = c.valorcita;
-    document.querySelector('#date').value = c.start;
+    document.querySelector('#valorpersonalizado').value = c.valorcita;  //****este se modifica****//
+    document.querySelector('#date').value = c.start;   //*****este se modifica****//
+    document.querySelector('#hora_fin').value = c.hora_fin;
     $('#servicios').val(c.idservicio).trigger('change'); //selecciona el select y segun su value lo elige, y dispara el evento por jquery
-    for(let i = 1; i<professionals.options.length; i++){
-      if(professionals.options[i].value === c.idempleado){
-          professionals.options[i].selected = true;
-          document.querySelector('#id_empserv').value = c.id; //se carga el id_empserv
-      }
-    }
+    for(let i = 1; i<professionals.options.length; i++)
+      if(professionals.options[i].value === c.idempleado)professionals.options[i].selected = true;
+    
     const mallaRepro = onlymalla.find(x=>x.id_empleado===c.idempleado); //cuando a un empleado se le quita o se cambia un dia ya su id no se encuentra en la malla de ese dia por lo tanto aqui, se envia obj undefine
     if(mallaRepro)gethoras(mallaRepro);  
     const divhoras = document.querySelector('#horas');
-    divhoras.insertAdjacentHTML('afterbegin', `<div class="citas__hora horaselected"><p class="texthora">${c.hora_fin}</p></div>`);
+    const h = new Date("2000-01-01T" + c.hora_fin).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    divhoras.insertAdjacentHTML('afterbegin', `<div class="citas__hora horaselected"><p class="texthora">${h}</p></div>`);
   }
+  /////////////////////////  fin Reprogramar  ////////////////////////////////
 
   function deshabilitarfechaanterior(){
     const inputfecha = document.querySelector('#date');
@@ -356,6 +368,26 @@
     inputfecha.min = deshabilitarfecha; //al input fecha se le agrega atributo min
   }
 
+  function cambiarestado(e){
+    console.log(e.target);
+    Swal.fire({
+      customClass: {
+          confirmButton: 'sweetbtnconfirm',
+          cancelButton: 'sweetbtncancel'
+      },
+      title: 'Desea Cancelar La Cita?',
+      text: "SE CANCELARA LA CITA, PUEDES CREAR UNA NUEVA CUANDO LO DESEES.",
+      showCancelButton: true,
+      confirmButtonText: 'Si',
+      cancelButtonText: 'No',
+      
+    }).then((result) => {
+        if(result.isConfirmed){  
+          Swal.fire('Cita Cancelada', '', 'success')          
+        } 
+    })
+  }
+
   ///////////////////// borrar html ////////////////////////
   function borrarhtml(elemento){
     horasdisponibles = [];
@@ -365,6 +397,7 @@
   ////////////// Limpiar formulario de crear citas del dialog/////////////////
   function limpiarformdialog(){
     document.querySelector('#formcrearcitas').reset();
+    document.querySelector('#formcrearcitas').action = "/admin/citas/crear";
     $('#servicios').val(0).trigger('change');
   }
     

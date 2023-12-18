@@ -271,11 +271,14 @@
     ////////////////////estilo a las horas de las citas de los modales///////////////////////
     &__campohoras{
         @include m.grid(2, 2rem);
+        row-gap: 1rem;
         @include m.tablet{
             @include m.grid(3, 2rem);
+            row-gap: 1rem;
         }
         @include m.xl_tablet{
             @include m.grid(4, 2rem);
+            row-gap: 1rem;
         }
         //border: 1px solid v.$grisclaro;
         padding: 1rem;
@@ -290,7 +293,7 @@
         .texthora{
             color: v.$grisoscuro;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin: 0;
             padding: .8rem 0;
         }
